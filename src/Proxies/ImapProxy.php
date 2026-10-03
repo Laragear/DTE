@@ -56,10 +56,10 @@ class ImapProxy
     public function search(
         Connection $connection,
         string $criteria,
-        ?int $flags = null,
+        int $flags = 2,
         string $charset = '',
     ): array|false {
-        return imap_search($connection, $criteria, $flags ?? \SE_FREE, $charset);
+        return imap_search($connection, $criteria, $flags, $charset);
     }
 
     /**

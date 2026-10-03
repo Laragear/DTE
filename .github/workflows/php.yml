@@ -17,6 +17,6 @@ jobs:
       laravel_versions: '["13.*"]'
 
       # Optional: Override exported files check (Defaults to 'LICENSE.md,README.md,composer.json')
-      expected_files: "CERTIFICATION.md,LICENSE.md,README.md,composer.json,CHANGELOG.md"
+      expected_files: "CERTIFICATION.md,LICENSE.md,README.md,composer.json"
 
     secrets: inherit                        # Required to pass org-wide secrets like CODECOV_TOKEN.

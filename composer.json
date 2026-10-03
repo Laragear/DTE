@@ -51,7 +51,7 @@
         "illuminate/support": "^13.27",
         "illuminate/validation": "^13.27",
         "illuminate/view": "^13.27",
-        "laragear/rut": "^5.1.4",
+        "laragear/rut": "^5.3.0",
         "laravel/prompts": "^0.3.22",
         "spatie/laravel-pdf": "^2.13",
         "spatie/temporary-directory": "^2.4",

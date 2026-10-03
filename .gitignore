@@ -1,0 +1,12 @@
+/build
+/coverage
+/coverage-html
+/vendor
+/.idea
+/.phpunit.cache
+.php-cs-fixer.cache
+.phpunit.result.cache
+composer.lock
+phpunit.xml.bak
+
+/knowledge

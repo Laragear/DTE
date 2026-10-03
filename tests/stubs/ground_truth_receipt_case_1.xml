@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioRecibos version="1.0">
+  <SetRecibos ID="SetRec">
+    <Caratula version="1.0">
+      <RutRecibe>22222222-2</RutRecibe>
+      <RutEnvia>76123456-0</RutEnvia>
+      <RutReceptor>76123456-0</RutReceptor>
+      <FchResol>2025-01-01</FchResol>
+      <NroResol>0</NroResol>
+      <TmstFirmaEnv>2025-01-15T12:00:00</TmstFirmaEnv>
+    </Caratula>
+    <Recibo>
+      <TipoDoc>33</TipoDoc>
+      <FolioDoc>1</FolioDoc>
+      <RutCesionario>33333333-3</RutCesionario>
+      <RutCedente>76123456-0</RutCedente>
+      <Monto>437505</Monto>
+      <FchRecibo>2025-01-15</FchRecibo>
+      <FchVencPago>2025-02-14</FchVencPago>
+    </Recibo>
+  </SetRecibos>
+</EnvioRecibos>

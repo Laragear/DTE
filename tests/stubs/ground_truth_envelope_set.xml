@@ -1,0 +1,916 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioDTE xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sii.cl/SiiDte" xsi:schemaLocation="http://www.sii.cl/SiiDte EnvioDTE_v10.xsd" version="1.0">
+<SetDTE ID="SetDoc">
+<Caratula version="1.0"><RutEmisor>11111111-1</RutEmisor>
+<RutEnvia>11111111-1</RutEnvia>
+<RutReceptor>60803000-K</RutReceptor>
+<FchResol>2020-07-31</FchResol>
+<NroResol>0</NroResol>
+<TmstFirmaEnv>2020-09-27T18:37:31</TmstFirmaEnv>
+
+<SubTotDTE><TpoDTE>33</TpoDTE><NroDTE>4</NroDTE></SubTotDTE>
+<SubTotDTE><TpoDTE>56</TpoDTE><NroDTE>1</NroDTE></SubTotDTE>
+<SubTotDTE><TpoDTE>61</TpoDTE><NroDTE>3</NroDTE></SubTotDTE>
+</Caratula>
+<DTE version="1.0">
+<Documento ID="F1T33">
+<Encabezado>
+<IdDoc>
+<TipoDTE>33</TipoDTE>
+<Folio>1</Folio>
+<FchEmis>2020-09-27</FchEmis>
+</IdDoc>
+<Emisor>
+<RUTEmisor>11111111-1</RUTEmisor>
+<RznSoc>EJEMPLO S.A.</RznSoc>
+<GiroEmis>Insumos de Computacion</GiroEmis>
+<Acteco>31341</Acteco>
+<DirOrigen>Teatinos 120, Piso 4</DirOrigen>
+<CmnaOrigen>Santiago</CmnaOrigen>
+</Emisor>
+<Receptor>
+<RUTRecep>77777777-7</RUTRecep>
+<RznSocRecep>EMPRESA  LTDA</RznSocRecep>
+<GiroRecep>COMPUTACION</GiroRecep>
+<DirRecep>SAN DIEGO 2222</DirRecep>
+<CmnaRecep>LA FLORIDA</CmnaRecep>
+</Receptor>
+<Totales>
+<MntNeto>100000</MntNeto>
+<TasaIVA>19</TasaIVA>
+<IVA>19000</IVA>
+<MntTotal>119000</MntTotal>
+</Totales>
+</Encabezado>
+<Detalle>
+<NroLinDet>1</NroLinDet>
+<NmbItem>Parlantes Multimedia 180W.</NmbItem>
+<QtyItem>20</QtyItem>
+<PrcItem>4500</PrcItem>
+<MontoItem>90000</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>2</NroLinDet>
+<NmbItem>Mouse Inalambrico PS/2</NmbItem>
+<QtyItem>1</QtyItem>
+<PrcItem>5000</PrcItem>
+<MontoItem>5000</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>3</NroLinDet>
+<NmbItem>Caja de Diskettes 10 Unidades</NmbItem>
+<QtyItem>5</QtyItem>
+<PrcItem>1000</PrcItem>
+<MontoItem>5000</MontoItem>
+</Detalle>
+<TED version="1.0"><DD><RE>11111111-1</RE><TD>33</TD><F>1</F><FE>2020-09-27</FE><RR>77777777-7</RR><RSR>EMPRESA  LTDA</RSR><MNT>119000</MNT><IT1>Parlantes Multimedia 180W.</IT1><CAF version="1.0">
+<DA>
+<RE>11111111-1</RE>
+<RS>EJEMPLO S.A.</RS>
+<TD>33</TD>
+<RNG><D>1</D><H>200</H></RNG>
+<FA>2020-05-31</FA>
+<RSAPK><M>0a4O6Kbx8Qj3K4iWSP4w7KneZYeJ+g/prihYtIEolKt3cykSxl1zO8vSXu397QhTmsX7SBEudTUx++2zDXBhZw==</M><E>Aw==</E></RSAPK>
+<IDK>100</IDK>
+</DA>
+<FRMA algoritmo="SHA1withRSA">s8jKW4d5E9NR/gaVkllgzJGwAQmtn35v0ZIQEO99pFITXLOmmX/M0TL2uLQZL/b4FYLj2uWZhG3AZ8TOjGs0WQ==</FRMA>
+</CAF><TSTED>2020-09-27T18:37:31</TSTED></DD><FRMT algoritmo="SHA1withRSA">MDDPWyvHwZY0xTa2y3IZ4ufwilhUIN8ckY4wLMdcuBUzIyox42b/iqXc3J8nzy0Vmx2//b/+rSLHuy6Dsl8N0Q==</FRMT></TED><TmstFirma>2020-09-27T18:37:31</TmstFirma>
+</Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#F1T33">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>aTqV0RjYkizMfLOGVf+GXtlfeX4=</DigestValue>
+</Reference>
+</SignedInfo>
+
+<SignatureValue>IVV/t4QBxOngcosPlkHr9tSJWd6gVp/bxu1OjGXhs3Rk60SQnLTifurWYWjXm1QeBWG76emGcsJD
+DZ6SUvqoVCGIz7szPqAlQKcrShOZVPSZDvwDDEorHzpDgaMGTKGVOTckNZNWR4SwV3sIdzYPMnaa
+wR53DLHC+GPOhY3Ewdw=
+</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>s4xlbaMp94XAtsWB5ARcmfYh0pX6C6nKhvozwNjgO74P5AgUmEhkPywWUUsq9nuwSXovq75diZ6f32yMkAE7yJv7pfVj09dHi03Qf6V8TVbKVB07vLvJyV7hPvNhnKU8kvqM9mB9Ubco3NPtSpSNnAM44swRbH4Vh6xwKnrLETE=</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>MIICejCCAeOgAwIBAgIKek1x7KhX1auNejANBgkqhkiG9w0BAQUFADBcMQswCQYDVQQGEwJDTDEnMCUGA1UEChMeRW1pc29yIGRlIGNlcnRpZmljYWRvIGZpY3RpY2lvMSQwIgYDVQQDExtQUlVFQkEgQ0EgRklSTUEgRUxFQ1RST05JQ0EwHhcNMjAwNjAxMDAwMDAxWhcNMzAwNjAxMDAwMDAxWjA/MQswCQYDVQQGEwJDTDEZMBcGA1UEChMQVXN1YXJpbyBmaWN0aWNpbzEVMBMGA1UEAxMMRWplbXBsbyBTLkEuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCzjGVtoyn3hcC2xYHkBFyZ9iHSlfoLqcqG+jPA2OA7vg/kCBSYSGQ/LBZRSyr2e7BJei+rvl2Jnp/fbIyQATvIm/ul9WPT10eLTdB/pXxNVspUHTu8u8nJXuE+82GcpTyS+oz2YH1Rtyjc0+1KlI2cAzjizBFsfhWHrHAqessRMQIDAQABo2AwXjAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIE8DAfBgNVHSMEGDAWgBTrYOCJEDumJxvBR6WnHWJv95/9TjAdBgNVHQ4EFgQUxc5OqOWmmDGvOFViJBCVSOLOqrswDQYJKoZIhvcNAQEFBQADgYEARFSdwN4QhIJBF7F4WP4CNwOKvrBqbaoe4FOED6/XhSfWUB8qoyWt5bed6b7FY300ZRfcl+C2VaFzWCkogzfXVPNhewgiIe2BV4ip3YpgA/W3TN2PjMbgM7GWHj2oJPmsVU8N3HXx+j7ZqcxrVHMzy73IWXYs9psAzkXVqzUTy3M=</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE><DTE version="1.0">
+<Documento ID="F2T33">
+<Encabezado>
+<IdDoc>
+<TipoDTE>33</TipoDTE>
+<Folio>2</Folio>
+<FchEmis>2020-09-27</FchEmis>
+</IdDoc>
+<Emisor>
+<RUTEmisor>11111111-1</RUTEmisor>
+<RznSoc>EJEMPLO S.A.</RznSoc>
+<GiroEmis>Insumos de Computacion</GiroEmis>
+<Acteco>31341</Acteco>
+<DirOrigen>Teatinos 120, Piso 4</DirOrigen>
+<CmnaOrigen>Santiago</CmnaOrigen>
+</Emisor>
+<Receptor>
+<RUTRecep>77777777-7</RUTRecep>
+<RznSocRecep>EMPRESA  LTDA</RznSocRecep>
+<GiroRecep>COMPUTACION</GiroRecep>
+<DirRecep>SAN DIEGO 2222</DirRecep>
+<CmnaRecep>LA FLORIDA</CmnaRecep>
+</Receptor>
+<Totales>
+<MntNeto>1705589</MntNeto>
+<TasaIVA>19</TasaIVA>
+<IVA>324062</IVA>
+<MntTotal>2029651</MntTotal>
+</Totales>
+</Encabezado>
+<Detalle>
+<NroLinDet>1</NroLinDet>
+<NmbItem>Parlantes Multimedia 180W.</NmbItem>
+<QtyItem>20</QtyItem>
+<PrcItem>4500</PrcItem>
+<MontoItem>90000</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>2</NroLinDet>
+<NmbItem>Mouse Inalambrico PS/2</NmbItem>
+<QtyItem>1</QtyItem>
+<PrcItem>5000</PrcItem>
+<MontoItem>5000</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>3</NroLinDet>
+<NmbItem>Caja de Diskettes 10 Unidades</NmbItem>
+<QtyItem>5</QtyItem>
+<PrcItem>1000</PrcItem>
+<MontoItem>5000</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>4</NroLinDet>
+<NmbItem>Pañuelo AFECTO</NmbItem>
+<QtyItem>373</QtyItem>
+<PrcItem>2966</PrcItem>
+<DescuentoPct>5</DescuentoPct>
+<DescuentoMonto>55316</DescuentoMonto>
+<MontoItem>1051002</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>5</NroLinDet>
+<NmbItem>ITEM 2 AFECTO</NmbItem>
+<QtyItem>304</QtyItem>
+<PrcItem>2027</PrcItem>
+<DescuentoPct>10</DescuentoPct>
+<DescuentoMonto>61621</DescuentoMonto>
+<MontoItem>554587</MontoItem>
+</Detalle>
+<TED version="1.0"><DD><RE>11111111-1</RE><TD>33</TD><F>2</F><FE>2020-09-27</FE><RR>77777777-7</RR><RSR>EMPRESA  LTDA</RSR><MNT>2029651</MNT><IT1>Parlantes Multimedia 180W.</IT1><CAF version="1.0">
+<DA>
+<RE>11111111-1</RE>
+<RS>EJEMPLO S.A.</RS>
+<TD>33</TD>
+<RNG><D>1</D><H>200</H></RNG>
+<FA>2020-05-31</FA>
+<RSAPK><M>0a4O6Kbx8Qj3K4iWSP4w7KneZYeJ+g/prihYtIEolKt3cykSxl1zO8vSXu397QhTmsX7SBEudTUx++2zDXBhZw==</M><E>Aw==</E></RSAPK>
+<IDK>100</IDK>
+</DA>
+<FRMA algoritmo="SHA1withRSA">s8jKW4d5E9NR/gaVkllgzJGwAQmtn35v0ZIQEO99pFITXLOmmX/M0TL2uLQZL/b4FYLj2uWZhG3AZ8TOjGs0WQ==</FRMA>
+</CAF><TSTED>2020-09-27T18:37:31</TSTED></DD><FRMT algoritmo="SHA1withRSA">CcEKBMdy76g4kF2Evg9o91JQ0KWOcJWuTN3GeFUwHF0Cdy8ylnBDiBQG1LA22rMOTkmNWNaPUbMT1u9OiCjqQw==</FRMT></TED><TmstFirma>2020-09-27T18:37:31</TmstFirma>
+</Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#F2T33">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>+RQ5XlxmhidI9zxlADJbO73buNU=</DigestValue>
+</Reference>
+</SignedInfo>
+
+<SignatureValue>cePyEJvYJ/cvhwBFR8tbrEjCMnt6Xus3fnz3BX9wGSUUP853XgiiCw50cWmlVji4tVbmhDi6nAiH
+QgT/WIQ0oQySAEIEXGmhu7rBWJVQx9If7Ume6NWR5Gw+tqgQanU8d9urXdanU1svnDaWk3n7t6le
+tR6q3qFAPJH4VsICRuo=
+</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>s4xlbaMp94XAtsWB5ARcmfYh0pX6C6nKhvozwNjgO74P5AgUmEhkPywWUUsq9nuwSXovq75diZ6f32yMkAE7yJv7pfVj09dHi03Qf6V8TVbKVB07vLvJyV7hPvNhnKU8kvqM9mB9Ubco3NPtSpSNnAM44swRbH4Vh6xwKnrLETE=</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>MIICejCCAeOgAwIBAgIKek1x7KhX1auNejANBgkqhkiG9w0BAQUFADBcMQswCQYDVQQGEwJDTDEnMCUGA1UEChMeRW1pc29yIGRlIGNlcnRpZmljYWRvIGZpY3RpY2lvMSQwIgYDVQQDExtQUlVFQkEgQ0EgRklSTUEgRUxFQ1RST05JQ0EwHhcNMjAwNjAxMDAwMDAxWhcNMzAwNjAxMDAwMDAxWjA/MQswCQYDVQQGEwJDTDEZMBcGA1UEChMQVXN1YXJpbyBmaWN0aWNpbzEVMBMGA1UEAxMMRWplbXBsbyBTLkEuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCzjGVtoyn3hcC2xYHkBFyZ9iHSlfoLqcqG+jPA2OA7vg/kCBSYSGQ/LBZRSyr2e7BJei+rvl2Jnp/fbIyQATvIm/ul9WPT10eLTdB/pXxNVspUHTu8u8nJXuE+82GcpTyS+oz2YH1Rtyjc0+1KlI2cAzjizBFsfhWHrHAqessRMQIDAQABo2AwXjAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIE8DAfBgNVHSMEGDAWgBTrYOCJEDumJxvBR6WnHWJv95/9TjAdBgNVHQ4EFgQUxc5OqOWmmDGvOFViJBCVSOLOqrswDQYJKoZIhvcNAQEFBQADgYEARFSdwN4QhIJBF7F4WP4CNwOKvrBqbaoe4FOED6/XhSfWUB8qoyWt5bed6b7FY300ZRfcl+C2VaFzWCkogzfXVPNhewgiIe2BV4ip3YpgA/W3TN2PjMbgM7GWHj2oJPmsVU8N3HXx+j7ZqcxrVHMzy73IWXYs9psAzkXVqzUTy3M=</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE><DTE version="1.0">
+<Documento ID="F3T33">
+<Encabezado>
+<IdDoc>
+<TipoDTE>33</TipoDTE>
+<Folio>3</Folio>
+<FchEmis>2020-09-27</FchEmis>
+</IdDoc>
+<Emisor>
+<RUTEmisor>11111111-1</RUTEmisor>
+<RznSoc>EJEMPLO S.A.</RznSoc>
+<GiroEmis>Insumos de Computacion</GiroEmis>
+<Acteco>31341</Acteco>
+<DirOrigen>Teatinos 120, Piso 4</DirOrigen>
+<CmnaOrigen>Santiago</CmnaOrigen>
+</Emisor>
+<Receptor>
+<RUTRecep>77777777-7</RUTRecep>
+<RznSocRecep>EMPRESA  LTDA</RznSocRecep>
+<GiroRecep>COMPUTACION</GiroRecep>
+<DirRecep>SAN DIEGO 2222</DirRecep>
+<CmnaRecep>LA FLORIDA</CmnaRecep>
+</Receptor>
+<Totales>
+<MntNeto>2351807</MntNeto>
+<MntExe>34859</MntExe>
+<TasaIVA>19</TasaIVA>
+<IVA>446843</IVA>
+<MntTotal>2833509</MntTotal>
+</Totales>
+</Encabezado>
+<Detalle>
+<NroLinDet>1</NroLinDet>
+<NmbItem>Parlantes Multimedia 180W.</NmbItem>
+<QtyItem>20</QtyItem>
+<PrcItem>4500</PrcItem>
+<MontoItem>90000</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>2</NroLinDet>
+<NmbItem>Mouse Inalambrico PS/2</NmbItem>
+<QtyItem>1</QtyItem>
+<PrcItem>5000</PrcItem>
+<MontoItem>5000</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>3</NroLinDet>
+<NmbItem>Caja de Diskettes 10 Unidades</NmbItem>
+<QtyItem>5</QtyItem>
+<PrcItem>1000</PrcItem>
+<MontoItem>5000</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>4</NroLinDet>
+<NmbItem>Pañuelo AFECTO</NmbItem>
+<QtyItem>373</QtyItem>
+<PrcItem>2966</PrcItem>
+<DescuentoPct>5</DescuentoPct>
+<DescuentoMonto>55316</DescuentoMonto>
+<MontoItem>1051002</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>5</NroLinDet>
+<NmbItem>ITEM 2 AFECTO</NmbItem>
+<QtyItem>304</QtyItem>
+<PrcItem>2027</PrcItem>
+<DescuentoPct>10</DescuentoPct>
+<DescuentoMonto>61621</DescuentoMonto>
+<MontoItem>554587</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>6</NroLinDet>
+<NmbItem>Pintura B&amp;W AFECTO</NmbItem>
+<QtyItem>30</QtyItem>
+<PrcItem>3343</PrcItem>
+<MontoItem>100290</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>7</NroLinDet>
+<NmbItem>ITEM 2 AFECTO</NmbItem>
+<QtyItem>172</QtyItem>
+<PrcItem>3174</PrcItem>
+<MontoItem>545928</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>8</NroLinDet>
+<IndExe>1</IndExe>
+<NmbItem>ITEM 3 SERVICIO EXENTO</NmbItem>
+<QtyItem>1</QtyItem>
+<PrcItem>34859</PrcItem>
+<MontoItem>34859</MontoItem>
+</Detalle>
+<TED version="1.0"><DD><RE>11111111-1</RE><TD>33</TD><F>3</F><FE>2020-09-27</FE><RR>77777777-7</RR><RSR>EMPRESA  LTDA</RSR><MNT>2833509</MNT><IT1>Parlantes Multimedia 180W.</IT1><CAF version="1.0">
+<DA>
+<RE>11111111-1</RE>
+<RS>EJEMPLO S.A.</RS>
+<TD>33</TD>
+<RNG><D>1</D><H>200</H></RNG>
+<FA>2020-05-31</FA>
+<RSAPK><M>0a4O6Kbx8Qj3K4iWSP4w7KneZYeJ+g/prihYtIEolKt3cykSxl1zO8vSXu397QhTmsX7SBEudTUx++2zDXBhZw==</M><E>Aw==</E></RSAPK>
+<IDK>100</IDK>
+</DA>
+<FRMA algoritmo="SHA1withRSA">s8jKW4d5E9NR/gaVkllgzJGwAQmtn35v0ZIQEO99pFITXLOmmX/M0TL2uLQZL/b4FYLj2uWZhG3AZ8TOjGs0WQ==</FRMA>
+</CAF><TSTED>2020-09-27T18:37:31</TSTED></DD><FRMT algoritmo="SHA1withRSA">hJvMbDnddgBOW7qprzYLTlqfGB/idSJYlYp1WyuRxb366Mi0+2BQGKWu4/9prDgK68eD5U5GWsYGuWoPA/Tw9g==</FRMT></TED><TmstFirma>2020-09-27T18:37:31</TmstFirma>
+</Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#F3T33">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>DW0lajPgal+LuEHcPqh3OMr4Rx4=</DigestValue>
+</Reference>
+</SignedInfo>
+
+<SignatureValue>NGJ0e9GX0I+W12RdSgKn2D6OKNhS4WiVeeUI0Mg/F9DgFDXs4ts994GlJB6J31jfCrhdTG84yxho
+FyaZWW2zm29Emvf6Z4ak5vOBB2/G0IDjSsyC7JzAHAmpv2HmjHjLX4mOpBH3NyxdFjh4jyG8QlHC
+4cID38UYktnlW1JhHaI=
+</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>s4xlbaMp94XAtsWB5ARcmfYh0pX6C6nKhvozwNjgO74P5AgUmEhkPywWUUsq9nuwSXovq75diZ6f32yMkAE7yJv7pfVj09dHi03Qf6V8TVbKVB07vLvJyV7hPvNhnKU8kvqM9mB9Ubco3NPtSpSNnAM44swRbH4Vh6xwKnrLETE=</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>MIICejCCAeOgAwIBAgIKek1x7KhX1auNejANBgkqhkiG9w0BAQUFADBcMQswCQYDVQQGEwJDTDEnMCUGA1UEChMeRW1pc29yIGRlIGNlcnRpZmljYWRvIGZpY3RpY2lvMSQwIgYDVQQDExtQUlVFQkEgQ0EgRklSTUEgRUxFQ1RST05JQ0EwHhcNMjAwNjAxMDAwMDAxWhcNMzAwNjAxMDAwMDAxWjA/MQswCQYDVQQGEwJDTDEZMBcGA1UEChMQVXN1YXJpbyBmaWN0aWNpbzEVMBMGA1UEAxMMRWplbXBsbyBTLkEuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCzjGVtoyn3hcC2xYHkBFyZ9iHSlfoLqcqG+jPA2OA7vg/kCBSYSGQ/LBZRSyr2e7BJei+rvl2Jnp/fbIyQATvIm/ul9WPT10eLTdB/pXxNVspUHTu8u8nJXuE+82GcpTyS+oz2YH1Rtyjc0+1KlI2cAzjizBFsfhWHrHAqessRMQIDAQABo2AwXjAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIE8DAfBgNVHSMEGDAWgBTrYOCJEDumJxvBR6WnHWJv95/9TjAdBgNVHQ4EFgQUxc5OqOWmmDGvOFViJBCVSOLOqrswDQYJKoZIhvcNAQEFBQADgYEARFSdwN4QhIJBF7F4WP4CNwOKvrBqbaoe4FOED6/XhSfWUB8qoyWt5bed6b7FY300ZRfcl+C2VaFzWCkogzfXVPNhewgiIe2BV4ip3YpgA/W3TN2PjMbgM7GWHj2oJPmsVU8N3HXx+j7ZqcxrVHMzy73IWXYs9psAzkXVqzUTy3M=</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE><DTE version="1.0">
+<Documento ID="F4T33">
+<Encabezado>
+<IdDoc>
+<TipoDTE>33</TipoDTE>
+<Folio>4</Folio>
+<FchEmis>2020-09-27</FchEmis>
+</IdDoc>
+<Emisor>
+<RUTEmisor>11111111-1</RUTEmisor>
+<RznSoc>EJEMPLO S.A.</RznSoc>
+<GiroEmis>Insumos de Computacion</GiroEmis>
+<Acteco>31341</Acteco>
+<DirOrigen>Teatinos 120, Piso 4</DirOrigen>
+<CmnaOrigen>Santiago</CmnaOrigen>
+</Emisor>
+<Receptor>
+<RUTRecep>77777777-7</RUTRecep>
+<RznSocRecep>EMPRESA  LTDA</RznSocRecep>
+<GiroRecep>COMPUTACION</GiroRecep>
+<DirRecep>SAN DIEGO 2222</DirRecep>
+<CmnaRecep>LA FLORIDA</CmnaRecep>
+</Receptor>
+<Totales>
+<MntNeto>2700849</MntNeto>
+<MntExe>48429</MntExe>
+<TasaIVA>19</TasaIVA>
+<IVA>513161</IVA>
+<MntTotal>3262439</MntTotal>
+</Totales>
+</Encabezado>
+<Detalle>
+<NroLinDet>1</NroLinDet>
+<NmbItem>Parlantes Multimedia 180W.</NmbItem>
+<QtyItem>20</QtyItem>
+<PrcItem>4500</PrcItem>
+<MontoItem>90000</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>2</NroLinDet>
+<NmbItem>Mouse Inalambrico PS/2</NmbItem>
+<QtyItem>1</QtyItem>
+<PrcItem>5000</PrcItem>
+<MontoItem>5000</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>3</NroLinDet>
+<NmbItem>Caja de Diskettes 10 Unidades</NmbItem>
+<QtyItem>5</QtyItem>
+<PrcItem>1000</PrcItem>
+<MontoItem>5000</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>4</NroLinDet>
+<NmbItem>Pañuelo AFECTO</NmbItem>
+<QtyItem>373</QtyItem>
+<PrcItem>2966</PrcItem>
+<DescuentoPct>5</DescuentoPct>
+<DescuentoMonto>55316</DescuentoMonto>
+<MontoItem>1051002</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>5</NroLinDet>
+<NmbItem>ITEM 2 AFECTO</NmbItem>
+<QtyItem>304</QtyItem>
+<PrcItem>2027</PrcItem>
+<DescuentoPct>10</DescuentoPct>
+<DescuentoMonto>61621</DescuentoMonto>
+<MontoItem>554587</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>6</NroLinDet>
+<NmbItem>Pintura B&amp;W AFECTO</NmbItem>
+<QtyItem>30</QtyItem>
+<PrcItem>3343</PrcItem>
+<MontoItem>100290</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>7</NroLinDet>
+<NmbItem>ITEM 2 AFECTO</NmbItem>
+<QtyItem>172</QtyItem>
+<PrcItem>3174</PrcItem>
+<MontoItem>545928</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>8</NroLinDet>
+<IndExe>1</IndExe>
+<NmbItem>ITEM 3 SERVICIO EXENTO</NmbItem>
+<QtyItem>1</QtyItem>
+<PrcItem>34859</PrcItem>
+<MontoItem>34859</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>9</NroLinDet>
+<NmbItem>ITEM 1 AFECTO</NmbItem>
+<QtyItem>169</QtyItem>
+<PrcItem>2791</PrcItem>
+<MontoItem>471679</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>10</NroLinDet>
+<NmbItem>ITEM 2 AFECTO</NmbItem>
+<QtyItem>72</QtyItem>
+<PrcItem>2933</PrcItem>
+<MontoItem>211176</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>11</NroLinDet>
+<IndExe>1</IndExe>
+<NmbItem>ITEM 3 SERVICIO EXENTO</NmbItem>
+<QtyItem>2</QtyItem>
+<PrcItem>6785</PrcItem>
+<MontoItem>13570</MontoItem>
+</Detalle>
+<DscRcgGlobal>
+<NroLinDR>1</NroLinDR>
+<TpoMov>D</TpoMov>
+<TpoValor>%</TpoValor>
+<ValorDR>11</ValorDR>
+</DscRcgGlobal>
+<TED version="1.0"><DD><RE>11111111-1</RE><TD>33</TD><F>4</F><FE>2020-09-27</FE><RR>77777777-7</RR><RSR>EMPRESA  LTDA</RSR><MNT>3262439</MNT><IT1>Parlantes Multimedia 180W.</IT1><CAF version="1.0">
+<DA>
+<RE>11111111-1</RE>
+<RS>EJEMPLO S.A.</RS>
+<TD>33</TD>
+<RNG><D>1</D><H>200</H></RNG>
+<FA>2020-05-31</FA>
+<RSAPK><M>0a4O6Kbx8Qj3K4iWSP4w7KneZYeJ+g/prihYtIEolKt3cykSxl1zO8vSXu397QhTmsX7SBEudTUx++2zDXBhZw==</M><E>Aw==</E></RSAPK>
+<IDK>100</IDK>
+</DA>
+<FRMA algoritmo="SHA1withRSA">s8jKW4d5E9NR/gaVkllgzJGwAQmtn35v0ZIQEO99pFITXLOmmX/M0TL2uLQZL/b4FYLj2uWZhG3AZ8TOjGs0WQ==</FRMA>
+</CAF><TSTED>2020-09-27T18:37:31</TSTED></DD><FRMT algoritmo="SHA1withRSA">QFmfgFOki7LjmBO/c4mhIgw/3giFUiNk8lgLBzg0a269ezbnXLu034xf67dvY8vSu0n4ygjFacMa+cvs4qLTzA==</FRMT></TED><TmstFirma>2020-09-27T18:37:31</TmstFirma>
+</Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#F4T33">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>BSKGEvPpbHWnl/txC4xG76bKe1k=</DigestValue>
+</Reference>
+</SignedInfo>
+
+<SignatureValue>TU5h+Y/Kn+KkixvEOSJ9PYZs6Oh40vzVNBzjn06TUO7iUv7MdHdGteFDebLd/RH9GfRi3fxUjmYX
+IAd6X8U5J1ZT1nwLgHNZWk6CYTrXfBLPrqRBVXfPjAx63CA1Vhc/fzsQZ1F8YUXFF0MGc20bx1Df
+q1JH9wW1UnZVy/z/A5g=
+</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>s4xlbaMp94XAtsWB5ARcmfYh0pX6C6nKhvozwNjgO74P5AgUmEhkPywWUUsq9nuwSXovq75diZ6f32yMkAE7yJv7pfVj09dHi03Qf6V8TVbKVB07vLvJyV7hPvNhnKU8kvqM9mB9Ubco3NPtSpSNnAM44swRbH4Vh6xwKnrLETE=</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>MIICejCCAeOgAwIBAgIKek1x7KhX1auNejANBgkqhkiG9w0BAQUFADBcMQswCQYDVQQGEwJDTDEnMCUGA1UEChMeRW1pc29yIGRlIGNlcnRpZmljYWRvIGZpY3RpY2lvMSQwIgYDVQQDExtQUlVFQkEgQ0EgRklSTUEgRUxFQ1RST05JQ0EwHhcNMjAwNjAxMDAwMDAxWhcNMzAwNjAxMDAwMDAxWjA/MQswCQYDVQQGEwJDTDEZMBcGA1UEChMQVXN1YXJpbyBmaWN0aWNpbzEVMBMGA1UEAxMMRWplbXBsbyBTLkEuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCzjGVtoyn3hcC2xYHkBFyZ9iHSlfoLqcqG+jPA2OA7vg/kCBSYSGQ/LBZRSyr2e7BJei+rvl2Jnp/fbIyQATvIm/ul9WPT10eLTdB/pXxNVspUHTu8u8nJXuE+82GcpTyS+oz2YH1Rtyjc0+1KlI2cAzjizBFsfhWHrHAqessRMQIDAQABo2AwXjAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIE8DAfBgNVHSMEGDAWgBTrYOCJEDumJxvBR6WnHWJv95/9TjAdBgNVHQ4EFgQUxc5OqOWmmDGvOFViJBCVSOLOqrswDQYJKoZIhvcNAQEFBQADgYEARFSdwN4QhIJBF7F4WP4CNwOKvrBqbaoe4FOED6/XhSfWUB8qoyWt5bed6b7FY300ZRfcl+C2VaFzWCkogzfXVPNhewgiIe2BV4ip3YpgA/W3TN2PjMbgM7GWHj2oJPmsVU8N3HXx+j7ZqcxrVHMzy73IWXYs9psAzkXVqzUTy3M=</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE><DTE version="1.0">
+<Documento ID="F1T61">
+<Encabezado>
+<IdDoc>
+<TipoDTE>61</TipoDTE>
+<Folio>1</Folio>
+<FchEmis>2020-09-27</FchEmis>
+</IdDoc>
+<Emisor>
+<RUTEmisor>11111111-1</RUTEmisor>
+<RznSoc>EJEMPLO S.A.</RznSoc>
+<GiroEmis>Insumos de Computacion</GiroEmis>
+<Acteco>31341</Acteco>
+<DirOrigen>Teatinos 120, Piso 4</DirOrigen>
+<CmnaOrigen>Santiago</CmnaOrigen>
+</Emisor>
+<Receptor>
+<RUTRecep>77777777-7</RUTRecep>
+<RznSocRecep>EMPRESA  LTDA</RznSocRecep>
+<GiroRecep>COMPUTACION</GiroRecep>
+<DirRecep>SAN DIEGO 2222</DirRecep>
+<CmnaRecep>LA FLORIDA</CmnaRecep>
+</Receptor>
+<Totales>
+<MntNeto>1</MntNeto>
+<MntTotal>1</MntTotal>
+</Totales>
+</Encabezado>
+<Detalle>
+<NroLinDet>1</NroLinDet>
+<NmbItem>CORRIGE GIRO DEL RECEPTOR</NmbItem>
+<QtyItem>1</QtyItem>
+<PrcItem>1</PrcItem>
+<MontoItem>1</MontoItem>
+</Detalle>
+<Referencia>
+<NroLinRef>1</NroLinRef>
+<TpoDocRef>33</TpoDocRef>
+<FolioRef>1</FolioRef>
+<FchRef>2020-09-27</FchRef>
+<CodRef>2</CodRef>
+<RazonRef>Corrige giro del receptor</RazonRef>
+</Referencia>
+<TED version="1.0"><DD><RE>11111111-1</RE><TD>61</TD><F>1</F><FE>2020-09-27</FE><RR>77777777-7</RR><RSR>EMPRESA  LTDA</RSR><MNT>1</MNT><IT1>CORRIGE GIRO DEL RECEPTOR</IT1><CAF version="1.0">
+<DA>
+<RE>11111111-1</RE>
+<RS>DUMMY COMPANY</RS>
+<TD>61</TD>
+<RNG><D>1</D><H>200</H></RNG>
+<FA>2020-05-31</FA>
+<RSAPK><M>r2x2pLTnl5WGAJAyMhxsUe1JpIOyTpEoMKtMrPQ3RW4ZunjJ5iQ+kCv6V5o3gFL8vHOcgvL7+LunIZGwfczSjAQhWdtfI1ipqUJNmRgNehkrLgek1CJ+l01FMAWPOaVhQd/SN4d8VgzkDEIZqIOkk/Zdp66zJrxEE1rDERlsics=</M><E>AQAB</E></RSAPK>
+<IDK>100</IDK>
+</DA>
+<FRMA algoritmo="SHA1withRSA">c2lpLXNpZ25hdHVyZQ==</FRMA>
+</CAF><TSTED>2020-09-27T18:37:31</TSTED></DD><FRMT algoritmo="SHA1withRSA">LA699wtHVM6fNsJHzLTZM1LBD73rXQFOLbrhJ5r1ybqKXHHKlJB+26IE14Zm5YLXtX+CLX5vqZfXcM9tDg9PJe9Zg6vwLDAC97OKOKbbXVUe9Zw8EWuoycBxtBXSSf2EwSiXdRbeVdgOwWLStC9P9ijPz6BGohdQSHOOQtVLWnU=</FRMT></TED><TmstFirma>2020-09-27T18:37:31</TmstFirma>
+</Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#F1T61">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>23e0Bi9cs2sv54w8ttaBzSt7w8w=</DigestValue>
+</Reference>
+</SignedInfo>
+
+<SignatureValue>IIFV+L3A2ztdEQqtLUiI39DJzbcXXxyVX7gv5SpyqcWlwUCiYnT7g2IcqzpWxvuZ0OfAYnLiWPsT
+DJprHFYh6XKMzFjSUqSjfIEszHyVdGX49itth8ZNME3kprMNj90+ymNT0QMLGzKIzFmamhY2VP6n
+i16Ua6FgFxfZmZtRSyM=
+</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>s4xlbaMp94XAtsWB5ARcmfYh0pX6C6nKhvozwNjgO74P5AgUmEhkPywWUUsq9nuwSXovq75diZ6f32yMkAE7yJv7pfVj09dHi03Qf6V8TVbKVB07vLvJyV7hPvNhnKU8kvqM9mB9Ubco3NPtSpSNnAM44swRbH4Vh6xwKnrLETE=</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>MIICejCCAeOgAwIBAgIKek1x7KhX1auNejANBgkqhkiG9w0BAQUFADBcMQswCQYDVQQGEwJDTDEnMCUGA1UEChMeRW1pc29yIGRlIGNlcnRpZmljYWRvIGZpY3RpY2lvMSQwIgYDVQQDExtQUlVFQkEgQ0EgRklSTUEgRUxFQ1RST05JQ0EwHhcNMjAwNjAxMDAwMDAxWhcNMzAwNjAxMDAwMDAxWjA/MQswCQYDVQQGEwJDTDEZMBcGA1UEChMQVXN1YXJpbyBmaWN0aWNpbzEVMBMGA1UEAxMMRWplbXBsbyBTLkEuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCzjGVtoyn3hcC2xYHkBFyZ9iHSlfoLqcqG+jPA2OA7vg/kCBSYSGQ/LBZRSyr2e7BJei+rvl2Jnp/fbIyQATvIm/ul9WPT10eLTdB/pXxNVspUHTu8u8nJXuE+82GcpTyS+oz2YH1Rtyjc0+1KlI2cAzjizBFsfhWHrHAqessRMQIDAQABo2AwXjAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIE8DAfBgNVHSMEGDAWgBTrYOCJEDumJxvBR6WnHWJv95/9TjAdBgNVHQ4EFgQUxc5OqOWmmDGvOFViJBCVSOLOqrswDQYJKoZIhvcNAQEFBQADgYEARFSdwN4QhIJBF7F4WP4CNwOKvrBqbaoe4FOED6/XhSfWUB8qoyWt5bed6b7FY300ZRfcl+C2VaFzWCkogzfXVPNhewgiIe2BV4ip3YpgA/W3TN2PjMbgM7GWHj2oJPmsVU8N3HXx+j7ZqcxrVHMzy73IWXYs9psAzkXVqzUTy3M=</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE><DTE version="1.0">
+<Documento ID="F2T61">
+<Encabezado>
+<IdDoc>
+<TipoDTE>61</TipoDTE>
+<Folio>2</Folio>
+<FchEmis>2020-09-27</FchEmis>
+</IdDoc>
+<Emisor>
+<RUTEmisor>11111111-1</RUTEmisor>
+<RznSoc>EJEMPLO S.A.</RznSoc>
+<GiroEmis>Insumos de Computacion</GiroEmis>
+<Acteco>31341</Acteco>
+<DirOrigen>Teatinos 120, Piso 4</DirOrigen>
+<CmnaOrigen>Santiago</CmnaOrigen>
+</Emisor>
+<Receptor>
+<RUTRecep>77777777-7</RUTRecep>
+<RznSocRecep>EMPRESA  LTDA</RznSocRecep>
+<GiroRecep>COMPUTACION</GiroRecep>
+<DirRecep>SAN DIEGO 2222</DirRecep>
+<CmnaRecep>LA FLORIDA</CmnaRecep>
+</Receptor>
+<Totales>
+<MntNeto>823905</MntNeto>
+<TasaIVA>19</TasaIVA>
+<IVA>156542</IVA>
+<MntTotal>980447</MntTotal>
+</Totales>
+</Encabezado>
+<Detalle>
+<NroLinDet>1</NroLinDet>
+<NmbItem>CORRIGE GIRO DEL RECEPTOR</NmbItem>
+<QtyItem>1</QtyItem>
+<PrcItem>1</PrcItem>
+<MontoItem>1</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>2</NroLinDet>
+<NmbItem>Pañuelo AFECTO</NmbItem>
+<QtyItem>137</QtyItem>
+<PrcItem>2966</PrcItem>
+<MontoItem>406342</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>3</NroLinDet>
+<NmbItem>ITEM 2 AFECTO</NmbItem>
+<QtyItem>206</QtyItem>
+<PrcItem>2027</PrcItem>
+<MontoItem>417562</MontoItem>
+</Detalle>
+<Referencia>
+<NroLinRef>1</NroLinRef>
+<TpoDocRef>33</TpoDocRef>
+<FolioRef>2</FolioRef>
+<FchRef>2020-09-27</FchRef>
+<CodRef>3</CodRef>
+<RazonRef>Devolución de mercaderías</RazonRef>
+</Referencia>
+<TED version="1.0"><DD><RE>11111111-1</RE><TD>61</TD><F>2</F><FE>2020-09-27</FE><RR>77777777-7</RR><RSR>EMPRESA  LTDA</RSR><MNT>980447</MNT><IT1>CORRIGE GIRO DEL RECEPTOR</IT1><CAF version="1.0">
+<DA>
+<RE>11111111-1</RE>
+<RS>DUMMY COMPANY</RS>
+<TD>61</TD>
+<RNG><D>1</D><H>200</H></RNG>
+<FA>2020-05-31</FA>
+<RSAPK><M>r2x2pLTnl5WGAJAyMhxsUe1JpIOyTpEoMKtMrPQ3RW4ZunjJ5iQ+kCv6V5o3gFL8vHOcgvL7+LunIZGwfczSjAQhWdtfI1ipqUJNmRgNehkrLgek1CJ+l01FMAWPOaVhQd/SN4d8VgzkDEIZqIOkk/Zdp66zJrxEE1rDERlsics=</M><E>AQAB</E></RSAPK>
+<IDK>100</IDK>
+</DA>
+<FRMA algoritmo="SHA1withRSA">c2lpLXNpZ25hdHVyZQ==</FRMA>
+</CAF><TSTED>2020-09-27T18:37:31</TSTED></DD><FRMT algoritmo="SHA1withRSA">TEWzoWPNh3nzf/IZwOI0f69uJYonJ03LbTmUiUzFXeefag581MZnlSQNrAYrqaomLARjrq0vRORvQhSJPRfrBHVD0DiiKKy2tT35H+umHX7P7Ias3uuQRFh9zlY5r2uPyJFN+rmCurt4FGrbHQthoc1dTJOMq9B9EcMDJhPM+ng=</FRMT></TED><TmstFirma>2020-09-27T18:37:31</TmstFirma>
+</Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#F2T61">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>HOfb+E15CWs6G7URa6ky9RZsANg=</DigestValue>
+</Reference>
+</SignedInfo>
+
+<SignatureValue>MMX+r6f7W5PJJNcnVpYT8M76LazmuHiptMLXVYJ4iFyCf7UDloN7U6ADoDAARe4KcbvUMWzYTpgB
+W2OaaWWcRtWw1iIBlrUHD9V9bUoVxPCppHIvNSu5weTam6VZ5G3hJDNJuRIQa/pr1i5IJaQPnkui
+m3lLCjPNpNzOxvgcYnQ=
+</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>s4xlbaMp94XAtsWB5ARcmfYh0pX6C6nKhvozwNjgO74P5AgUmEhkPywWUUsq9nuwSXovq75diZ6f32yMkAE7yJv7pfVj09dHi03Qf6V8TVbKVB07vLvJyV7hPvNhnKU8kvqM9mB9Ubco3NPtSpSNnAM44swRbH4Vh6xwKnrLETE=</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>MIICejCCAeOgAwIBAgIKek1x7KhX1auNejANBgkqhkiG9w0BAQUFADBcMQswCQYDVQQGEwJDTDEnMCUGA1UEChMeRW1pc29yIGRlIGNlcnRpZmljYWRvIGZpY3RpY2lvMSQwIgYDVQQDExtQUlVFQkEgQ0EgRklSTUEgRUxFQ1RST05JQ0EwHhcNMjAwNjAxMDAwMDAxWhcNMzAwNjAxMDAwMDAxWjA/MQswCQYDVQQGEwJDTDEZMBcGA1UEChMQVXN1YXJpbyBmaWN0aWNpbzEVMBMGA1UEAxMMRWplbXBsbyBTLkEuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCzjGVtoyn3hcC2xYHkBFyZ9iHSlfoLqcqG+jPA2OA7vg/kCBSYSGQ/LBZRSyr2e7BJei+rvl2Jnp/fbIyQATvIm/ul9WPT10eLTdB/pXxNVspUHTu8u8nJXuE+82GcpTyS+oz2YH1Rtyjc0+1KlI2cAzjizBFsfhWHrHAqessRMQIDAQABo2AwXjAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIE8DAfBgNVHSMEGDAWgBTrYOCJEDumJxvBR6WnHWJv95/9TjAdBgNVHQ4EFgQUxc5OqOWmmDGvOFViJBCVSOLOqrswDQYJKoZIhvcNAQEFBQADgYEARFSdwN4QhIJBF7F4WP4CNwOKvrBqbaoe4FOED6/XhSfWUB8qoyWt5bed6b7FY300ZRfcl+C2VaFzWCkogzfXVPNhewgiIe2BV4ip3YpgA/W3TN2PjMbgM7GWHj2oJPmsVU8N3HXx+j7ZqcxrVHMzy73IWXYs9psAzkXVqzUTy3M=</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE><DTE version="1.0">
+<Documento ID="F3T61">
+<Encabezado>
+<IdDoc>
+<TipoDTE>61</TipoDTE>
+<Folio>3</Folio>
+<FchEmis>2020-09-27</FchEmis>
+</IdDoc>
+<Emisor>
+<RUTEmisor>11111111-1</RUTEmisor>
+<RznSoc>EJEMPLO S.A.</RznSoc>
+<GiroEmis>Insumos de Computacion</GiroEmis>
+<Acteco>31341</Acteco>
+<DirOrigen>Teatinos 120, Piso 4</DirOrigen>
+<CmnaOrigen>Santiago</CmnaOrigen>
+</Emisor>
+<Receptor>
+<RUTRecep>77777777-7</RUTRecep>
+<RznSocRecep>EMPRESA  LTDA</RznSocRecep>
+<GiroRecep>COMPUTACION</GiroRecep>
+<DirRecep>SAN DIEGO 2222</DirRecep>
+<CmnaRecep>LA FLORIDA</CmnaRecep>
+</Receptor>
+<Totales>
+<MntNeto>823906</MntNeto>
+<TasaIVA>19</TasaIVA>
+<IVA>156542</IVA>
+<MntTotal>980448</MntTotal>
+</Totales>
+</Encabezado>
+<Detalle>
+<NroLinDet>1</NroLinDet>
+<NmbItem>CORRIGE GIRO DEL RECEPTOR</NmbItem>
+<QtyItem>1</QtyItem>
+<PrcItem>1</PrcItem>
+<MontoItem>1</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>2</NroLinDet>
+<NmbItem>Pañuelo AFECTO</NmbItem>
+<QtyItem>137</QtyItem>
+<PrcItem>2966</PrcItem>
+<MontoItem>406342</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>3</NroLinDet>
+<NmbItem>ITEM 2 AFECTO</NmbItem>
+<QtyItem>206</QtyItem>
+<PrcItem>2027</PrcItem>
+<MontoItem>417562</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>4</NroLinDet>
+<NmbItem>ANULA FACTURA</NmbItem>
+<QtyItem>1</QtyItem>
+<PrcItem>1</PrcItem>
+<MontoItem>1</MontoItem>
+</Detalle>
+<Referencia>
+<NroLinRef>1</NroLinRef>
+<TpoDocRef>33</TpoDocRef>
+<FolioRef>3</FolioRef>
+<FchRef>2020-09-27</FchRef>
+<CodRef>1</CodRef>
+<RazonRef>Anula factura</RazonRef>
+</Referencia>
+<TED version="1.0"><DD><RE>11111111-1</RE><TD>61</TD><F>3</F><FE>2020-09-27</FE><RR>77777777-7</RR><RSR>EMPRESA  LTDA</RSR><MNT>980448</MNT><IT1>CORRIGE GIRO DEL RECEPTOR</IT1><CAF version="1.0">
+<DA>
+<RE>11111111-1</RE>
+<RS>DUMMY COMPANY</RS>
+<TD>61</TD>
+<RNG><D>1</D><H>200</H></RNG>
+<FA>2020-05-31</FA>
+<RSAPK><M>r2x2pLTnl5WGAJAyMhxsUe1JpIOyTpEoMKtMrPQ3RW4ZunjJ5iQ+kCv6V5o3gFL8vHOcgvL7+LunIZGwfczSjAQhWdtfI1ipqUJNmRgNehkrLgek1CJ+l01FMAWPOaVhQd/SN4d8VgzkDEIZqIOkk/Zdp66zJrxEE1rDERlsics=</M><E>AQAB</E></RSAPK>
+<IDK>100</IDK>
+</DA>
+<FRMA algoritmo="SHA1withRSA">c2lpLXNpZ25hdHVyZQ==</FRMA>
+</CAF><TSTED>2020-09-27T18:37:31</TSTED></DD><FRMT algoritmo="SHA1withRSA">auvA1oy8MoP6DXew2FWhgzhsXQYX6wU1c7WqG9uNkdYC1PzcBD1psZS+GsM70WfySKYYR7UkDNm0XcrreNfFsWmhb4JRuNkbVqDggdEo/jpXMfKOhCI3HlL6l/d2DcGnN4+AfCjPjqekSsgw8ZV+7n8rgSz2EpOHZcouKJ2YewU=</FRMT></TED><TmstFirma>2020-09-27T18:37:31</TmstFirma>
+</Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#F3T61">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>gkuinUipc+FWQ0xtk95xybZvWi8=</DigestValue>
+</Reference>
+</SignedInfo>
+
+<SignatureValue>XrOzwySqzyNrfzobMWsR33E/eFTJ+0P4rOrvv4tGs4NSH78KMTuEdLPpBhtaYm+fJo2ghpMt7OOJ
+Qmdl4mxvX5bdTc2d+QuchX9oakVmGeqbd2J4oC9SI0M5Oh+loVqIhM69nT6NL4xMSdi1eo8qHLHI
+pjMEvvfFqi7ihEeay9A=
+</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>s4xlbaMp94XAtsWB5ARcmfYh0pX6C6nKhvozwNjgO74P5AgUmEhkPywWUUsq9nuwSXovq75diZ6f32yMkAE7yJv7pfVj09dHi03Qf6V8TVbKVB07vLvJyV7hPvNhnKU8kvqM9mB9Ubco3NPtSpSNnAM44swRbH4Vh6xwKnrLETE=</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>MIICejCCAeOgAwIBAgIKek1x7KhX1auNejANBgkqhkiG9w0BAQUFADBcMQswCQYDVQQGEwJDTDEnMCUGA1UEChMeRW1pc29yIGRlIGNlcnRpZmljYWRvIGZpY3RpY2lvMSQwIgYDVQQDExtQUlVFQkEgQ0EgRklSTUEgRUxFQ1RST05JQ0EwHhcNMjAwNjAxMDAwMDAxWhcNMzAwNjAxMDAwMDAxWjA/MQswCQYDVQQGEwJDTDEZMBcGA1UEChMQVXN1YXJpbyBmaWN0aWNpbzEVMBMGA1UEAxMMRWplbXBsbyBTLkEuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCzjGVtoyn3hcC2xYHkBFyZ9iHSlfoLqcqG+jPA2OA7vg/kCBSYSGQ/LBZRSyr2e7BJei+rvl2Jnp/fbIyQATvIm/ul9WPT10eLTdB/pXxNVspUHTu8u8nJXuE+82GcpTyS+oz2YH1Rtyjc0+1KlI2cAzjizBFsfhWHrHAqessRMQIDAQABo2AwXjAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIE8DAfBgNVHSMEGDAWgBTrYOCJEDumJxvBR6WnHWJv95/9TjAdBgNVHQ4EFgQUxc5OqOWmmDGvOFViJBCVSOLOqrswDQYJKoZIhvcNAQEFBQADgYEARFSdwN4QhIJBF7F4WP4CNwOKvrBqbaoe4FOED6/XhSfWUB8qoyWt5bed6b7FY300ZRfcl+C2VaFzWCkogzfXVPNhewgiIe2BV4ip3YpgA/W3TN2PjMbgM7GWHj2oJPmsVU8N3HXx+j7ZqcxrVHMzy73IWXYs9psAzkXVqzUTy3M=</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE><DTE version="1.0">
+<Documento ID="F1T56">
+<Encabezado>
+<IdDoc>
+<TipoDTE>56</TipoDTE>
+<Folio>1</Folio>
+<FchEmis>2020-09-27</FchEmis>
+</IdDoc>
+<Emisor>
+<RUTEmisor>11111111-1</RUTEmisor>
+<RznSoc>EJEMPLO S.A.</RznSoc>
+<GiroEmis>Insumos de Computacion</GiroEmis>
+<Acteco>31341</Acteco>
+<DirOrigen>Teatinos 120, Piso 4</DirOrigen>
+<CmnaOrigen>Santiago</CmnaOrigen>
+</Emisor>
+<Receptor>
+<RUTRecep>77777777-7</RUTRecep>
+<RznSocRecep>EMPRESA  LTDA</RznSocRecep>
+<GiroRecep>COMPUTACION</GiroRecep>
+<DirRecep>SAN DIEGO 2222</DirRecep>
+<CmnaRecep>LA FLORIDA</CmnaRecep>
+</Receptor>
+<Totales>
+<MntNeto>1</MntNeto>
+<MntTotal>1</MntTotal>
+</Totales>
+</Encabezado>
+<Detalle>
+<NroLinDet>1</NroLinDet>
+<NmbItem>ANULA NOTA DE CREDITO</NmbItem>
+<QtyItem>1</QtyItem>
+<PrcItem>1</PrcItem>
+<MontoItem>1</MontoItem>
+</Detalle>
+<Referencia>
+<NroLinRef>1</NroLinRef>
+<TpoDocRef>61</TpoDocRef>
+<FolioRef>1</FolioRef>
+<FchRef>2020-09-27</FchRef>
+<CodRef>1</CodRef>
+<RazonRef>Anula nota de crédito electrónica</RazonRef>
+</Referencia>
+<TED version="1.0"><DD><RE>11111111-1</RE><TD>56</TD><F>1</F><FE>2020-09-27</FE><RR>77777777-7</RR><RSR>EMPRESA  LTDA</RSR><MNT>1</MNT><IT1>ANULA NOTA DE CREDITO</IT1><CAF version="1.0">
+<DA>
+<RE>11111111-1</RE>
+<RS>DUMMY COMPANY</RS>
+<TD>56</TD>
+<RNG><D>1</D><H>200</H></RNG>
+<FA>2020-05-31</FA>
+<RSAPK><M>qpvLQLWW30jPD6Lu++4l8fSc+gk+hj8HChxcNpFl4WTZsRy9xs6FRrA6K2DGFvXy9JcpstrvnTtLCaZjgsn7deIiK55ddBmXwJLZQz50ohjgYg70ByMzfKS7sZlLX6slg+ivp7cOG3vx0cO5Q9kgmAX96AUvIJQTwj+Bp0DJpfk=</M><E>AQAB</E></RSAPK>
+<IDK>100</IDK>
+</DA>
+<FRMA algoritmo="SHA1withRSA">c2lpLXNpZ25hdHVyZQ==</FRMA>
+</CAF><TSTED>2020-09-27T18:37:31</TSTED></DD><FRMT algoritmo="SHA1withRSA">XKyKavdW7gs5UnJkdBT1kSSk7/0i/LqelT/SKdF/E5RuS3zMagEHJV9AmtR704Gke/U3a5eTJ025H3nQFk1UvJ3+m+ncGiykHADK3Ix6Abhlpkz+etc269WpWHgEa4jVbQU/0x+4EqYJHBE1nrVBkcp4hSMub4vB1kiJDNUuSg4=</FRMT></TED><TmstFirma>2020-09-27T18:37:31</TmstFirma>
+</Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#F1T56">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>tE02SKeGRscztdZ0TYduCctxLhQ=</DigestValue>
+</Reference>
+</SignedInfo>
+
+<SignatureValue>Tya+71qjoTVAGK97w4+LeJBn8rqYCVkME5r4R6lhDgH593SbSxXMd/RrhmOag9ZmIu0Aw/b5IQKD
+aK/PZ9STDnpF1KuL9Q9BIB4i65rjeHTf9ywdaI9lghpNOcr2gRd+tAaP5ri7QPUnS+34S3Cpqg9b
+3k8juNe7GeAtCu8pDpw=
+</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>s4xlbaMp94XAtsWB5ARcmfYh0pX6C6nKhvozwNjgO74P5AgUmEhkPywWUUsq9nuwSXovq75diZ6f32yMkAE7yJv7pfVj09dHi03Qf6V8TVbKVB07vLvJyV7hPvNhnKU8kvqM9mB9Ubco3NPtSpSNnAM44swRbH4Vh6xwKnrLETE=</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>MIICejCCAeOgAwIBAgIKek1x7KhX1auNejANBgkqhkiG9w0BAQUFADBcMQswCQYDVQQGEwJDTDEnMCUGA1UEChMeRW1pc29yIGRlIGNlcnRpZmljYWRvIGZpY3RpY2lvMSQwIgYDVQQDExtQUlVFQkEgQ0EgRklSTUEgRUxFQ1RST05JQ0EwHhcNMjAwNjAxMDAwMDAxWhcNMzAwNjAxMDAwMDAxWjA/MQswCQYDVQQGEwJDTDEZMBcGA1UEChMQVXN1YXJpbyBmaWN0aWNpbzEVMBMGA1UEAxMMRWplbXBsbyBTLkEuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCzjGVtoyn3hcC2xYHkBFyZ9iHSlfoLqcqG+jPA2OA7vg/kCBSYSGQ/LBZRSyr2e7BJei+rvl2Jnp/fbIyQATvIm/ul9WPT10eLTdB/pXxNVspUHTu8u8nJXuE+82GcpTyS+oz2YH1Rtyjc0+1KlI2cAzjizBFsfhWHrHAqessRMQIDAQABo2AwXjAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIE8DAfBgNVHSMEGDAWgBTrYOCJEDumJxvBR6WnHWJv95/9TjAdBgNVHQ4EFgQUxc5OqOWmmDGvOFViJBCVSOLOqrswDQYJKoZIhvcNAQEFBQADgYEARFSdwN4QhIJBF7F4WP4CNwOKvrBqbaoe4FOED6/XhSfWUB8qoyWt5bed6b7FY300ZRfcl+C2VaFzWCkogzfXVPNhewgiIe2BV4ip3YpgA/W3TN2PjMbgM7GWHj2oJPmsVU8N3HXx+j7ZqcxrVHMzy73IWXYs9psAzkXVqzUTy3M=</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE>
+</SetDTE>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#SetDoc">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>Y5Gxt76wD344aY2AeKj8dBMM8No=</DigestValue>
+</Reference>
+</SignedInfo>
+
+<SignatureValue>qpl0EyAGo6Orxm2KQcglYwgIn5hP9Lt5/5ctOCrbTONyb5i5USS4fUSxgt8ighwFpPBcnHGXpS/9
+PhGUP9aBb5URIfvklqea0FOEIWA8orgGSjZ8DLM33eKhKXQGHN409FzptrkWf2XqJyOY4feK1bQv
+rjM3kjku125VY4uhq6Q=
+</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>s4xlbaMp94XAtsWB5ARcmfYh0pX6C6nKhvozwNjgO74P5AgUmEhkPywWUUsq9nuwSXovq75diZ6f32yMkAE7yJv7pfVj09dHi03Qf6V8TVbKVB07vLvJyV7hPvNhnKU8kvqM9mB9Ubco3NPtSpSNnAM44swRbH4Vh6xwKnrLETE=</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>MIICejCCAeOgAwIBAgIKek1x7KhX1auNejANBgkqhkiG9w0BAQUFADBcMQswCQYDVQQGEwJDTDEnMCUGA1UEChMeRW1pc29yIGRlIGNlcnRpZmljYWRvIGZpY3RpY2lvMSQwIgYDVQQDExtQUlVFQkEgQ0EgRklSTUEgRUxFQ1RST05JQ0EwHhcNMjAwNjAxMDAwMDAxWhcNMzAwNjAxMDAwMDAxWjA/MQswCQYDVQQGEwJDTDEZMBcGA1UEChMQVXN1YXJpbyBmaWN0aWNpbzEVMBMGA1UEAxMMRWplbXBsbyBTLkEuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCzjGVtoyn3hcC2xYHkBFyZ9iHSlfoLqcqG+jPA2OA7vg/kCBSYSGQ/LBZRSyr2e7BJei+rvl2Jnp/fbIyQATvIm/ul9WPT10eLTdB/pXxNVspUHTu8u8nJXuE+82GcpTyS+oz2YH1Rtyjc0+1KlI2cAzjizBFsfhWHrHAqessRMQIDAQABo2AwXjAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIE8DAfBgNVHSMEGDAWgBTrYOCJEDumJxvBR6WnHWJv95/9TjAdBgNVHQ4EFgQUxc5OqOWmmDGvOFViJBCVSOLOqrswDQYJKoZIhvcNAQEFBQADgYEARFSdwN4QhIJBF7F4WP4CNwOKvrBqbaoe4FOED6/XhSfWUB8qoyWt5bed6b7FY300ZRfcl+C2VaFzWCkogzfXVPNhewgiIe2BV4ip3YpgA/W3TN2PjMbgM7GWHj2oJPmsVU8N3HXx+j7ZqcxrVHMzy73IWXYs9psAzkXVqzUTy3M=</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></EnvioDTE>

@@ -1,0 +1,1195 @@
+variant = "loose"
+
+[[issues]]
+file = "database/factories/SiiAecCessionFactory.php"
+code = "prefer-fake-helper"
+message = "Use the `fake()` helper instead of the `$this->faker` property."
+count = 2
+
+[[issues]]
+file = "database/factories/SiiAecCessionFactory.php"
+code = "readable-literal"
+message = "Numeric literal could use underscore separators for readability."
+count = 1
+
+[[issues]]
+file = "database/factories/SiiCafFactory.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 1
+
+[[issues]]
+file = "database/factories/SiiCafFactory.php"
+code = "prefer-fake-helper"
+message = "Use the `fake()` helper instead of the `$this->faker` property."
+count = 4
+
+[[issues]]
+file = "database/factories/SiiCafFactory.php"
+code = "readable-literal"
+message = "Numeric literal could use underscore separators for readability."
+count = 1
+
+[[issues]]
+file = "database/factories/SiiDteEnvelopeFactory.php"
+code = "readable-literal"
+message = "Numeric literal could use underscore separators for readability."
+count = 1
+
+[[issues]]
+file = "database/factories/SiiDteFactory.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "database/factories/SiiDteFactory.php"
+code = "prefer-fake-helper"
+message = "Use the `fake()` helper instead of the `$this->faker` property."
+count = 3
+
+[[issues]]
+file = "database/factories/SiiDteFactory.php"
+code = "prefer-static-closure"
+message = "This closure does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "database/factories/SiiDteFactory.php"
+code = "readable-literal"
+message = "Numeric literal could use underscore separators for readability."
+count = 2
+
+[[issues]]
+file = "database/factories/SiiDtePayloadFactory.php"
+code = "prefer-fake-helper"
+message = "Use the `fake()` helper instead of the `$this->faker` property."
+count = 2
+
+[[issues]]
+file = "database/factories/SiiDtePayloadFactory.php"
+code = "readable-literal"
+message = "Numeric literal could use underscore separators for readability."
+count = 1
+
+[[issues]]
+file = "database/factories/SiiInboundDocumentFactory.php"
+code = "prefer-fake-helper"
+message = "Use the `fake()` helper instead of the `$this->faker` property."
+count = 3
+
+[[issues]]
+file = "database/factories/SiiInboundDocumentFactory.php"
+code = "readable-literal"
+message = "Numeric literal could use underscore separators for readability."
+count = 2
+
+[[issues]]
+file = "database/factories/SiiInterchangeLogFactory.php"
+code = "prefer-fake-helper"
+message = "Use the `fake()` helper instead of the `$this->faker` property."
+count = 3
+
+[[issues]]
+file = "src/Actions/Aec/Pipes/BuildAecXml.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 3
+
+[[issues]]
+file = "src/Actions/Aec/Pipes/BuildAecXml.php"
+code = "no-error-control-operator"
+message = "Unsafe use of error control operator `@`."
+count = 1
+
+[[issues]]
+file = "src/Actions/Aec/Pipes/BuildAecXml.php"
+code = "no-redundant-nullsafe"
+message = "The nullsafe operator (`?->`) is redundant when used with `??`."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "cyclomatic-complexity"
+message = "Class has high complexity."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "kan-defect"
+message = "Class has a high kan defect score."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "no-empty"
+message = "Use of the `empty` construct."
+count = 5
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 3
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/ValidateState.php"
+code = "no-else-clause"
+message = "Avoid `elseif` clauses."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/XsdValidation.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/CreateEnvelope.php"
+code = "no-boolean-flag-parameter"
+message = "Avoid boolean flag parameters."
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/CreateEnvelope.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 2
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/EmbedDteNodes.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/ValidateEnvelopeDocuments.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/ValidateEnvelopeDocuments.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/ValidateEnvelopeDocuments.php"
+code = "prefer-static-closure"
+message = "This closure does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "src/Actions/Cuadratura/Pipes/DowngradeOrphanedDocuments.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 1
+
+[[issues]]
+file = "src/Actions/Cuadratura/Pipes/ReconcileRcvStream.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 3
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessEnvioDteDocuments.php"
+code = "no-boolean-flag-parameter"
+message = "Avoid boolean flag parameters."
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessEnvioDteDocuments.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessRespuestaDteDocuments.php"
+code = "no-else-clause"
+message = "Avoid `elseif` clauses."
+count = 1
+
+[[issues]]
+file = "src/Actions/PersistDte/Pipes/PersistDocument.php"
+code = "no-implicit-model-query"
+message = "Query-builder methods on a model should be reached through an explicit `query()` call."
+count = 1
+
+[[issues]]
+file = "src/Actions/PersistDte/Pipes/PersistDocument.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 1
+
+[[issues]]
+file = "src/Actions/RcvParsing/Pipes/YieldLazyCollection.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 2
+
+[[issues]]
+file = "src/Actions/RcvParsing/Pipes/YieldLazyCollection.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 3
+
+[[issues]]
+file = "src/Actions/RcvParsing/Pipes/YieldLazyCollection.php"
+code = "prefer-first-class-callable"
+message = "Use first-class callable syntax `...` instead of a closure."
+count = 1
+
+[[issues]]
+file = "src/Builders/AecCessionBuilder.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 3
+
+[[issues]]
+file = "src/Builders/Concerns/HasGlobalModifiers.php"
+code = "no-boolean-flag-parameter"
+message = "Avoid boolean flag parameters."
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/HasItems.php"
+code = "no-boolean-flag-parameter"
+message = "Avoid boolean flag parameters."
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/HasItems.php"
+code = "no-else-clause"
+message = "Avoid `elseif` clauses."
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/HasItems.php"
+code = "prefer-early-continue"
+message = "Consider using early continue pattern to reduce nesting."
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/HasReferences.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/PayloadSerializer.php"
+code = "no-redundant-use"
+message = "Unused import: `ConfigurationManager`."
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/PayloadSerializer.php"
+code = "no-redundant-use"
+message = "Unused import: `app`."
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/TotalsCalculator.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 2
+
+[[issues]]
+file = "src/Builders/CreditNoteBuilder.php"
+code = "no-implicit-model-query"
+message = "Query-builder methods on a model should be reached through an explicit `query()` call."
+count = 1
+
+[[issues]]
+file = "src/Builders/CreditNoteBuilder.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 8
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "no-empty"
+message = "Use of the `empty` construct."
+count = 1
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 3
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "no-redundant-nullsafe"
+message = "The nullsafe operator (`?->`) is redundant when used with `??`."
+count = 1
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvBuilder.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvBuilder.php"
+code = "prefer-early-continue"
+message = "Consider using early continue pattern to reduce nesting."
+count = 2
+
+[[issues]]
+file = "src/Builders/Iecv/IecvPurchaseData.php"
+code = "excessive-parameter-list"
+message = "Parameter list is too long."
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvPurchasesBuilder.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvPurchasesBuilder.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 2
+
+[[issues]]
+file = "src/Builders/InvoiceBuilder.php"
+code = "no-assign-in-condition"
+message = "Avoid assignments in conditions."
+count = 1
+
+[[issues]]
+file = "src/Builders/ReceiptBuilder.php"
+code = "no-redundant-nullsafe"
+message = "The nullsafe operator (`?->`) is redundant when used with `??`."
+count = 1
+
+[[issues]]
+file = "src/Caf/CafManager.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 4
+
+[[issues]]
+file = "src/Caf/CafParser.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 6
+
+[[issues]]
+file = "src/Caf/CafParser.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 2
+
+[[issues]]
+file = "src/Caf/Folio.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 1
+
+[[issues]]
+file = "src/Caf/Folio.php"
+code = "cyclomatic-complexity"
+message = "Class has high complexity."
+count = 1
+
+[[issues]]
+file = "src/Caf/Folio.php"
+code = "kan-defect"
+message = "Class has a high kan defect score."
+count = 1
+
+[[issues]]
+file = "src/Caf/Folio.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 4
+
+[[issues]]
+file = "src/Caf/Folio.php"
+code = "no-else-clause"
+message = "Avoid `elseif` clauses."
+count = 1
+
+[[issues]]
+file = "src/Caf/Folio.php"
+code = "no-multi-assignments"
+message = "Avoid multiple assignments in a single statement."
+count = 2
+
+[[issues]]
+file = "src/Caf/Folio.php"
+code = "readable-literal"
+message = "Numeric literal could use underscore separators for readability."
+count = 1
+
+[[issues]]
+file = "src/Caf/Folio.php"
+code = "too-many-methods"
+message = "Class has too many methods."
+count = 1
+
+[[issues]]
+file = "src/Certificate/CertificateResolver.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/Concerns/HasDefaultRut.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 2
+
+[[issues]]
+file = "src/Console/Commands/FetchInboundMailboxCommand.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCafCommand.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCafCommand.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCertificateCommand.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCertificateCommand.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 7
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCertificateCommand.php"
+code = "sensitive-parameter"
+message = "Parameters that may contain sensitive information should be marked with the `#[SensitiveParameter]` attribute."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/RejectExpiringPhantomInvoicesCommand.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 1
+
+[[issues]]
+file = "src/Data/DocumentPayload.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Data/DocumentPayload.php"
+code = "no-redundant-use"
+message = "Unused import: `collect`."
+count = 1
+
+[[issues]]
+file = "src/Data/DocumentPayload.php"
+code = "prefer-first-class-callable"
+message = "Use first-class callable syntax `...` instead of a arrow function."
+count = 3
+
+[[issues]]
+file = "src/Data/DocumentTotalsData.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Data/GlobalModifierData.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 2
+
+[[issues]]
+file = "src/Data/IssuerData.php"
+code = "excessive-parameter-list"
+message = "Parameter list is too long."
+count = 1
+
+[[issues]]
+file = "src/Data/IssuerData.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Data/IssuerData.php"
+code = "prefer-early-continue"
+message = "Consider using early continue pattern to reduce nesting."
+count = 1
+
+[[issues]]
+file = "src/Data/Item.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 1
+
+[[issues]]
+file = "src/Data/Item.php"
+code = "excessive-parameter-list"
+message = "Parameter list is too long."
+count = 1
+
+[[issues]]
+file = "src/Data/Item.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Data/PaymentTermData.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Data/ReceiverData.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Data/ReferenceData.php"
+code = "halstead"
+message = "Method has a high halstead difficulty"
+count = 1
+
+[[issues]]
+file = "src/Data/ReferenceData.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Data/Token.php"
+code = "sensitive-parameter"
+message = "Parameters that may contain sensitive information should be marked with the `#[SensitiveParameter]` attribute."
+count = 1
+
+[[issues]]
+file = "src/Data/TransportData.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/DteServiceProvider.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 1
+
+[[issues]]
+file = "src/DteServiceProvider.php"
+code = "prefer-static-closure"
+message = "This closure does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "src/Enums/Concerns/EnumHelpers.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 1
+
+[[issues]]
+file = "src/Enums/DteStatus.php"
+code = "kan-defect"
+message = "Enum has a high kan defect score."
+count = 1
+
+[[issues]]
+file = "src/Enums/DteStatus.php"
+code = "too-many-methods"
+message = "Enum has too many methods."
+count = 1
+
+[[issues]]
+file = "src/Enums/SiiTaxes.php"
+code = "halstead"
+message = "Method has a high halstead difficulty"
+count = 1
+
+[[issues]]
+file = "src/Facades/SiiEnvelope.php"
+code = "no-redundant-use"
+message = "Unused import: `Closure`."
+count = 1
+
+[[issues]]
+file = "src/Gateways/BoletaRestGateway.php"
+code = "sensitive-parameter"
+message = "Parameters that may contain sensitive information should be marked with the `#[SensitiveParameter]` attribute."
+count = 1
+
+[[issues]]
+file = "src/Gateways/IecvUploadGateway.php"
+code = "sensitive-parameter"
+message = "Parameters that may contain sensitive information should be marked with the `#[SensitiveParameter]` attribute."
+count = 1
+
+[[issues]]
+file = "src/Gateways/ReclamoWebserviceGateway.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 1
+
+[[issues]]
+file = "src/Gateways/ReclamoWebserviceGateway.php"
+code = "prefer-static-closure"
+message = "This closure does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "src/Gateways/RestAuthGateway.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 1
+
+[[issues]]
+file = "src/Gateways/SignedTokenRequestBuilder.php"
+code = "inline-variable-return"
+message = "Variable assignment can be inlined into the return statement."
+count = 1
+
+[[issues]]
+file = "src/Gateways/SoapClientFactory.php"
+code = "sensitive-parameter"
+message = "Parameters that may contain sensitive information should be marked with the `#[SensitiveParameter]` attribute."
+count = 1
+
+[[issues]]
+file = "src/Gateways/SoapGateway.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 4
+
+[[issues]]
+file = "src/Gateways/SoapGateway.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 2
+
+[[issues]]
+file = "src/Gateways/SoapGateway.php"
+code = "sensitive-parameter"
+message = "Parameters that may contain sensitive information should be marked with the `#[SensitiveParameter]` attribute."
+count = 2
+
+[[issues]]
+file = "src/Gateways/UploadGateway.php"
+code = "sensitive-parameter"
+message = "Parameters that may contain sensitive information should be marked with the `#[SensitiveParameter]` attribute."
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollDteStatusJob.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 3
+
+[[issues]]
+file = "src/Jobs/PollDteStatusJob.php"
+code = "no-else-clause"
+message = "Avoid `elseif` clauses."
+count = 2
+
+[[issues]]
+file = "src/Jobs/PollEnvelopeTrackIdJob.php"
+code = "cyclomatic-complexity"
+message = "Class has high complexity."
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollEnvelopeTrackIdJob.php"
+code = "kan-defect"
+message = "Class has a high kan defect score."
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollEnvelopeTrackIdJob.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 5
+
+[[issues]]
+file = "src/Jobs/PollEnvelopeTrackIdJob.php"
+code = "no-else-clause"
+message = "Avoid `elseif` clauses."
+count = 4
+
+[[issues]]
+file = "src/Jobs/PollEnvelopeTrackIdJob.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 2
+
+[[issues]]
+file = "src/Jobs/SendInterchangeEnvelopeJob.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/AwsSesDriver.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/GoogleWorkspaceDriver.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 2
+
+[[issues]]
+file = "src/Mailbox/Drivers/Microsoft365Driver.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 1
+
+[[issues]]
+file = "src/Mailbox/RutEmailResolver.php"
+code = "sensitive-parameter"
+message = "Parameters that may contain sensitive information should be marked with the `#[SensitiveParameter]` attribute."
+count = 1
+
+[[issues]]
+file = "src/Mailbox/XmlExtractor.php"
+code = "prefer-early-continue"
+message = "Consider using early continue pattern to reduce nesting."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiAecCession.php"
+code = "prefer-casts-method"
+message = "Define model casts in the `casts()` method instead of the `$casts` property."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiCaf.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 3
+
+[[issues]]
+file = "src/Models/SiiCaf.php"
+code = "no-boolean-flag-parameter"
+message = "Avoid boolean flag parameters."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiCaf.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiCaf.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiCaf.php"
+code = "prefer-casts-method"
+message = "Define model casts in the `casts()` method instead of the `$casts` property."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDte.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDte.php"
+code = "prefer-casts-method"
+message = "Define model casts in the `casts()` method instead of the `$casts` property."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDte.php"
+code = "too-many-methods"
+message = "Class has too many methods."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDteEnvelope.php"
+code = "prefer-casts-method"
+message = "Define model casts in the `casts()` method instead of the `$casts` property."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDtePayload.php"
+code = "prefer-casts-method"
+message = "Define model casts in the `casts()` method instead of the `$casts` property."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDteReference.php"
+code = "prefer-casts-method"
+message = "Define model casts in the `casts()` method instead of the `$casts` property."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDteReference.php"
+code = "prefer-static-closure"
+message = "This closure does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiInboundDocument.php"
+code = "prefer-casts-method"
+message = "Define model casts in the `casts()` method instead of the `$casts` property."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiInterchangeLog.php"
+code = "prefer-casts-method"
+message = "Define model casts in the `casts()` method instead of the `$casts` property."
+count = 1
+
+[[issues]]
+file = "src/Pdf/PdfBuilder.php"
+code = "no-redundant-nullsafe"
+message = "The nullsafe operator (`?->`) is redundant when used with `??`."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417CodeWords.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417CodeWords.php"
+code = "inline-variable-return"
+message = "Variable assignment can be inlined into the return statement."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Encoder.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 4
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Encoder.php"
+code = "readable-literal"
+message = "Numeric literal could use underscore separators for readability."
+count = 2
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417ErrorCorrection.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417ErrorCorrection.php"
+code = "prefer-early-continue"
+message = "Consider using early continue pattern to reduce nesting."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Lookup.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Lookup.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Lookup.php"
+code = "prefer-early-continue"
+message = "Consider using early continue pattern to reduce nesting."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Renderer.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 3
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Renderer.php"
+code = "prefer-early-continue"
+message = "Consider using early continue pattern to reduce nesting."
+count = 2
+
+[[issues]]
+file = "src/Pdf/TedExtractor.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 2
+
+[[issues]]
+file = "src/Proxies/GDProxy.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 1
+
+[[issues]]
+file = "src/Proxies/ImapProxy.php"
+code = "sensitive-parameter"
+message = "Parameters that may contain sensitive information should be marked with the `#[SensitiveParameter]` attribute."
+count = 1
+
+[[issues]]
+file = "src/Proxies/OpenSslProxy.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 1
+
+[[issues]]
+file = "src/Proxies/OpenSslProxy.php"
+code = "cyclomatic-complexity"
+message = "Class has high complexity."
+count = 1
+
+[[issues]]
+file = "src/Proxies/OpenSslProxy.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Services/DteAuthenticityVerifier.php"
+code = "sensitive-parameter"
+message = "Parameters that may contain sensitive information should be marked with the `#[SensitiveParameter]` attribute."
+count = 1
+
+[[issues]]
+file = "src/Services/DteLifecycleService.php"
+code = "no-boolean-flag-parameter"
+message = "Avoid boolean flag parameters."
+count = 3
+
+[[issues]]
+file = "src/Services/IecvGenerator.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 1
+
+[[issues]]
+file = "src/Services/IecvGenerator.php"
+code = "no-error-control-operator"
+message = "Unsafe use of error control operator `@`."
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "cyclomatic-complexity"
+message = "Class has high complexity."
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "halstead"
+message = "Method has a high halstead difficulty"
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "kan-defect"
+message = "Class has a high kan defect score."
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "no-boolean-flag-parameter"
+message = "Avoid boolean flag parameters."
+count = 3
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 2
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "src/Support/CertificateParser.php"
+code = "prefer-early-continue"
+message = "Consider using early continue pattern to reduce nesting."
+count = 1
+
+[[issues]]
+file = "src/Support/TokenAuthenticator.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 2
+
+[[issues]]
+file = "src/Support/TokenAuthenticator.php"
+code = "prefer-first-class-callable"
+message = "Use first-class callable syntax `...` instead of a closure."
+count = 2
+
+[[issues]]
+file = "src/Support/TokenRepository.php"
+code = "sensitive-parameter"
+message = "Parameters that may contain sensitive information should be marked with the `#[SensitiveParameter]` attribute."
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDocumentBuilder.php"
+code = "no-boolean-flag-parameter"
+message = "Avoid boolean flag parameters."
+count = 2
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDocumentBuilder.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithDigitalCertificates.php"
+code = "prefer-static-closure"
+message = "This closure does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "no-empty"
+message = "Use of the `empty` construct."
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "prefer-early-continue"
+message = "Consider using early continue pattern to reduce nesting."
+count = 1
+
+[[issues]]
+file = "src/Validation/DocumentValidator.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Validation/DocumentValidator.php"
+code = "prefer-array-validation-rules"
+message = "Validation rules should be declared as an array, not a `|`-delimited string."
+count = 1
+
+[[issues]]
+file = "src/Validation/DocumentValidator.php"
+code = "prefer-early-continue"
+message = "Consider using early continue pattern to reduce nesting."
+count = 1
+
+[[issues]]
+file = "src/Validation/Rules/SiiCertificate.php"
+code = "no-literal-password"
+message = "Literal passwords or sensitive data should not be stored in code."
+count = 1
+
+[[issues]]
+file = "src/Validation/SiiCertificateValidator.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Validation/ValidatesSiiDocuments.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "no-else-clause"
+message = "Avoid `elseif` clauses."
+count = 1
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "prefer-early-continue"
+message = "Consider using early continue pattern to reduce nesting."
+count = 1
+
+[[issues]]
+file = "src/Xml/XmlSigner.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 2
+
+[[issues]]
+file = "src/Xml/XmlSigner.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 1
+
+[[issues]]
+file = "src/Xml/XmlValidator.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 1
+
+[[issues]]
+file = "src/Xml/XsdValidator.php"
+code = "braced-string-interpolation"
+message = "Unbraced variable in string interpolation."
+count = 1

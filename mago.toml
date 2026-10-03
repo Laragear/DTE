@@ -1,0 +1,100 @@
+#:schema https://mago.carthage.software/1.46.0/schema.json
+# Welcome to Mago!
+# For full documentation, see https://mago.carthage.software/1.46.0/en/tools/overview/
+version = "1"
+php-version = "8.5.0"
+
+[source]
+workspace = "."
+paths = ["database/factories/", "src/"]
+includes = ["vendor"]
+excludes = [
+    # The IDE helper model stubs are unparseable and resolve to
+    # `unknown-ref(LaravelIdea\Helper\...)`, which cascades into false
+    # `invalid-*-method-access` errors across `src/`. The rest of
+    # `_laravel_idea/` is still needed for class resolution.
+    "**/_laravel_idea/_ide_helper_models_*.php",
+    "**/_laravel_idea/_ide_helper_model_builders_*.php",
+]
+
+[source.glob]
+literal-separator = true
+
+[formatter]
+preset = "pint"
+preserve-breaking-member-access-chain = true
+preserve-breaking-member-access-chain-first-method-on-same-line = true
+preserve-breaking-argument-list = true
+preserve-breaking-array-like = true
+preserve-breaking-parameter-list = true
+preserve-breaking-attribute-list = true
+preserve-breaking-conditional-expression = true
+preserve-breaking-condition-expression = true
+preserve-redundant-logical-binary-expression-parentheses = true
+
+[linter]
+integrations = ["laravel"]
+baseline = "mago-lint-baseline.toml"
+
+[linter.rules]
+ambiguous-function-call = { enabled = false }
+halstead = { effort-threshold = 7000 }
+literal-named-argument = { enabled = false }
+
+# This package does not declare `strict_types` (0 of 298 files), unlike the
+# author's other packages. Adding it would change runtime coercion semantics
+# across the SII SOAP/XML boundary, so it is a deliberate omission, not a defect.
+strict-types = { enabled = false }
+
+# `//` as a constructor body placeholder is this codebase's house style (144 uses).
+no-empty-comment = { enabled = true, preserve-single-line-comments = true }
+
+# Structural thresholds are raised to fit the domain. SII XML builders and
+# document builders are legitimately wide; the defaults flag legitimate shapes.
+excessive-parameter-list = { threshold = 10, constructor-threshold = 15 }
+too-many-methods = { threshold = 25 }
+too-many-properties = { threshold = 20 }
+too-many-enum-cases = { threshold = 30 }
+cyclomatic-complexity = { threshold = 30 }
+kan-defect = { threshold = 2.5 }
+
+[analyzer]
+
+baseline = "mago-baseline.toml"
+plugins = []
+find-unused-definitions = true
+find-unused-expressions = true
+analyze-dead-code = true
+memoize-properties = false
+allow-possibly-undefined-array-keys = true
+check-throws = false
+unchecked-exceptions = ["Error", "LogicException"]
+unchecked-exception-classes = []
+check-missing-override = false
+find-unused-parameters = true
+strict-list-index-checks = false
+strict-array-index-existence = false
+allow-array-truthy-operand = false
+no-boolean-literal-comparison = false
+check-missing-type-hints = false
+register-super-globals = true
+
+ignore = [
+    # Eloquent __get/__call and SimpleXMLElement dynamic members are unresolvable by design.
+    "non-documented-property",
+    "non-documented-method",
+
+    # Laravel's public API ships without return-type annotations, so every call
+    # site widens to `mixed`. Not fixable from this package.
+    "mixed-method-access",
+    "mixed-property-access",
+    "mixed-array-access",
+    "mixed-return-statement",
+    "mixed-argument",
+    "mixed-assignment",
+    "mixed-operand",
+    "mixed-property-type-coercion",
+
+    # `new static()` in non-final data classes; the constructor is stable in practice.
+    "unsafe-instantiation",
+]

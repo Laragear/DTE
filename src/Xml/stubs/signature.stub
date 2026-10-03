@@ -1,0 +1,15 @@
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+{$signedInfoXml}
+<SignatureValue>{$signatureValue}</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>{$modulus}</Modulus>
+<Exponent>{$exponent}</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>{$x509b64}</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature>

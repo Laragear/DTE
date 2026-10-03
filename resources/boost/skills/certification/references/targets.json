@@ -1,0 +1,146 @@
+[
+    {
+        "rut": "76.020.458-7",
+        "name": "EMPRESAS RED SALUD S.A.",
+        "activity": "FONDOS Y SOCIEDADES DE INVERSION",
+        "address": "LOS CONQUISTADORES 1730 PISO 15",
+        "commune": "PROVIDENCIA",
+        "email": " redsaludsvs@redsalud.cl"
+    },
+    {
+        "rut": "76.022.072-8",
+        "name": "INVERSIONES ELECTRICAS DEL SUR S.A.",
+        "activity": "FONDOS Y SOCIEDADES DE INVERSION",
+        "address": "AVENIDA APOQUINDO 3885, PISO 8",
+        "commune": "LAS CONDES",
+        "email": ""
+    },
+    {
+        "rut": "76.072.469-6",
+        "name": "CRUZADOS S.A.D.P.",
+        "activity": "VENTA AL POR MENOR DE PRENDAS",
+        "address": "CAMINO LAS FLORES 13000",
+        "commune": "LAS CONDES",
+        "email": ""
+    },
+    {
+        "rut": "76.238.714-K",
+        "name": "GAMA SERVICIOS FINANCIEROS S.A.",
+        "activity": "LEASING FINANCIERO",
+        "address": "AV. AMERICO VESPUCIO NORTE EXPRESS 1300 PARQUE INDUSTRIAL ENEA",
+        "commune": "PUDAHUEL",
+        "email": "contacto@gamamobility.cl"
+    },
+    {
+        "rut": "76.876.635-5",
+        "name": "RUTA DEL LOA SOCIEDAD CONCESIONARIA S.A.",
+        "activity": "CONSTRUCCION DE CARRETERAS",
+        "address": "CERRO EL PLOMO 5630 PISO 10",
+        "commune": "LAS CONDES",
+        "email": "cfuenzalida@intervialchile.cl"
+    },
+    {
+        "rut": "76.762.250-3",
+        "name": "ADMINISTRADORA DE FONDOS DE PENSIONES MODELO S.A.",
+        "activity": "ADMINISTRADORAS DE FONDOS DE PENSIONES (AFP)",
+        "address": "AV. DEL VALLE 614 OF 101 CIUDAD EMPRESARIAL",
+        "commune": "HUECHURABA",
+        "email": ""
+    },
+    {
+        "rut": "76.265.736-8",
+        "name": "ADMINISTRADORA DE FONDOS DE PENSIONES PROVIDA S.A.",
+        "activity": "ADMINISTRADORAS DE FONDOS DE PENSIONES (AFP)",
+        "address": "AVENIDA APOQUINDO N° 2730, TORRE 1, PISO 13",
+        "commune": "LAS CONDES",
+        "email": "infoaccionistas@provida.cl"
+    },
+    {
+        "rut": "93.458.000-1",
+        "name": "CELULOSA ARAUCO Y CONSTITUCION S.A.",
+        "activity": "EXTRACCION DE MADERA",
+        "address": "AV. EL GOLF 150 PISO 14",
+        "commune": "LAS CONDES",
+        "email": ""
+    },
+    {
+        "rut": "92.604.000-6",
+        "name": "EMPRESA NACIONAL DEL PETROLEO",
+        "activity": "EXTRACCION DE PETROLEO CRUDO",
+        "address": "AVENIDA APOQUINDO 2929 PISO 5",
+        "commune": "LAS CONDES",
+        "email": "ir@enap.cl"
+    },
+    {
+        "rut": "61.219.000-3",
+        "name": "EMPRESA DE TRANSPORTE DE PASAJEROS METRO S.A.",
+        "activity": "VENTA AL POR MENOR DE OTROS PRODUCTOS",
+        "address": "AV. LIBERTADOR BDO. O'HIGGINS 1414",
+        "commune": "SANTIAGO",
+        "email": ""
+    },
+    {
+        "rut": "92.434.000-2",
+        "name": "BESALCO S.A.",
+        "activity": "CONSTRUCCION DE CARRETERAS Y LINEAS DE FERROCARRIL",
+        "address": "EBRO 2705",
+        "commune": "LAS CONDES",
+        "email": "hvaras@besalco.cl"
+    },
+    {
+        "rut": "96.579.410-7",
+        "name": "EMPRESA CONCESIONARIA DE SERVICIOS SANITARIOS S.A.",
+        "activity": "CAPTACION, TRATAMIENTO Y DISTRIBUCION DE AGUA",
+        "address": "MONJITAS 392 PISO 10 OF 1003",
+        "commune": "SANTIAGO",
+        "email": ""
+    },
+    {
+        "rut": "60.503.000-9",
+        "name": "EMPRESA DE CORREOS DE CHILE",
+        "activity": "OTRAS ACTIVIDADES DE TELECOMUNICACIONES N.C.P.",
+        "address": "PLAZA DE ARMAS 989 PISO 2 EDIFICIO PATRIMONIAL",
+        "commune": "SANTIAGO",
+        "email": "sac@correos.cl"
+    },
+    {
+        "rut": "61.216.000-7",
+        "name": "EMPRESA DE LOS FERROCARRILES DEL ESTADO",
+        "activity": "ALQUILER DE VEHICULOS AUTOMOTORES SIN CHOFER",
+        "address": "MORANDE 115 PISO 6",
+        "commune": "SANTIAGO",
+        "email": "contacto@efe.cl"
+    },
+    {
+        "rut": "61.703.000-4",
+        "name": "EMPRESA NACIONAL DE MINERIA",
+        "activity": "FABRICACION DE PRODUCTOS PRIMARIOS DE METALES PRECIOSOS",
+        "address": "MAC IVER 459",
+        "commune": "SANTIAGO",
+        "email": "cmf@enami.cl"
+    },
+    {
+        "rut": "61.604.000-6",
+        "name": "POLLA CHILENA DE BENEFICENCIA S.A.",
+        "activity": "VENTA AL POR MAYOR NO ESPECIALIZADA",
+        "address": "COMPAÑIA 1085",
+        "commune": "SANTIAGO",
+        "email": ""
+    },
+    {
+        "rut": "81.689.800-5",
+        "name": "TELEVISION NACIONAL DE CHILE",
+        "activity": "OTRAS ACTIVIDADES DE VENTA POR MENOR",
+        "address": "BELLAVISTA 0990",
+        "commune": "PROVIDENCIA",
+        "email": "margarita.molina@tvn.cl"
+    },
+    {
+        "rut": "70.285.500-4",
+        "name": "ZONA FRANCA DE IQUIQUE S.A.",
+        "activity": "OTROS SERVICIOS DE ALMACENAMIENTO Y DEPOSITO N.C.P.",
+        "address": "RECINTO AMURALLADO EDIFICIO GERENCIA S/N",
+        "commune": "IQUIQUE",
+        "email": ""
+    }
+]

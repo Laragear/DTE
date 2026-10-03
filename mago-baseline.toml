@@ -1,0 +1,2707 @@
+variant = "loose"
+
+[[issues]]
+file = "database/factories/DteFactory.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Database\Eloquent\Factories\Factory`: expected at least 1, but found 0.'
+count = 1
+
+[[issues]]
+file = "database/factories/SiiAecCessionFactory.php"
+code = "excess-template-parameter"
+message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
+count = 1
+
+[[issues]]
+file = "database/factories/SiiCafFactory.php"
+code = "excess-template-parameter"
+message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
+count = 1
+
+[[issues]]
+file = "database/factories/SiiDteEnvelopeFactory.php"
+code = "excess-template-parameter"
+message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
+count = 1
+
+[[issues]]
+file = "database/factories/SiiDteEnvelopePayloadFactory.php"
+code = "excess-template-parameter"
+message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
+count = 1
+
+[[issues]]
+file = "database/factories/SiiDteFactory.php"
+code = "excess-template-parameter"
+message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
+count = 1
+
+[[issues]]
+file = "database/factories/SiiDtePayloadFactory.php"
+code = "excess-template-parameter"
+message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
+count = 1
+
+[[issues]]
+file = "database/factories/SiiInboundDocumentFactory.php"
+code = "excess-template-parameter"
+message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
+count = 1
+
+[[issues]]
+file = "database/factories/SiiInboundDocumentPayloadFactory.php"
+code = "excess-template-parameter"
+message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
+count = 1
+
+[[issues]]
+file = "database/factories/SiiInterchangeLogFactory.php"
+code = "excess-template-parameter"
+message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
+count = 1
+
+[[issues]]
+file = "src/Actions/Aec/CompileAec.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Actions\Aec\CompileAec::$pipes` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Actions/Aec/Pipes/BuildAecXml.php"
+code = "falsable-return-statement"
+message = '''Function `Laragear\Dte\Actions\Aec\Pipes\BuildAecXml::sourceElementStr` is declared to return `string` but possibly returns 'false' (inferred as `false|string`).'''
+count = 1
+
+[[issues]]
+file = "src/Actions/Aec/Pipes/BuildAecXml.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Actions\Aec\Pipes\BuildAecXml::sourceElementStr`: expected `string`, but found `false|string`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/Aec/Pipes/BuildAecXml.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Actions/Aec/Pipes/BuildAecXml.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laragear\Dte\Support\Timestamp::formatSii` is possibly `null`, but parameter type `DateTimeInterface` does not accept it.'
+count = 3
+
+[[issues]]
+file = "src/Actions/Aec/Pipes/PrepareAecContext.php"
+code = "possibly-null-operand"
+message = "Possibly null right operand used in string concatenation (type `int|null`)."
+count = 3
+
+[[issues]]
+file = "src/Actions/CompileDte/Compilation.php"
+code = "less-specific-return-statement"
+message = 'Returned type `array<array-key, mixed>` is less specific than the declared return type `array<string, mixed>` for function `Laragear\Dte\Actions\CompileDte\Compilation::requireCafData`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Compile.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Actions\CompileDte\Compile::$pipes` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "impossible-nonnull-entry-check"
+message = "Impossible `isset` check on key `'non_billable'` accessed on `array{'exempt': int, 'net': int, 'tax': int, 'total': int}`."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `truthy-mixed`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Actions\CompileDte\Pipes\BuildXml::itemTotal`: expected `int`, but found `float`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "invalid-type-cast"
+message = "Casting `mixed` to `array`."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "invalid-type-cast"
+message = "Casting `mixed` to `float`."
+count = 5
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "less-specific-argument"
+message = 'Argument type mismatch for argument #2 of `Laragear\Dte\Actions\CompileDte\Pipes\BuildXml::appendHeader`: expected `array<string, mixed>`, but provided type `array<array-key, mixed>` is less specific.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "possibly-null-argument"
+message = "Argument #1 of method `DOMDocument::loadXML` is possibly `null`, but parameter type `string` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "redundant-logical-operation"
+message = "Redundant `&&` operation: left operand is always truthy and right operand is evaluated."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/BuildXml.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side is always `null`."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
+code = "invalid-method-access"
+message = "Attempting to access a method on a non-object type (`false`)."
+count = 2
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
+code = "invalid-property-assignment-value"
+message = "Invalid type for property `$ted`: expected `DOMElement|null`, but got `DOMElement|false`."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 2
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
+code = "possibly-false-argument"
+message = "Argument #1 of method `DOMNode::appendChild` is possibly `false`, but parameter type `DOMNode` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
+code = "possibly-false-argument"
+message = 'Argument #2 of method `Laragear\Dte\Actions\CompileDte\Pipes\GenerateTed::appendDetails` is possibly `false`, but parameter type `DOMElement` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
+code = "possibly-false-argument"
+message = 'Argument #2 of method `Laragear\Dte\Actions\CompileDte\Pipes\GenerateTed::appendSignature` is possibly `false`, but parameter type `DOMElement` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
+code = "possibly-false-argument"
+message = 'Argument #3 of method `Laragear\Dte\Actions\CompileDte\Pipes\GenerateTed::appendSignature` is possibly `false`, but parameter type `DOMElement` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/XsdValidation.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/XsdValidation.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #1 of `Laragear\Dte\Xml\XsdValidator::validate`: expected `string`, but possibly received `array<array-key, string>|string`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/CreateEnvelope.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Actions\CreateEnvelope\CreateEnvelope::$pipes` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/BuildCaratulaHeader.php"
+code = "impossible-condition"
+message = "This condition (type `false`) will always evaluate to false."
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/BuildCaratulaHeader.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #2 of `Illuminate\Support\Traits\Conditionable::when`: expected `(callable($this(Illuminate\Database\Eloquent\Relations\HasMany<Laragear\Dte\Models\SiiDte, Laragear\Dte\Models\SiiDteEnvelope&static>), Laragear\Rut\Rut): void)|null`, but found `(closure(Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>, Laragear\Rut\Rut): void)`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/BuildCaratulaHeader.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/BuildCaratulaHeader.php"
+code = "redundant-logical-operation"
+message = "Redundant `&&` operation: left operand is always truthy and right operand is evaluated."
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/BuildCaratulaHeader.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$value` is already `int`."
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/EmbedDteNodes.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #2 of `Illuminate\Support\Traits\Conditionable::when`: expected `(callable($this(Illuminate\Database\Eloquent\Relations\HasManyThrough<Laragear\Dte\Models\SiiDtePayload, Laragear\Dte\Models\SiiDte, Laragear\Dte\Models\SiiDteEnvelope&static>), Laragear\Rut\Rut): void)|null`, but found `(closure(Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>, Laragear\Rut\Rut): void)`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/EmbedDteNodes.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/InitializeEnvelope.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/ValidateEnvelopeDocuments.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #2 of `Illuminate\Support\Traits\Conditionable::when`: expected `(callable($this(Illuminate\Database\Eloquent\Relations\HasMany<Laragear\Dte\Models\SiiDte, Laragear\Dte\Models\SiiDteEnvelope&static>), Laragear\Rut\Rut): $this(Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>))|null`, but found `(closure(Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>, Laragear\Rut\Rut): $this(Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>))`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/ValidateEnvelopeDocuments.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #2 of `Illuminate\Support\Traits\Conditionable::when`: expected `(callable($this(Illuminate\Database\Eloquent\Relations\HasMany<Laragear\Dte\Models\SiiDte, Laragear\Dte\Models\SiiDteEnvelope&static>), Laragear\Rut\Rut): void)|null`, but found `(closure(Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>, Laragear\Rut\Rut): void)`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/CreateEnvelope/Pipes/ValidateEnvelopeDocuments.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Actions/Cuadratura/Pipes/DowngradeOrphanedDocuments.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #1 of `Laragear\Dte\Actions\Cuadratura\Pipes\DowngradeOrphanedDocuments::downgradeQuery`: expected `Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>`, but possibly received `$this(Laragear\Dte\Models\SiiDte)|Illuminate\Database\Eloquent\Builder<Laragear\Dte\Models\SiiDte>&static`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/Cuadratura/Pipes/DowngradeOrphanedDocuments.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #1 of `Laragear\Dte\Actions\Cuadratura\Pipes\DowngradeOrphanedDocuments::downgradeQuery`: expected `Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>`, but possibly received `$this(Laragear\Dte\Models\SiiInboundDocument)|Illuminate\Database\Eloquent\Builder<Laragear\Dte\Models\SiiInboundDocument>&static`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/Cuadratura/Pipes/ReconcileRcvStream.php"
+code = "possibly-null-iterator"
+message = 'Expression being iterated (type `Illuminate\Support\LazyCollection<array-key, mixed>|null`) might be `null` at runtime.'
+count = 1
+
+[[issues]]
+file = "src/Actions/Cuadratura/Sync.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Actions\Cuadratura\Sync::$pipes` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Actions/Cuadratura/Sync.php"
+code = "less-specific-return-statement"
+message = 'Returned type `array<array-key, mixed>` is less specific than the declared return type `array<string, int>` for function `Laragear\Dte\Actions\Cuadratura\Sync::forParsing`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/CreateInterchangeLog.php"
+code = "property-type-coercion"
+message = '''A value of a less specific type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)` is being assigned to property `$log` (Laragear\Dte\Models\SiiInterchangeLog|null).'''
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ParseInboundDocument.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessEnvioDteDocuments.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessEnvioDteDocuments.php"
+code = "invalid-return-statement"
+message = '''Invalid return type for function `Laragear\Dte\Actions\InboundDte\Pipes\ProcessEnvioDteDocuments::extractMetadata`: expected `array{'amount': int, 'folio': int, 'issued_on': Illuminate\Support\Carbon, 'issuer': Laragear\Rut\Rut, 'type': enum(Laragear\Dte\Enums\DteType), 'xml': string}`, but found `array{'amount': int, 'folio': int, 'issued_on': Illuminate\Support\Carbon, 'issuer': Laragear\Rut\Rut, 'type': enum(laragear\dte\enums\dtetype), 'xml': bool|string}`.'''
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessEnvioDteDocuments.php"
+code = "less-specific-return-statement"
+message = '''Returned type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)` is less specific than the declared return type `Laragear\Dte\Models\SiiInboundDocument` for function `Laragear\Dte\Actions\InboundDte\Pipes\ProcessEnvioDteDocuments::persistDocument`.'''
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessEnvioDteDocuments.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessEnvioDteDocuments.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laragear\Dte\Actions\InboundDte\Pipes\ProcessEnvioDteDocuments::resolveReceiver` is possibly `null`, but parameter type `SimpleXMLElement` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessEnvioDteDocuments.php"
+code = "possibly-null-argument"
+message = 'Argument #3 of method `Laragear\Dte\Actions\InboundDte\Pipes\ProcessEnvioDteDocuments::processDocument` is possibly `null`, but parameter type `Laragear\Dte\Models\SiiInterchangeLog` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessEnvioDteDocuments.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessRespuestaDteDocuments.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessRespuestaDteDocuments.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laragear\Dte\Actions\InboundDte\Pipes\ProcessRespuestaDteDocuments::resolveRespondee` is possibly `null`, but parameter type `SimpleXMLElement` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/Pipes/ProcessRespuestaDteDocuments.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 1
+
+[[issues]]
+file = "src/Actions/InboundDte/ProcessInboundDte.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Actions\InboundDte\ProcessInboundDte::$pipes` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Actions/PersistDte/PersistDte.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Actions\PersistDte\PersistDte::$pipes` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Actions/PersistDte/PersistDte.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Actions\PersistDte\PersistDte::handle`: expected `Laragear\Dte\Models\SiiDte`, but found `Laragear\Dte\Models\SiiDte|null`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/PersistDte/PersistDte.php"
+code = "nullable-return-statement"
+message = 'Function `Laragear\Dte\Actions\PersistDte\PersistDte::handle` is declared to return `Laragear\Dte\Models\SiiDte` but possibly returns a nullable value (inferred as `Laragear\Dte\Models\SiiDte|null`).'
+count = 1
+
+[[issues]]
+file = "src/Actions/PersistDte/Pipes/PersistDocument.php"
+code = "less-specific-argument"
+message = '''Argument type mismatch for argument #1 of `Illuminate\Database\Eloquent\Model::forceFill`: expected `array<string, mixed>`, but provided type `array{'accepted_at': null, 'acknowledged_at': null, 'rejected_at': null, 'repairs': null, 'status': enum(Laragear\Dte\Enums\DteStatus::Draft)|enum(Laragear\Dte\Enums\DteStatus::Pending), ...}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Actions/PersistDte/Pipes/PersistDocument.php"
+code = "less-specific-argument"
+message = '''Argument type mismatch for argument #1 of `Laragear\Dte\Actions\PersistDte\Pipes\PersistDocument::persistReferences`: expected `Laragear\Dte\Models\SiiDte`, but provided type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Actions/PersistDte/Pipes/PersistDocument.php"
+code = "less-specific-return-statement"
+message = '''Returned type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)` is less specific than the declared return type `Laragear\Dte\Models\SiiDte` for function `Laragear\Dte\Actions\PersistDte\Pipes\PersistDocument::persistCreate`.'''
+count = 1
+
+[[issues]]
+file = "src/Actions/RcvParsing/Parse.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Actions\RcvParsing\Parse::$pipes` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Actions/RcvParsing/Pipes/YieldLazyCollection.php"
+code = "invalid-argument"
+message = "Invalid argument type for argument #1 of `array_map`: expected `(callable(null|string): string)|(callable(null|string, ('S.array_map() extends mixed)): string)|null`, but found `(closure(string): string)`."
+count = 1
+
+[[issues]]
+file = "src/Actions/RcvParsing/Pipes/YieldLazyCollection.php"
+code = "invalid-type-cast"
+message = "Non numeric string of type `string` implicitly cast to `float`."
+count = 1
+
+[[issues]]
+file = "src/Actions/RcvParsing/Pipes/YieldLazyCollection.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Builders/AecCessionBuilder.php"
+code = "possibly-null-operand"
+message = "Left operand in `>` comparison might be `null` (type `int|null`)."
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/HasCorrections.php"
+code = "less-specific-nested-return-statement"
+message = '''Returned type `list{enum(Laragear\Dte\Enums\DteType), string, mixed}` is less specific than the declared return type `array{0: enum(Laragear\Dte\Enums\DteType), 1: string, 2: DateTimeImmutable}` for function `Laragear\Dte\Builders\Concerns\HasCorrections::extractFromDte` due to nested 'mixed'.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/HasCorrections.php"
+code = "non-existent-property"
+message = 'Property `$date` does not exist on trait `Laragear\Dte\Builders\Concerns\HasCorrections`.'
+count = 2
+
+[[issues]]
+file = "src/Builders/Concerns/HasItems.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #2 of `Laragear\Dte\Data\Item::__construct`: expected `float`, but possibly received `array<array-key, mixed>|int|null`.'
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/HasItems.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `Laragear\Dte\Data\Item::__construct` is possibly `null`, but parameter type `float` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/HasPaymentTerms.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/HasPaymentTerms.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 2
+
+[[issues]]
+file = "src/Builders/Concerns/HasReferences.php"
+code = "non-existent-property"
+message = 'Property `$issueDate` does not exist on trait `Laragear\Dte\Builders\Concerns\HasReferences`.'
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/HasTransport.php"
+code = "invalid-return-statement"
+message = '''Invalid return type for function `Laragear\Dte\Builders\Concerns\HasTransport::transport`: expected `array{'arrival_at'?: DateTimeImmutable, 'carrier'?: Laragear\Rut\Rut, 'departure_at'?: DateTimeImmutable, 'destination_address'?: string, 'destination_city'?: string, 'destination_commune'?: string, 'driver'?: Laragear\Rut\Rut, 'driver_name'?: string, 'trailer_plate'?: string, 'vehicle_plate'?: string}`, but found `array{'arrival_at'?: DateTimeImmutable, 'carrier'?: Laragear\Rut\Rut, 'departure_at'?: DateTimeImmutable, 'destination_address'?: string, 'destination_city'?: string, 'destination_commune'?: string, 'driver'?: Laragear\Rut\Rut, 'driver_name'?: string, 'ind_traslado'?: int, 'tipo_despacho'?: int, 'trailer_plate'?: string, 'vehicle_plate'?: string}`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/PayloadSerializer.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Builders\Concerns\PayloadSerializer::aggregateTaxes`: expected `array<int, int>`, but found `array<string, int>`.'
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/PayloadSerializer.php"
+code = "less-specific-nested-return-statement"
+message = '''Returned type `array{'activity': mixed, 'address': mixed, 'city': mixed, 'commune': mixed, 'email': mixed, 'name': mixed, 'rut': mixed}` is less specific than the declared return type `array{'activity': null|string, 'address': null|string, 'city': null|string, 'commune': null|string, 'email': null|string, 'legal_name': string, 'rut': string}|null` for function `Laragear\Dte\Builders\Concerns\PayloadSerializer::receiverData` due to nested 'mixed'.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/PayloadSerializer.php"
+code = "non-existent-property"
+message = 'Property `$configurationManager` does not exist on trait `Laragear\Dte\Builders\Concerns\PayloadSerializer`.'
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/PayloadSerializer.php"
+code = "non-existent-property"
+message = 'Property `$indMntNeto` does not exist on trait `Laragear\Dte\Builders\Concerns\PayloadSerializer`.'
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/PayloadSerializer.php"
+code = "non-existent-property"
+message = 'Property `$issueDate` does not exist on trait `Laragear\Dte\Builders\Concerns\PayloadSerializer`.'
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/PayloadSerializer.php"
+code = "non-existent-property"
+message = 'Property `$receiver` does not exist on trait `Laragear\Dte\Builders\Concerns\PayloadSerializer`.'
+count = 8
+
+[[issues]]
+file = "src/Builders/Concerns/PayloadSerializer.php"
+code = "redundant-condition"
+message = "Redundant ternary operator: condition is always truthy."
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/TotalsCalculator.php"
+code = "less-specific-nested-return-statement"
+message = '''Returned type `array{'exempt': int, 'net': int, 'non_billable': mixed, 'tax': int, 'total': int}` is less specific than the declared return type `array{'exempt': int, 'net': int, 'non_billable': int, 'tax': int, 'total': int}` for function `Laragear\Dte\Builders\Concerns\TotalsCalculator::calculatedTotals` due to nested 'mixed'.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/TotalsCalculator.php"
+code = "non-existent-property"
+message = 'Property `$nonBillableAmount` does not exist on trait `Laragear\Dte\Builders\Concerns\TotalsCalculator`.'
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/TotalsCalculator.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laragear\Dte\Builders\Concerns\TotalsCalculator::applyGlobalModifiers`: expected `array{'exempt': int, 'net': int, 'tax': int, 'total': int}`, but possibly received `array<array-key, mixed>`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/CreditNoteBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\CreditNoteBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Builders/CreditNoteBuilder.php"
+code = "possibly-null-operand"
+message = "Possibly null middle operand used in string concatenation (type `null|string`)."
+count = 1
+
+[[issues]]
+file = "src/Builders/DebitNoteBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DebitNoteBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "impossible-nonnull-entry-check"
+message = '''Impossible `isset` check on key `'ind_traslado'` accessed on `array{'arrival_at'?: DateTimeImmutable, 'carrier'?: Laragear\Rut\Rut, 'departure_at'?: DateTimeImmutable, 'destination_address'?: string, 'destination_city'?: string, 'destination_commune'?: string, 'driver'?: Laragear\Rut\Rut, 'driver_name'?: string, 'trailer_plate'?: string, 'vehicle_plate'?: string}`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "impossible-nonnull-entry-check"
+message = '''Impossible `isset` check on key `'tipo_despacho'` accessed on `array{'arrival_at'?: DateTimeImmutable, 'carrier'?: Laragear\Rut\Rut, 'departure_at'?: DateTimeImmutable, 'destination_address'?: string, 'destination_city'?: string, 'destination_commune'?: string, 'driver'?: Laragear\Rut\Rut, 'driver_name'?: string, 'trailer_plate'?: string, 'vehicle_plate'?: string}`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DispatchGuideBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-property-assignment-value"
+message = '''Invalid type for property `$transport`: expected `array{'arrival_at'?: DateTimeImmutable, 'carrier'?: Laragear\Rut\Rut, 'departure_at'?: DateTimeImmutable, 'destination_address'?: string, 'destination_city'?: string, 'destination_commune'?: string, 'driver'?: Laragear\Rut\Rut, 'driver_name'?: string, 'ind_traslado'?: int, 'tipo_despacho'?: int, 'trailer_plate'?: string, 'vehicle_plate'?: string}`, but got `array{'arrival_at': DateTimeImmutable|null, 'carrier': Laragear\Rut\Rut|null, 'departure_at': DateTimeImmutable|null, 'destination_address': mixed, 'destination_city': mixed, 'destination_commune': mixed, 'driver': Laragear\Rut\Rut|null, 'driver_name': mixed, 'trailer_plate': mixed, 'vehicle_plate': mixed}`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side is always `null`."
+count = 2
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "invalid-property-assignment-value"
+message = 'Invalid type for property `$items`: expected `list<Laragear\Dte\Data\Item>`, but got `array<array-key, Laragear\Dte\Data\Item&static>|list<Laragear\Dte\Data\Item&static>`.'
+count = 1
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "invalid-property-assignment-value"
+message = 'Invalid type for property `$references`: expected `list<Laragear\Dte\Data\ReferenceData>`, but got `array<array-key, Laragear\Dte\Data\ReferenceData&static>|list<Laragear\Dte\Data\ReferenceData&static>`.'
+count = 1
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `Laragear\Dte\Data\ReceiverData::make` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 4
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 1
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "unused-parameter"
+message = "Parameter `$data` is never used."
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvBuilder.php"
+code = "array-to-string-conversion"
+message = "Potentially casting `array` to `string`."
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvBuilder.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #2 of `Laragear\Dte\Builders\Iecv\IecvBuilder::appendResumenIvaUsoComun`: expected `Illuminate\Support\Collection<int, Laragear\Dte\Models\SiiDte>`, but found `bool`.'
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvBuilder.php"
+code = "invalid-method-access"
+message = "Attempting to access a method on a non-object type (`bool`)."
+count = 2
+
+[[issues]]
+file = "src/Builders/Iecv/IecvBuilder.php"
+code = "invalid-type-cast"
+message = "Casting `mixed` to `float`."
+count = 2
+
+[[issues]]
+file = "src/Builders/Iecv/IecvBuilder.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvBuilder.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `Laragear\Dte\Builders\Iecv\IecvBuilder::appendCaratula` is possibly `null`, but parameter type `Laragear\Rut\Rut` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvBuilder.php"
+code = "possibly-null-iterator"
+message = "Expression being iterated (type `array<string, int>|null`) might be `null` at runtime."
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvBuilder.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvBuilder.php"
+code = "redundant-cast"
+message = "Redundant cast to `(string)`: the expression already has this type."
+count = 2
+
+[[issues]]
+file = "src/Builders/Iecv/IecvBuilder.php"
+code = "redundant-condition"
+message = "This condition (type `true`) will always evaluate to true."
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvPurchasesBuilder.php"
+code = "invalid-method-access"
+message = "Attempting to access a method on a non-object type (`string`)."
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvPurchasesBuilder.php"
+code = "invalid-property-access"
+message = "Attempting to access a property on a non-object type (`int`)."
+count = 3
+
+[[issues]]
+file = "src/Builders/Iecv/IecvPurchasesBuilder.php"
+code = "invalid-return-statement"
+message = '''Invalid return type for function `Laragear\Dte\Builders\Iecv\IecvPurchasesBuilder::groupEntriesByType`: expected `array<int|string, array{'count': int, 'exempt': int, 'iva_common_use': bool, 'net': int, 'taxes': int, 'total': int, 'type': int|string}>`, but found `array<enum(Laragear\Dte\Enums\DteType)|int|string(''), array{'count': non-negative-int, 'exempt': int, 'iva_common_use': bool, 'net': int, 'taxes': int, 'total': int, 'type': enum(Laragear\Dte\Enums\DteType)|int|null}>`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvPurchasesBuilder.php"
+code = "invalid-type-cast"
+message = 'Cannot cast enum instance of type `enum(Laragear\Dte\Enums\DteType)` to `string`.'
+count = 2
+
+[[issues]]
+file = "src/Builders/Iecv/IecvPurchasesBuilder.php"
+code = "invalid-type-cast"
+message = "Casting `mixed` to `float`."
+count = 1
+
+[[issues]]
+file = "src/Builders/Iecv/IecvPurchasesBuilder.php"
+code = "mismatched-array-index"
+message = 'Invalid array key type: `enum(Laragear\Dte\Enums\DteType)|int|null` is not a valid key for this array.'
+count = 8
+
+[[issues]]
+file = "src/Builders/Iecv/IecvPurchasesBuilder.php"
+code = "possibly-null-array-index"
+message = "Possibly using `null` as an array index to access element."
+count = 7
+
+[[issues]]
+file = "src/Builders/Iecv/IecvPurchasesBuilder.php"
+code = "possibly-null-array-index"
+message = "Possibly using `null` as an array index to access elementof variable $grouped."
+count = 2
+
+[[issues]]
+file = "src/Builders/Iecv/IecvPurchasesBuilder.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 1
+
+[[issues]]
+file = "src/Builders/InvoiceBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\InvoiceBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Builders/InvoiceBuilder.php"
+code = "incompatible-return-type"
+message = '''Return type `array{'exempt': int, 'net': int, 'tax': int, 'total': int}` of `Laragear\Dte\Builders\InvoiceBuilder::calculatedtotals()` is incompatible with parent return type `array{'exempt': int, 'net': int, 'non_billable': int, 'tax': int, 'total': int}` of `Laragear\Dte\Builders\Concerns\TotalsCalculator::calculatedtotals()`'''
+count = 1
+
+[[issues]]
+file = "src/Builders/InvoiceBuilder.php"
+code = "invalid-return-statement"
+message = '''Invalid return type for function `Laragear\Dte\Builders\InvoiceBuilder::calculatedTotals`: expected `array{'exempt': int, 'net': int, 'tax': int, 'total': int}`, but found `array{'exempt': int, 'net': int(0), 'non_billable': int, 'tax': int(0), 'total': int}`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/InvoiceBuilder.php"
+code = "invalid-return-statement"
+message = '''Invalid return type for function `Laragear\Dte\Builders\InvoiceBuilder::calculatedTotals`: expected `array{'exempt': int, 'net': int, 'tax': int, 'total': int}`, but found `array{'exempt': int, 'net': int, 'non_billable': int, 'tax': int, 'total': int}`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/InvoiceLiquidationBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\InvoiceLiquidationBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Builders/NoteBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\NoteBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Builders/PurchaseInvoiceBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\PurchaseInvoiceBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Builders/ReceiptBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\ReceiptBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Builders/ReceiptBuilder.php"
+code = "incompatible-return-type"
+message = '''Return type `array<string, mixed>` of `Laragear\Dte\Builders\ReceiptBuilder::receiverdata()` is incompatible with parent return type `array{'activity': null|string, 'address': null|string, 'city': null|string, 'commune': null|string, 'email': null|string, 'legal_name': string, 'rut': string}|null` of `Laragear\Dte\Builders\Concerns\PayloadSerializer::receiverdata()`'''
+count = 1
+
+[[issues]]
+file = "src/Caf/CafManager.php"
+code = "invalid-static-method-access"
+message = 'Cannot call non-static method `Laragear\Dte\Models\SiiCaf::query` statically.'
+count = 3
+
+[[issues]]
+file = "src/Caf/CafManager.php"
+code = "less-specific-argument"
+message = '''Argument type mismatch for argument #1 of `Laragear\Dte\Events\CafLoaded::__construct`: expected `Laragear\Dte\Models\SiiCaf`, but provided type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Caf/CafManager.php"
+code = "less-specific-nested-argument-type"
+message = 'Argument type mismatch for argument #1 of `Laragear\Dte\Caf\Folio::normalize`: expected `array<array-key, array{0: int, 1: int}|int>`, but provided type `array<array-key, mixed>` is less specific.'
+count = 1
+
+[[issues]]
+file = "src/Caf/CafManager.php"
+code = "less-specific-return-statement"
+message = '''Returned type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)` is less specific than the declared return type `Laragear\Dte\Models\SiiCaf` for function `Laragear\Dte\Caf\CafManager::store`.'''
+count = 1
+
+[[issues]]
+file = "src/Caf/CafManager.php"
+code = "possibly-false-argument"
+message = 'Argument #1 of method `Illuminate\Filesystem\Filesystem::get` is possibly `false`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Caf/CafParser.php"
+code = "redundant-cast"
+message = "Redundant cast to `(string)`: the expression already has this type."
+count = 1
+
+[[issues]]
+file = "src/Caf/CafParser.php"
+code = "redundant-condition"
+message = "Redundant ternary operator: condition is always truthy."
+count = 1
+
+[[issues]]
+file = "src/Caf/CafParser.php"
+code = "redundant-logical-operation"
+message = "Redundant `||` operation: left operand is evaluated and right operand is always falsy."
+count = 1
+
+[[issues]]
+file = "src/Caf/CafParser.php"
+code = "redundant-type-comparison"
+message = "Redundant condition: variable `$nodes[0]` (type `SimpleXMLElement`) is already known to be `SimpleXMLElement`."
+count = 1
+
+[[issues]]
+file = "src/Caf/CafParser.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$details` is already `array<string, mixed>`."
+count = 1
+
+[[issues]]
+file = "src/Caf/Folio.php"
+code = "invalid-destructuring-source"
+message = "Invalid destructuring assignment: Cannot unpack type `mixed` into variables."
+count = 4
+
+[[issues]]
+file = "src/Caf/Folio.php"
+code = "less-specific-argument"
+message = 'Argument type mismatch for argument #1 of `Laragear\Dte\Caf\Folio::insertRange`: expected `array<int, array{0: int, 1: int}>`, but provided type `array<array-key, mixed>` is less specific.'
+count = 1
+
+[[issues]]
+file = "src/Caf/Folio.php"
+code = "less-specific-nested-argument-type"
+message = 'Argument type mismatch for argument #1 of `Laragear\Dte\Caf\Folio::mergeAll`: expected `array<array-key, array{0: int, 1: int}|int>`, but provided type `array<array-key, mixed>` is less specific.'
+count = 1
+
+[[issues]]
+file = "src/Casts/AsDocumentPayload.php"
+code = "falsable-return-statement"
+message = '''Function `Laragear\Dte\Casts\AsDocumentPayload::set` is declared to return `string` but possibly returns 'false' (inferred as `false|string`).'''
+count = 2
+
+[[issues]]
+file = "src/Casts/AsDocumentPayload.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Casts\AsDocumentPayload::set`: expected `string`, but found `false|string`.'
+count = 2
+
+[[issues]]
+file = "src/Casts/AsDocumentPayload.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Contracts\Database\Eloquent\CastsAttributes`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Casts/AsFolio.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Contracts\Database\Eloquent\CastsAttributes`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Certificate/CertificateResolver.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Illuminate\Contracts\Container\Container::call` is possibly `null`, but parameter type `(callable(...mixed): mixed)|string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Configuration/ConfigurationManager.php"
+code = "less-specific-nested-argument-type"
+message = 'Argument type mismatch for argument #1 of `Laragear\Dte\Configuration\ConfigurationManager::setSenderResolver`: expected `(closure(): Laragear\Rut\Rut)|null`, but provided type `(closure(): mixed)` is less specific.'
+count = 1
+
+[[issues]]
+file = "src/Configuration/ConfigurationManager.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #1 of `Laragear\Dte\Configuration\ConfigurationManager::setSenderResolver`: expected `(closure(): Laragear\Rut\Rut)|null`, but possibly received `(closure(Laragear\Rut\Rut): Laragear\Rut\Rut|null)|null`.'
+count = 1
+
+[[issues]]
+file = "src/Configuration/ConfigurationManager.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Illuminate\Contracts\Container\Container::call` is possibly `null`, but parameter type `(callable(...mixed): mixed)|string` does not accept it.'
+count = 3
+
+[[issues]]
+file = "src/Console/Commands/CheckNearDepletedCafsCommand.php"
+code = "invalid-static-method-access"
+message = 'Cannot call non-static method `Laragear\Dte\Models\SiiCaf::query` statically.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/CheckNearDepletedCafsCommand.php"
+code = "invalid-type-cast"
+message = "Casting `mixed` to `float`."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/CheckNearDepletedCafsCommand.php"
+code = "less-specific-argument"
+message = 'Argument type mismatch for argument #1 of `Laragear\Dte\Console\Commands\CheckNearDepletedCafsCommand::checkDepletion`: expected `Laragear\Dte\Models\SiiCaf`, but provided type `Illuminate\Database\Eloquent\Model` is less specific.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/CheckNearDepletedCafsCommand.php"
+code = "less-specific-argument"
+message = 'Argument type mismatch for argument #1 of `Laragear\Dte\Console\Commands\CheckNearDepletedCafsCommand::checkExpiration`: expected `Laragear\Dte\Models\SiiCaf`, but provided type `Illuminate\Database\Eloquent\Model` is less specific.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/CheckNearDepletedCafsCommand.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/CompileDteXmlCommand.php"
+code = "less-specific-argument"
+message = '''Argument type mismatch for argument #1 of `Laragear\Dte\Actions\CompileDte\Compile::forDte`: expected `Laragear\Dte\Models\SiiDte`, but provided type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)|Illuminate\Database\Eloquent\Collection<int, ('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)>` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/CompileDteXmlCommand.php"
+code = "redundant-condition"
+message = "This condition (type `true`) will always evaluate to true."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/Concerns/HasDefaultRut.php"
+code = "non-existent-method"
+message = 'Method `option` does not exist on type `Laragear\Dte\Console\Commands\Concerns\HasDefaultRut`.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/FetchInboundMailboxCommand.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/FetchInboundMailboxCommand.php"
+code = "invalid-return-statement"
+message = '''Invalid return type for function `Laragear\Dte\Console\Commands\FetchInboundMailboxCommand::loadDisallowedSenders`: expected `array{'domains': list<string>, 'prefixes': list<string>}`, but found `array{'domains': array<non-negative-int, truthy-string>, 'prefixes': array<non-negative-int, truthy-string>}`.'''
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/FetchInboundMailboxCommand.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #1 of `Laragear\Dte\Mailbox\MailboxManager::driver`: expected `null|string`, but possibly received `float|int|non-empty-array<array-key, mixed>|true|truthy-string`.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/FetchInboundMailboxCommand.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #6 of `Laragear\Dte\Console\Commands\FetchInboundMailboxCommand::fetchAndProcess`: expected `null|string`, but possibly received `array<array-key, mixed>|bool|float|int|null|string`.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/FetchInboundMailboxCommand.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCafCommand.php"
+code = "array-to-string-conversion"
+message = "Potentially casting `array` to `string`."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCafCommand.php"
+code = "impossible-condition"
+message = "This condition (type `false`) will always evaluate to false."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCafCommand.php"
+code = "less-specific-nested-argument-type"
+message = 'Argument type mismatch for argument #2 of `Illuminate\Support\Str::replace`: expected `iterable<mixed, string>|string`, but provided type `list{string, int(30)|int(32)|int(33)|int(34)|int(39)|int(41)|int(43)|int(46)|int(52)|int(56)|int(61), int, int, string, string, string, string, mixed}` is less specific.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCafCommand.php"
+code = "never-return"
+message = "Cannot return value with type 'never' from this function."
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCafCommand.php"
+code = "possibly-false-array-access"
+message = "Cannot perform array access on possibly `false` value."
+count = 3
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCafCommand.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #2 of `Laragear\Dte\Console\Commands\MakeFakeCafCommand::createCafInFilesystem`: expected `string`, but possibly received `array<array-key, mixed>|bool|float|int|null|string`.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCafCommand.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `Laragear\Dte\Console\Commands\MakeFakeCafCommand::createCafInFilesystem` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCertificateCommand.php"
+code = "less-specific-nested-return-statement"
+message = '''Returned type `array{'commonName': string('LARAVEL DEVELOPMENT FAKE CERTIFICATE'), 'countryName': string('CL'), 'emailAddress': mixed, 'localityName': string('Santiago'), 'organizationName': mixed, 'serialNumber': string, 'stateOrProvinceName': string('RM')}` is less specific than the declared return type `array<string, string>` for function `Laragear\Dte\Console\Commands\MakeFakeCertificateCommand::buildDistinguishedName` due to nested 'mixed'.'''
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/MakeFakeCertificateCommand.php"
+code = "less-specific-nested-return-statement"
+message = '''Returned type `array{'disk': truthy-mixed, 'password': truthy-mixed, 'path': truthy-mixed}` is less specific than the declared return type `array{'disk': string, 'password': string, 'path': string}` for function `Laragear\Dte\Console\Commands\MakeFakeCertificateCommand::resolveOptions` due to nested 'mixed'.'''
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/PackManualDtesCommand.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `collect`: expected `Illuminate\Contracts\Support\Arrayable<('TKey.collect() extends array-key), ('TValue.collect() extends mixed)>|iterable<('TKey.collect() extends array-key), ('TValue.collect() extends mixed)>|null`, but possibly received `array<array-key, mixed>|bool|float|int|null|string`.'''
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/PackManualDtesCommand.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #3 of `Laragear\Dte\Services\PackDtesService::packManual`: expected `bool`, but possibly received `array<array-key, mixed>|bool|float|int|null|string`.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/PackManualDtesCommand.php"
+code = "possibly-null-argument"
+message = 'Argument #3 of method `Laragear\Dte\Services\PackDtesService::packManual` is possibly `null`, but parameter type `bool` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/PollTrackStatusCommand.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Console\Commands\PollTrackStatusCommand::envelopes`: expected `Illuminate\Support\LazyCollection<int, Laragear\Dte\Models\SiiDteEnvelope>`, but found `Illuminate\Support\LazyCollection<int, Laragear\Dte\Models\SiiDteEnvelope|Laragear\Dte\Models\SiiDteEnvelope&static|stdClass>`.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/ProcessAndSendEnvelopeCommand.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Console\Commands\ProcessAndSendEnvelopeCommand::reclaimStaleEnvelopes`: expected `int`, but found `bool|int`.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/ProcessAndSendEnvelopeCommand.php"
+code = "less-specific-return-statement"
+message = '''Returned type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)|Laragear\Dte\Models\SiiDteEnvelope` is less specific than the declared return type `Laragear\Dte\Models\SiiDteEnvelope` for function `Laragear\Dte\Console\Commands\ProcessAndSendEnvelopeCommand::envelope`.'''
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/ProcessAndSendEnvelopeCommand.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `Laragear\Dte\Gateways\BoletaRestGateway::upload` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/ProcessAndSendEnvelopeCommand.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `Laragear\Dte\Gateways\UploadGateway::upload` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/ProcessAndSendEnvelopeCommand.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 2
+
+[[issues]]
+file = "src/Console/Commands/RejectExpiringPhantomInvoicesCommand.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiInboundDocument|Laragear\Dte\Models\SiiInboundDocument&static>|Illuminate\Support\Collection<int, stdClass>` is less specific than the declared return type `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiInboundDocument>` for function `Laragear\Dte\Console\Commands\RejectExpiringPhantomInvoicesCommand::queryExpiringPhantomInvoices`.'
+count = 1
+
+[[issues]]
+file = "src/Data/DocumentPayload.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Support\Fluent`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Data/DocumentTotalsData.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Contracts\Support\Arrayable`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Data/GlobalModifierData.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Contracts\Support\Arrayable`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Data/IssuerData.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Contracts\Support\Arrayable`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Data/IssuerData.php"
+code = "unused-parameter"
+message = "Parameter `$attribute` is never used."
+count = 1
+
+[[issues]]
+file = "src/Data/Item.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Contracts\Support\Arrayable`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Data/PaymentTermData.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Contracts\Support\Arrayable`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Data/ReceiverData.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Contracts\Support\Arrayable`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Data/ReferenceData.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Contracts\Support\Arrayable`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Data/ReferenceData.php"
+code = "redundant-logical-operation"
+message = "Redundant `||` operation: left operand is always false and right operand is evaluated."
+count = 1
+
+[[issues]]
+file = "src/Data/ReferenceData.php"
+code = "redundant-type-comparison"
+message = "Redundant condition: variable `$value` (type `string`) is already known to be `string`."
+count = 1
+
+[[issues]]
+file = "src/Data/ReferenceData.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$value` is already `string`."
+count = 1
+
+[[issues]]
+file = "src/Data/Token.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Contracts\Support\Arrayable`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Data/TrackStatus.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Laragear\Dte\Data\TrackStatus` is less specific than the declared return type `laragear\dte\data\trackstatus&static` for function `Laragear\Dte\Data\TrackStatus::fromResponse`.'
+count = 1
+
+[[issues]]
+file = "src/Data/TransportData.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Contracts\Support\Arrayable`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Data/TransportData.php"
+code = "redundant-logical-operation"
+message = "Redundant `||` operation: left operand is always false and right operand is evaluated."
+count = 1
+
+[[issues]]
+file = "src/Data/TransportData.php"
+code = "redundant-type-comparison"
+message = "Redundant condition: variable `$value` (type `string`) is already known to be `string`."
+count = 1
+
+[[issues]]
+file = "src/Data/TransportData.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$value` is already `string`."
+count = 1
+
+[[issues]]
+file = "src/DteServiceProvider.php"
+code = "ambiguous-object-method-access"
+message = "Cannot statically verify method call on a generic `object` type."
+count = 3
+
+[[issues]]
+file = "src/DteServiceProvider.php"
+code = "no-value"
+message = 'Argument #2 passed to method `Illuminate\Contracts\Validation\Factory::extend` has type `never`, meaning it cannot produce a value.'
+count = 1
+
+[[issues]]
+file = "src/DteServiceProvider.php"
+code = "string-member-selector"
+message = "This member selector uses a non-literal string type (`string`); its specific value cannot be statically determined."
+count = 1
+
+[[issues]]
+file = "src/Enums/Concerns/EnumHelpers.php"
+code = "invalid-array-element-key"
+message = "Invalid array key type."
+count = 1
+
+[[issues]]
+file = "src/Enums/Concerns/EnumHelpers.php"
+code = "non-existent-method"
+message = 'Method `cases` does not exist on type `Laragear\Dte\Enums\Concerns\EnumHelpers`.'
+count = 1
+
+[[issues]]
+file = "src/Enums/Concerns/EnumHelpers.php"
+code = "non-existent-property"
+message = 'Property `$value` does not exist on trait `Laragear\Dte\Enums\Concerns\EnumHelpers`.'
+count = 1
+
+[[issues]]
+file = "src/Gateways/BoletaRestGateway.php"
+code = "invalid-operand"
+message = "Left operand in `&&` operation is an `object`."
+count = 1
+
+[[issues]]
+file = "src/Gateways/BoletaRestGateway.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Gateways/BoletaRestGateway.php"
+code = "possibly-false-argument"
+message = 'Argument #2 of method `Illuminate\Http\Client\PendingRequest::withCookies` is possibly `false`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Gateways/BoletaRestGateway.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `Illuminate\Http\Client\PendingRequest::withCookies` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Gateways/BoletaRestGateway.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `Laragear\Dte\Gateways\BoletaRestGateway::makeClient` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Gateways/BoletaRestGateway.php"
+code = "redundant-logical-operation"
+message = "Redundant `&&` operation: left operand is always truthy and right operand is evaluated."
+count = 1
+
+[[issues]]
+file = "src/Gateways/BoletaRestGateway.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 1
+
+[[issues]]
+file = "src/Gateways/IecvUploadGateway.php"
+code = "possibly-false-argument"
+message = 'Argument #2 of method `Illuminate\Http\Client\PendingRequest::withCookies` is possibly `false`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Gateways/IecvUploadGateway.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `Illuminate\Http\Client\PendingRequest::withCookies` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Gateways/RestAuthGateway.php"
+code = "non-existent-method"
+message = 'Method `body` does not exist on type `GuzzleHttp\Promise\PromiseInterface`.'
+count = 2
+
+[[issues]]
+file = "src/Gateways/RestAuthGateway.php"
+code = "non-existent-method"
+message = 'Method `failed` does not exist on type `GuzzleHttp\Promise\PromiseInterface`.'
+count = 2
+
+[[issues]]
+file = "src/Gateways/SignedTokenRequestBuilder.php"
+code = "falsable-return-statement"
+message = '''Function `Laragear\Dte\Gateways\SignedTokenRequestBuilder::createRootElement` is declared to return `DOMElement` but possibly returns 'false' (inferred as `DOMElement|false`).'''
+count = 1
+
+[[issues]]
+file = "src/Gateways/SignedTokenRequestBuilder.php"
+code = "invalid-method-access"
+message = "Attempting to access a method on a non-object type (`false`)."
+count = 2
+
+[[issues]]
+file = "src/Gateways/SignedTokenRequestBuilder.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Gateways\SignedTokenRequestBuilder::createRootElement`: expected `DOMElement`, but found `DOMElement|false`.'
+count = 1
+
+[[issues]]
+file = "src/Gateways/SignedTokenRequestBuilder.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Gateways\SignedTokenRequestBuilder::serialize`: expected `string`, but found `array<array-key, string>|string`.'
+count = 1
+
+[[issues]]
+file = "src/Gateways/SignedTokenRequestBuilder.php"
+code = "possibly-false-argument"
+message = "Argument #1 of method `DOMNode::appendChild` is possibly `false`, but parameter type `DOMNode` does not accept it."
+count = 3
+
+[[issues]]
+file = "src/Gateways/SignedTokenRequestBuilder.php"
+code = "possibly-false-argument"
+message = "Argument #3 of function `str_replace` is possibly `false`, but parameter type `array<array-key, string>|string` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Gateways/SoapGateway.php"
+code = "ambiguous-object-property-access"
+message = "Cannot statically verify property access on a generic `object` type."
+count = 1
+
+[[issues]]
+file = "src/Gateways/SoapGateway.php"
+code = "falsable-return-statement"
+message = '''Function `Laragear\Dte\Gateways\SoapGateway::buildSignedSeedXml` is declared to return `string` but possibly returns 'false' (inferred as `false|string`).'''
+count = 1
+
+[[issues]]
+file = "src/Gateways/SoapGateway.php"
+code = "invalid-method-access"
+message = "Attempting to access a method on a non-object type (`false`)."
+count = 2
+
+[[issues]]
+file = "src/Gateways/SoapGateway.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Gateways\SoapGateway::buildSignedSeedXml`: expected `string`, but found `false|string`.'
+count = 1
+
+[[issues]]
+file = "src/Gateways/SoapGateway.php"
+code = "invalid-type-cast"
+message = "Cannot reliably cast generic `object` to `string`."
+count = 1
+
+[[issues]]
+file = "src/Gateways/SoapGateway.php"
+code = "possibly-false-argument"
+message = "Argument #1 of method `DOMNode::appendChild` is possibly `false`, but parameter type `DOMNode` does not accept it."
+count = 3
+
+[[issues]]
+file = "src/Gateways/SoapGateway.php"
+code = "possibly-false-argument"
+message = 'Argument #1 of method `Laragear\Dte\Xml\XmlSigner::signRoot` is possibly `false`, but parameter type `DOMElement` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Gateways/UploadGateway.php"
+code = "possibly-false-argument"
+message = 'Argument #2 of method `Illuminate\Http\Client\PendingRequest::withCookies` is possibly `false`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Gateways/UploadGateway.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `Illuminate\Http\Client\PendingRequest::withCookies` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Gateways/UploadResponseParser.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$matches`."
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollDteStatusJob.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 2
+
+[[issues]]
+file = "src/Jobs/PollDteStatusJob.php"
+code = "possibly-false-argument"
+message = "Argument #1 of function `json_decode` is possibly `false`, but parameter type `string` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollDteStatusJob.php"
+code = "possibly-false-argument"
+message = 'Argument #2 of method `Laragear\Dte\Jobs\PollDteStatusJob::saveDteRepairs` is possibly `false`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollDteStatusJob.php"
+code = "possibly-false-operand"
+message = "Possibly false right operand used in string concatenation (type `false|string`)."
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollEnvelopeTrackIdJob.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `nonnull`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollEnvelopeTrackIdJob.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollEnvelopeTrackIdJob.php"
+code = "possibly-false-argument"
+message = "Argument #1 of function `json_decode` is possibly `false`, but parameter type `string` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollEnvelopeTrackIdJob.php"
+code = "possibly-false-argument"
+message = 'Argument #2 of method `Laragear\Dte\Jobs\PollEnvelopeTrackIdJob::saveEnvelopeRepairs` is possibly `false`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollEnvelopeTrackIdJob.php"
+code = "possibly-false-operand"
+message = "Possibly false right operand used in string concatenation (type `false|string`)."
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollEnvelopeTrackIdJob.php"
+code = "possibly-null-argument"
+message = "Argument #1 of function `strlen` is possibly `null`, but parameter type `string` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollEnvelopeTrackIdJob.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 1
+
+[[issues]]
+file = "src/Jobs/SendInterchangeEnvelopeJob.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 1
+
+[[issues]]
+file = "src/Jobs/SendInterchangeEnvelopeJob.php"
+code = "too-many-arguments"
+message = 'Too many arguments provided for method `Illuminate\Database\Query\Builder::select`.'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/AwsSesDriver.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `nonnull`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/AwsSesDriver.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::copyObject`: expected `array{'ACL'?: string('authenticated-read')|string('aws-exec-read')|string('bucket-owner-full-control')|string('bucket-owner-read')|string('private')|string('public-read')|string('public-read-write'), 'AnnotationDirective'?: string('COPY')|string('EXCLUDE'), 'Bucket'?: string, 'BucketKeyEnabled'?: bool, 'CacheControl'?: string, 'ChecksumAlgorithm'?: string('CRC32')|string('CRC32C')|string('CRC64NVME')|string('MD5')|string('SHA1')|string('SHA256')|string('SHA512')|string('XXHASH128')|string('XXHASH3')|string('XXHASH64'), 'ContentDisposition'?: string, 'ContentEncoding'?: string, 'ContentLanguage'?: string, 'ContentType'?: string, 'CopySource'?: string, 'CopySourceIfMatch'?: string, 'CopySourceIfModifiedSince'?: DateTimeInterface|int|string, 'CopySourceIfNoneMatch'?: string, 'CopySourceIfUnmodifiedSince'?: DateTimeInterface|int|string, 'CopySourceSSECustomerAlgorithm'?: string, 'CopySourceSSECustomerKey'?: string, 'CopySourceSSECustomerKeyMD5'?: string, 'ExpectedBucketOwner'?: string, 'ExpectedSourceBucketOwner'?: string, 'Expires'?: string, 'GrantFullControl'?: string, 'GrantRead'?: string, 'GrantReadACP'?: string, 'GrantWriteACP'?: string, 'IfMatch'?: string, 'IfNoneMatch'?: string, 'Key'?: string, 'Metadata'?: array<string, string>, 'MetadataDirective'?: string('COPY')|string('REPLACE'), 'ObjectLockEventHold'?: string('OFF')|string('ON'), 'ObjectLockEventHoldDurationDays'?: int, 'ObjectLockEventHoldDurationYears'?: int, 'ObjectLockLegalHoldStatus'?: string('OFF')|string('ON'), 'ObjectLockMode'?: string('COMPLIANCE')|string('GOVERNANCE'), 'ObjectLockRetainUntilDate'?: DateTimeInterface|int|string, 'RequestPayer'?: string('requester'), 'SSECustomerAlgorithm'?: string, 'SSECustomerKey'?: string, 'SSECustomerKeyMD5'?: string, 'SSEKMSEncryptionContext'?: string, 'SSEKMSKeyId'?: string, 'ServerSideEncryption'?: string('AES256')|string('aws:backup')|string('aws:fsx')|string('aws:kms')|string('aws:kms:dsse'), 'StorageClass'?: string('AWS_BACKUP_LOW_COST_WARM')|string('AWS_BACKUP_WARM')|string('DEEP_ARCHIVE')|string('EXPRESS_ONEZONE')|string('FSX_ONTAP')|string('FSX_OPENZFS')|string('GLACIER')|string('GLACIER_IR')|string('INTELLIGENT_TIERING')|string('ONEZONE_IA')|string('OUTPOSTS')|string('REDUCED_REDUNDANCY')|string('SNOW')|string('STANDARD')|string('STANDARD_IA'), 'Tagging'?: string, 'TaggingDirective'?: string('COPY')|string('REPLACE'), 'WebsiteRedirectLocation'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'CopySource': truthy-string, 'Key': string}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/AwsSesDriver.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::deleteObject`: expected `array{'Bucket'?: string, 'BypassGovernanceRetention'?: bool, 'ExpectedBucketOwner'?: string, 'IfMatch'?: string, 'IfMatchLastModifiedTime'?: DateTimeInterface|int|string, 'IfMatchSize'?: int, 'Key'?: string, 'MFA'?: string, 'RequestPayer'?: string('requester'), 'VersionId'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'Key': string}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/AwsSesDriver.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::getObject`: expected `array{'Bucket'?: string, 'ChecksumMode'?: string('ENABLED'), 'ExpectedBucketOwner'?: string, 'IfMatch'?: string, 'IfModifiedSince'?: DateTimeInterface|int|string, 'IfNoneMatch'?: string, 'IfUnmodifiedSince'?: DateTimeInterface|int|string, 'Key'?: string, 'PartNumber'?: int, 'Range'?: string, 'RequestPayer'?: string('requester'), 'ResponseCacheControl'?: string, 'ResponseContentDisposition'?: string, 'ResponseContentEncoding'?: string, 'ResponseContentLanguage'?: string, 'ResponseContentType'?: string, 'ResponseExpires'?: DateTimeInterface|int|string, 'SSECustomerAlgorithm'?: string, 'SSECustomerKey'?: string, 'SSECustomerKeyMD5'?: string, 'VersionId'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'Key': mixed}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/AwsSesDriver.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::listObjectsV2`: expected `array{'Bucket'?: string, 'ContinuationToken'?: string, 'Delimiter'?: string, 'EncodingType'?: string('url'), 'ExpectedBucketOwner'?: string, 'FetchOwner'?: bool, 'MaxKeys'?: int, 'OptionalObjectAttributes'?: list<string('RestoreStatus')>, 'Prefix'?: string, 'RequestPayer'?: string('requester'), 'StartAfter'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'MaxKeys': mixed, 'Prefix': nonnull}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/AwsSesDriver.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$matches`."
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/GoogleWorkspaceDriver.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `nonnull`, which is not iterable."
+count = 2
+
+[[issues]]
+file = "src/Mailbox/Drivers/GoogleWorkspaceDriver.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Mailbox\Drivers\GoogleWorkspaceDriver::gmail`: expected `Google\Service\Gmail`, but found `Google\Service\Gmail|null`.'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/GoogleWorkspaceDriver.php"
+code = "nullable-return-statement"
+message = 'Function `Laragear\Dte\Mailbox\Drivers\GoogleWorkspaceDriver::gmail` is declared to return `Google\Service\Gmail` but possibly returns a nullable value (inferred as `Google\Service\Gmail|null`).'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/GoogleWorkspaceDriver.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 2
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #1 of `Laragear\Dte\Proxies\ImapProxy::body`: expected `unknown-ref(IMAP\Connection)`, but found `resource`.'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #1 of `Laragear\Dte\Proxies\ImapProxy::close`: expected `unknown-ref(IMAP\Connection)`, but found `resource`.'
+count = 2
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #1 of `Laragear\Dte\Proxies\ImapProxy::headerinfo`: expected `unknown-ref(IMAP\Connection)`, but found `resource`.'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #1 of `Laragear\Dte\Proxies\ImapProxy::search`: expected `unknown-ref(IMAP\Connection)`, but found `resource`.'
+count = 2
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #1 of `Laragear\Dte\Proxies\ImapProxy::setflag_full`: expected `unknown-ref(IMAP\Connection)`, but found `resource`.'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Mailbox\Drivers\ImapDriver::connect`: expected `resource`, but found `unknown-ref(IMAP\Connection)`.'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "non-existent-constant"
+message = 'Undefined constant: `Laragear\Dte\Mailbox\Drivers\FT_UID`.'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "non-existent-constant"
+message = 'Undefined constant: `Laragear\Dte\Mailbox\Drivers\SE_UID`.'
+count = 2
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "non-existent-constant"
+message = 'Undefined constant: `Laragear\Dte\Mailbox\Drivers\ST_UID`.'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "possibly-false-operand"
+message = "Possibly false right operand used in string concatenation (type `false|string`)."
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #2 of `Laragear\Dte\Proxies\ImapProxy::body`: expected `int`, but possibly received `int|string`.'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/ImapDriver.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #2 of `Laragear\Dte\Proxies\ImapProxy::headerinfo`: expected `int`, but possibly received `int|string`.'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/Microsoft365Driver.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
+count = 2
+
+[[issues]]
+file = "src/Mailbox/Drivers/Microsoft365Driver.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Mailbox\Drivers\Microsoft365Driver::client`: expected `Microsoft\Graph\GraphServiceClient`, but found `Microsoft\Graph\GraphServiceClient|null`.'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/Microsoft365Driver.php"
+code = "nullable-return-statement"
+message = 'Function `Laragear\Dte\Mailbox\Drivers\Microsoft365Driver::client` is declared to return `Microsoft\Graph\GraphServiceClient` but possibly returns a nullable value (inferred as `Microsoft\Graph\GraphServiceClient|null`).'
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/Microsoft365Driver.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 2
+
+[[issues]]
+file = "src/Mailbox/Drivers/Microsoft365Driver.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `base64_decode`: expected `string`, but possibly received `Psr\Http\Message\StreamInterface|string('')`.'''
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/Microsoft365Driver.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 5
+
+[[issues]]
+file = "src/Models/Concerns/HasCorrections.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasCorrections.php"
+code = "match-not-exhaustive"
+message = "Non-exhaustive `match` expression: subject of type `int` is not fully handled."
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasCorrections.php"
+code = "non-existent-method"
+message = 'Method `getkey` does not exist on type `Laragear\Dte\Models\Concerns\HasCorrections`.'
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasCorrections.php"
+code = "non-existent-method"
+message = 'Method `loadmissing` does not exist on type `Laragear\Dte\Models\Concerns\HasCorrections`.'
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasCorrections.php"
+code = "non-existent-property"
+message = 'Property `$document_type` does not exist on trait `Laragear\Dte\Models\Concerns\HasCorrections`.'
+count = 6
+
+[[issues]]
+file = "src/Models/Concerns/HasCorrections.php"
+code = "non-existent-property"
+message = 'Property `$payload` does not exist on trait `Laragear\Dte\Models\Concerns\HasCorrections`.'
+count = 6
+
+[[issues]]
+file = "src/Models/Concerns/HasDocumentReplication.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Laragear\Dte\Models\SiiDte` is less specific than the declared return type `laragear\dte\models\concerns\hasdocumentreplication&static` for function `Laragear\Dte\Models\Concerns\HasDocumentReplication::finalizeClonedDraft`.'
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasDocumentReplication.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Laragear\Dte\Models\SiiDte` is less specific than the declared return type `laragear\dte\models\concerns\hasdocumentreplication&static` for function `{closure:src/Models/Concerns/HasDocumentReplication.php:51:57}`.'
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasDocumentReplication.php"
+code = "non-existent-method"
+message = 'Method `getkey` does not exist on type `Laragear\Dte\Models\Concerns\HasDocumentReplication`.'
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasDocumentReplication.php"
+code = "non-existent-method"
+message = 'Method `relationloaded` does not exist on type `Laragear\Dte\Models\Concerns\HasDocumentReplication`.'
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasDocumentReplication.php"
+code = "non-existent-method"
+message = 'Method `replicate` does not exist on type `Laragear\Dte\Models\Concerns\HasDocumentReplication`.'
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasDocumentReplication.php"
+code = "non-existent-property"
+message = 'Property `$payload` does not exist on trait `Laragear\Dte\Models\Concerns\HasDocumentReplication`.'
+count = 2
+
+[[issues]]
+file = "src/Models/Concerns/HasDocumentReplication.php"
+code = "template-constraint-violation"
+message = "Argument type mismatch for template `TRelatedModel`."
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasDocumentType.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `Illuminate\Database\Eloquent\Builder<Laragear\Dte\Models\Concerns\HasDocumentType&static>` is incompatible with native return type `Illuminate\Database\Eloquent\Builder`.'
+count = 9
+
+[[issues]]
+file = "src/Models/Concerns/HasRetries.php"
+code = "non-existent-property"
+message = 'Property `$document_type` does not exist on trait `Laragear\Dte\Models\Concerns\HasRetries`.'
+count = 2
+
+[[issues]]
+file = "src/Models/Concerns/HasSiiStatus.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `Illuminate\Database\Eloquent\Builder<Laragear\Dte\Models\Concerns\HasSiiStatus&static>` is incompatible with native return type `Illuminate\Database\Eloquent\Builder`.'
+count = 3
+
+[[issues]]
+file = "src/Models/Concerns/HasSiiStatus.php"
+code = "non-existent-method"
+message = 'Method `forcefill` does not exist on type `Laragear\Dte\Models\Concerns\HasSiiStatus`.'
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasSiiStatus.php"
+code = "non-existent-method"
+message = 'Method `getattribute` does not exist on type `Laragear\Dte\Models\Concerns\HasSiiStatus`.'
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasSiiStatus.php"
+code = "non-existent-method"
+message = 'Method `save` does not exist on type `Laragear\Dte\Models\Concerns\HasSiiStatus`.'
+count = 1
+
+[[issues]]
+file = "src/Models/Concerns/HasXmlPayload.php"
+code = "non-existent-method"
+message = 'Method `getattribute` does not exist on type `Laragear\Dte\Models\Concerns\HasXmlPayload`.'
+count = 1
+
+[[issues]]
+file = "src/Models/SiiAecCession.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Models\SiiAecCession::$casts` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Models/SiiCaf.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Models\SiiCaf::$casts` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Models/SiiCaf.php"
+code = "invalid-use-tag"
+message = "The `@use` tag must refer to a trait that is used."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiCaf.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Database\Eloquent\Factories\HasFactory`: expected at least 1, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Models/SiiCaf.php"
+code = "unused-parameter"
+message = "Parameter `$value` is never used."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDte.php"
+code = "docblock-type-mismatch"
+message = "Docblock type mismatch for variable `$query`."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDte.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDte.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laragear\Dte\Caf\Folio::isAnnuled` is possibly `null`, but parameter type `int` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDte.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDteEnvelope.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Models\SiiDteEnvelope::$casts` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDteEnvelope.php"
+code = "unused-parameter"
+message = "Parameter `$dte` is never used."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDtePayload.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Models\SiiDtePayload::$casts` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDteReference.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Models\SiiDteReference::$casts` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Models/SiiInboundDocument.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Models\SiiInboundDocument::$casts` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Models/SiiInboundDocument.php"
+code = "invalid-use-tag"
+message = "The `@use` tag must refer to a trait that is used."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiInboundDocument.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Database\Eloquent\Factories\HasFactory`: expected at least 1, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Models/SiiInterchangeLog.php"
+code = "incompatible-property-type"
+message = 'Property `Laragear\Dte\Models\SiiInterchangeLog::$casts` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Pdf/PdfBuilder.php"
+code = "invalid-callable"
+message = "Expression of type `null` cannot be called as a function or method."
+count = 1
+
+[[issues]]
+file = "src/Pdf/PdfBuilder.php"
+code = "less-specific-nested-return-statement"
+message = '''Returned type `array{'disk': mixed, 'path': string}` is less specific than the declared return type `array{'disk': string, 'path': string}` for function `Laragear\Dte\Pdf\PdfBuilder::resolveDiskAndPath` due to nested 'mixed'.'''
+count = 1
+
+[[issues]]
+file = "src/Pdf/PdfBuilder.php"
+code = "non-existent-method"
+message = 'Method `temporaryurl` does not exist on type `Illuminate\Contracts\Filesystem\Filesystem`.'
+count = 1
+
+[[issues]]
+file = "src/Pdf/PdfBuilder.php"
+code = "non-existent-method"
+message = 'Method `url` does not exist on type `Illuminate\Contracts\Filesystem\Filesystem`.'
+count = 1
+
+[[issues]]
+file = "src/Pdf/PdfBuilder.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laragear\Dte\Pdf\Ted\Pdf417Encoder::setColumns` is possibly `null`, but parameter type `int` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Pdf/PdfBuilder.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laragear\Dte\Pdf\Ted\Pdf417Encoder::setSecurityLevel` is possibly `null`, but parameter type `int` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Encoder.php"
+code = "invalid-argument"
+message = "Invalid argument type for argument #1 of `bcpow`: expected `numeric-string`, but found `int(256)`."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Encoder.php"
+code = "invalid-argument"
+message = "Invalid argument type for argument #2 of `bcdiv`: expected `numeric-string`, but found `int(900)`."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Encoder.php"
+code = "invalid-argument"
+message = "Invalid argument type for argument #2 of `bcmod`: expected `numeric-string`, but found `int(900)`."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Encoder.php"
+code = "invalid-argument"
+message = "Invalid argument type for argument #2 of `bcmul`: expected `numeric-string`, but found `int<0, 255>`."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Encoder.php"
+code = "invalid-argument"
+message = "Invalid argument type for argument #2 of `bcpow`: expected `numeric-string`, but found `int<0, 5>`."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Encoder.php"
+code = "possibly-invalid-argument"
+message = "Possible argument type mismatch for argument #1 of `bcdiv`: expected `numeric-string`, but possibly received `string`."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Encoder.php"
+code = "possibly-invalid-argument"
+message = "Possible argument type mismatch for argument #1 of `bcmod`: expected `numeric-string`, but possibly received `string`."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Encoder.php"
+code = "possibly-invalid-argument"
+message = "Possible argument type mismatch for argument #2 of `array_chunk`: expected `positive-int`, but possibly received `int`."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Encoder.php"
+code = "possibly-invalid-argument"
+message = "Possible argument type mismatch for argument #2 of `array_fill`: expected `non-negative-int`, but possibly received `int`."
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Renderer.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Pdf\Ted\Pdf417Renderer::parseColor`: expected `array{0: int, 1: int, 2: int}|null`, but found `list{float|int, float|int, float|int}`.'
+count = 1
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Renderer.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #1 of `Laragear\Dte\Pdf\Ted\Pdf417Renderer::parseColor`: expected `string`, but possibly received `int|string`.'
+count = 5
+
+[[issues]]
+file = "src/Pdf/Ted/Pdf417Renderer.php"
+code = "too-few-arguments"
+message = 'Too few arguments provided for method `Laragear\Dte\Proxies\GDProxy::allocateColor`.'
+count = 4
+
+[[issues]]
+file = "src/Pdf/TedExtractor.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Pdf\TedExtractor::extract`: expected `string`, but found `non-empty-array<array-key, string>|truthy-string`.'
+count = 1
+
+[[issues]]
+file = "src/Pdf/TedExtractor.php"
+code = "invalid-return-statement"
+message = "Invalid return type for function `{closure:src/Pdf/TedExtractor.php:35:21}`: expected `string`, but found `array<array-key, string>|null|string`."
+count = 1
+
+[[issues]]
+file = "src/Pdf/TedExtractor.php"
+code = "invalid-return-statement"
+message = "Invalid return type for function `{closure:src/Pdf/TedExtractor.php:36:21}`: expected `string`, but found `array<array-key, string>|string`."
+count = 1
+
+[[issues]]
+file = "src/Pdf/TedExtractor.php"
+code = "nullable-return-statement"
+message = "Function `{closure:src/Pdf/TedExtractor.php:35:21}` is declared to return `string` but possibly returns a nullable value (inferred as `array<array-key, string>|null|string`)."
+count = 1
+
+[[issues]]
+file = "src/Proxies/ImapProxy.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `IMAP\Connection`.'
+count = 6
+
+[[issues]]
+file = "src/Proxies/ImapProxy.php"
+code = "non-existent-constant"
+message = 'Undefined constant: `Laragear\Dte\Proxies\SE_FREE`.'
+count = 1
+
+[[issues]]
+file = "src/Proxies/ImapProxy.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `Laragear\Dte\Proxies\imap_body` (also tried as `imap_body` in a broader scope).'
+count = 1
+
+[[issues]]
+file = "src/Proxies/ImapProxy.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `Laragear\Dte\Proxies\imap_close` (also tried as `imap_close` in a broader scope).'
+count = 1
+
+[[issues]]
+file = "src/Proxies/ImapProxy.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `Laragear\Dte\Proxies\imap_headerinfo` (also tried as `imap_headerinfo` in a broader scope).'
+count = 1
+
+[[issues]]
+file = "src/Proxies/ImapProxy.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `Laragear\Dte\Proxies\imap_last_error` (also tried as `imap_last_error` in a broader scope).'
+count = 1
+
+[[issues]]
+file = "src/Proxies/ImapProxy.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `Laragear\Dte\Proxies\imap_open` (also tried as `imap_open` in a broader scope).'
+count = 1
+
+[[issues]]
+file = "src/Proxies/ImapProxy.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `Laragear\Dte\Proxies\imap_search` (also tried as `imap_search` in a broader scope).'
+count = 1
+
+[[issues]]
+file = "src/Proxies/ImapProxy.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `Laragear\Dte\Proxies\imap_setflag_full` (also tried as `imap_setflag_full` in a broader scope).'
+count = 1
+
+[[issues]]
+file = "src/Proxies/OpenSslProxy.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Proxies\OpenSslProxy::csrNew`: expected `OpenSSLCertificateSigningRequest|false`, but found `OpenSSLCertificateSigningRequest|false|resource`.'
+count = 1
+
+[[issues]]
+file = "src/Proxies/OpenSslProxy.php"
+code = "invalid-return-statement"
+message = '''Invalid return type for function `Laragear\Dte\Proxies\OpenSslProxy::parsePem`: expected `array{'cert': string, 'extracerts'?: list<string>, 'pkey': string}`, but found `array{'cert': string, 'extracerts'?: non-empty-array<array-key, string>|non-empty-list<string>, 'pkey': string}`.'''
+count = 1
+
+[[issues]]
+file = "src/Proxies/OpenSslProxy.php"
+code = "less-specific-nested-return-statement"
+message = '''Returned type `array{'cert': string, 'extracerts'?: list<mixed>, 'pkey': string}` is less specific than the declared return type `array{'cert': string, 'extracerts'?: list<string>, 'pkey': string}` for function `Laragear\Dte\Proxies\OpenSslProxy::normalizeCertificates` due to nested 'mixed'.'''
+count = 1
+
+[[issues]]
+file = "src/Proxies/OpenSslProxy.php"
+code = "redundant-logical-operation"
+message = "Redundant `||` operation: left operand is evaluated and right operand is always falsy."
+count = 2
+
+[[issues]]
+file = "src/Proxies/OpenSslProxy.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 2
+
+[[issues]]
+file = "src/Proxies/OpenSslProxy.php"
+code = "redundant-type-comparison"
+message = "Redundant condition: variable `$metadata['validFrom_time_t']` (type `int`) is already known to be `int`."
+count = 2
+
+[[issues]]
+file = "src/Proxies/OpenSslProxy.php"
+code = "redundant-type-comparison"
+message = "Redundant condition: variable `$metadata['validTo_time_t']` (type `int`) is already known to be `int`."
+count = 1
+
+[[issues]]
+file = "src/Proxies/OpenSslProxy.php"
+code = "too-many-arguments"
+message = "Too many arguments provided for function `openssl_verify`."
+count = 1
+
+[[issues]]
+file = "src/Proxies/StreamProxy.php"
+code = "less-specific-return-statement"
+message = 'Returned type `array<array-key, mixed>|false` is less specific than the declared return type `array<int, null|string>|false|null` for function `Laragear\Dte\Proxies\StreamProxy::fgetcsv`.'
+count = 1
+
+[[issues]]
+file = "src/Services/DteAuthenticityVerifier.php"
+code = "ambiguous-object-property-access"
+message = "Cannot statically verify property access on a generic `object` type."
+count = 1
+
+[[issues]]
+file = "src/Services/DteAuthenticityVerifier.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 1
+
+[[issues]]
+file = "src/Services/DteLifecycleService.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Services/IecvGenerator.php"
+code = "falsable-return-statement"
+message = '''Function `Laragear\Dte\Services\IecvGenerator::signXml` is declared to return `string` but possibly returns 'false' (inferred as `false|string`).'''
+count = 1
+
+[[issues]]
+file = "src/Services/IecvGenerator.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Services\IecvGenerator::signXml`: expected `string`, but found `false|string`.'
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Services\PackDtesService::resolveManualIds`: expected `list<int>`, but found `array<int, int>`.'
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "less-specific-argument"
+message = 'Argument type mismatch for argument #1 of `Illuminate\Support\Collection::diff`: expected `Illuminate\Contracts\Support\Arrayable<array-key, int>|iterable<array-key, int>`, but provided type `array<int, array-key>` is less specific.'
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "less-specific-argument"
+message = 'Argument type mismatch for argument #1 of `Laragear\Dte\Services\PackDtesService::createEnvelope`: expected `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiDte>`, but provided type `Illuminate\Support\Collection<int, Laragear\Dte\Models\SiiDte>&static` is less specific.'
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #3 of `Laragear\Dte\Services\PackDtesService::createEnvelopeInDatabase`: expected `array<array-key, mixed>`, but provided type `('TValue.illuminate\support\fluent extends nonnull)|array{}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "less-specific-return-statement"
+message = '''Returned type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)` is less specific than the declared return type `Laragear\Dte\Models\SiiDteEnvelope` for function `Laragear\Dte\Services\PackDtesService::createEnvelopeInDatabase`.'''
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Illuminate\Database\Eloquent\Collection<array-key, Illuminate\Database\Eloquent\Collection<int, mixed>&static>&static` is less specific than the declared return type `Illuminate\Support\Collection<string, Illuminate\Support\Collection<int, Laragear\Dte\Models\SiiDte>>` for function `Laragear\Dte\Services\PackDtesService::groupByIssuerAndReceiver`.'
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Illuminate\Support\Collection<array-key, mixed>` is less specific than the declared return type `Illuminate\Support\Collection<int, Laragear\Dte\Models\SiiDteEnvelope>` for function `Laragear\Dte\Services\PackDtesService::packManual`.'
+count = 2
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 3
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 2
+
+[[issues]]
+file = "src/Support/TokenAuthenticator.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Laragear\Dte\Data\Token::make`: expected `string`, but provided type `('TReturn.laragear\dte\support\tokenauthenticator::authenticate() extends mixed)` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Testing/DteFake.php"
+code = "deprecated-feature"
+message = 'Calling static methods directly on traits (`Laragear\Dte\Testing\Fakes\FakeDocumentBuilder`) is deprecated.'
+count = 2
+
+[[issues]]
+file = "src/Testing/DteFake.php"
+code = "invalid-property-access"
+message = "Attempting to access a property on a non-object type (`int`)."
+count = 2
+
+[[issues]]
+file = "src/Testing/DteFake.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Testing\DteFake::createdFor`: expected `list<Laragear\Dte\Models\SiiDte>`, but found `array<non-negative-int, Laragear\Dte\Models\SiiDte>`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/DteFake.php"
+code = "possibly-null-array-index"
+message = "Possibly using `null` as an array index to access elementof variable $all."
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakeCreditNoteBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Testing\Fakes\FakeCreditNoteBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDebitNoteBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Testing\Fakes\FakeDebitNoteBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDispatchGuideBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Testing\Fakes\FakeDispatchGuideBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDocumentBuilder.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #1 of `Laragear\Dte\Events\DteCreating::__construct`: expected `Laragear\Dte\Builders\DocumentBuilder`, but found `$this(Laragear\Dte\Testing\Fakes\FakeDocumentBuilder)`.'
+count = 2
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDocumentBuilder.php"
+code = "invalid-property-assignment-value"
+message = 'Invalid type for property `$data`: expected `Laragear\Dte\Data\DocumentPayload`, but got `array<array-key, mixed>`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDocumentBuilder.php"
+code = "missing-return-statement"
+message = "Missing return statement in function `fail`"
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDocumentBuilder.php"
+code = "non-existent-method"
+message = 'Method `assertTrue` does not exist on type `Laragear\Dte\Testing\Fakes\FakeDocumentBuilder`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDocumentBuilder.php"
+code = "non-existent-method"
+message = 'Method `dte` does not exist on type `Laragear\Dte\Testing\Fakes\FakeDocumentBuilder`.'
+count = 2
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDocumentBuilder.php"
+code = "possibly-non-existent-method"
+message = "Call to documented magic method `attributes()` on a class that may not handle it."
+count = 2
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDocumentBuilder.php"
+code = "possibly-non-existent-method"
+message = "Call to documented magic method `payloadData()` on a class that may not handle it."
+count = 4
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDocumentBuilder.php"
+code = "possibly-non-existent-method"
+message = "Call to documented magic method `validate()` on a class that may not handle it."
+count = 2
+
+[[issues]]
+file = "src/Testing/Fakes/FakeDocumentBuilder.php"
+code = "possibly-null-array-index"
+message = 'Possibly using `null` as an array index to access elementof variable laragear\dte\testing\fakes\fakedocumentbuilder::$created.'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakeInvoiceBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Testing\Fakes\FakeInvoiceBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakeInvoiceLiquidationBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Testing\Fakes\FakeInvoiceLiquidationBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakePersistDte.php"
+code = "invalid-property-assignment-value"
+message = 'Invalid type for property `$data`: expected `Laragear\Dte\Data\DocumentPayload`, but got `array<string, mixed>`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakePurchaseInvoiceBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Testing\Fakes\FakePurchaseInvoiceBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakeReceiptBuilder.php"
+code = "incompatible-return-type"
+message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Testing\Fakes\FakeReceiptBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakesBuilder.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Illuminate\Foundation\Application` is less specific than the declared return type `Laragear\Dte\Testing\Fakes\FakeDocumentBuilder|laragear\dte\testing\fakes\fakesbuilder&static` for function `Laragear\Dte\Testing\Fakes\FakesBuilder::fake`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakesBuilder.php"
+code = "non-existent-method"
+message = 'Method `clearResolvedInstances` does not exist on type `Laragear\Dte\Testing\Fakes\FakesBuilder`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakesBuilder.php"
+code = "non-existent-method"
+message = 'Method `swap` does not exist on type `Laragear\Dte\Testing\Fakes\FakesBuilder`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/Fakes/FakesBuilder.php"
+code = "non-existent-property"
+message = 'Static property `$fakeClass` does not exist on trait `Laragear\Dte\Testing\Fakes\FakesBuilder`.'
+count = 2
+
+[[issues]]
+file = "src/Testing/Fakes/FakesBuilder.php"
+code = "null-argument"
+message = 'Argument #1 of method `Illuminate\Container\Container::forgetInstance` is `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithDigitalCertificates.php"
+code = "invalid-method-access"
+message = "Attempting to access a method on a non-object type (`int`)."
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithDigitalCertificates.php"
+code = "invalid-method-access"
+message = "Attempting to access a method on a non-object type (`string`)."
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithDigitalCertificates.php"
+code = "non-existent-method"
+message = 'Method `missing` does not exist on type `Illuminate\Contracts\Filesystem\Filesystem`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithDigitalCertificates.php"
+code = "non-existent-method"
+message = 'Method `mock` does not exist on type `Laragear\Dte\Testing\InteractsWithDigitalCertificates`.'
+count = 2
+
+[[issues]]
+file = "src/Testing/InteractsWithDigitalCertificates.php"
+code = "non-existent-property"
+message = 'Property `$app` does not exist on trait `Laragear\Dte\Testing\InteractsWithDigitalCertificates`.'
+count = 2
+
+[[issues]]
+file = "src/Testing/InteractsWithDigitalCertificates.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laragear\Dte\Certificate\DigitalCertificate::__construct` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "invalid-static-method-access"
+message = 'Cannot call non-static method `Laragear\Dte\Facades\SiiCreditNote::fake` statically.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "invalid-static-method-access"
+message = 'Cannot call non-static method `Laragear\Dte\Facades\SiiDebitNote::fake` statically.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "invalid-static-method-access"
+message = 'Cannot call non-static method `Laragear\Dte\Facades\SiiDispatchGuide::fake` statically.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "invalid-static-method-access"
+message = 'Cannot call non-static method `Laragear\Dte\Facades\SiiInvoice::fake` statically.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "invalid-static-method-access"
+message = 'Cannot call non-static method `Laragear\Dte\Facades\SiiInvoiceLiquidation::fake` statically.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "invalid-static-method-access"
+message = 'Cannot call non-static method `Laragear\Dte\Facades\SiiPurchaseInvoice::fake` statically.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "invalid-static-method-access"
+message = 'Cannot call non-static method `Laragear\Dte\Facades\SiiReceipt::fake` statically.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Laragear\Dte\Builders\DocumentBuilder` is less specific than the declared return type `Laragear\Dte\Testing\Fakes\FakeCreditNoteBuilder` for function `Laragear\Dte\Testing\InteractsWithSiiDte::newCreditNote`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Laragear\Dte\Builders\DocumentBuilder` is less specific than the declared return type `Laragear\Dte\Testing\Fakes\FakeDebitNoteBuilder` for function `Laragear\Dte\Testing\InteractsWithSiiDte::newDebitNote`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Laragear\Dte\Builders\DocumentBuilder` is less specific than the declared return type `Laragear\Dte\Testing\Fakes\FakeDispatchGuideBuilder` for function `Laragear\Dte\Testing\InteractsWithSiiDte::newDispatchGuide`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Laragear\Dte\Builders\DocumentBuilder` is less specific than the declared return type `Laragear\Dte\Testing\Fakes\FakeInvoiceBuilder` for function `Laragear\Dte\Testing\InteractsWithSiiDte::newInvoice`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Laragear\Dte\Builders\DocumentBuilder` is less specific than the declared return type `Laragear\Dte\Testing\Fakes\FakeInvoiceLiquidationBuilder` for function `Laragear\Dte\Testing\InteractsWithSiiDte::newInvoiceLiquidation`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Laragear\Dte\Builders\DocumentBuilder` is less specific than the declared return type `Laragear\Dte\Testing\Fakes\FakePurchaseInvoiceBuilder` for function `Laragear\Dte\Testing\InteractsWithSiiDte::newPurchaseInvoice`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Laragear\Dte\Builders\DocumentBuilder` is less specific than the declared return type `Laragear\Dte\Testing\Fakes\FakeReceiptBuilder` for function `Laragear\Dte\Testing\InteractsWithSiiDte::newReceipt`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "non-existent-method"
+message = 'Method `assertsame` does not exist on type `Laragear\Dte\Testing\InteractsWithSiiDte`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "non-existent-method"
+message = 'Method `getStub` does not exist on type `Laragear\Dte\Testing\InteractsWithSiiDte`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "non-existent-method"
+message = 'Method `mock` does not exist on type `Laragear\Dte\Testing\InteractsWithSiiDte`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "non-existent-property"
+message = 'Property `$app` does not exist on trait `Laragear\Dte\Testing\InteractsWithSiiDte`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 4
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 2
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "template-constraint-violation"
+message = "Argument type mismatch for template `TBuilder`."
+count = 7
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "too-few-arguments"
+message = 'Too few arguments provided for method `Laragear\Dte\Data\Item::make`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithSiiDte.php"
+code = "unknown-iterator-type"
+message = "Cannot determine the type of the expression provided to `foreach`."
+count = 1
+
+[[issues]]
+file = "src/Validation/Rules/SiiCertificate.php"
+code = "possibly-invalid-argument"
+message = "Possible argument type mismatch for argument #1 of `Closure`: expected `string`, but possibly received `array<array-key, mixed>|string`."
+count = 1
+
+[[issues]]
+file = "src/Validation/SiiCertificateValidator.php"
+code = "impossible-condition"
+message = "This condition (type `false`) will always evaluate to false."
+count = 1
+
+[[issues]]
+file = "src/Validation/ValidatesSiiDocuments.php"
+code = "unused-parameter"
+message = "Parameter `$attribute` is never used."
+count = 2
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "falsable-return-statement"
+message = '''Function `Laragear\Dte\Xml\TimbreSigner::cloneElement` is declared to return `DOMElement` but possibly returns 'false' (inferred as `DOMElement|false`).'''
+count = 1
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "invalid-method-access"
+message = "Attempting to access a method on a non-object type (`false`)."
+count = 3
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Xml\TimbreSigner::cloneElement`: expected `DOMElement`, but found `DOMElement|false`.'
+count = 1
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Xml\TimbreSigner::flatten`: expected `string`, but found `array<array-key, string>|null|string`.'
+count = 1
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "less-specific-nested-argument-type"
+message = "Argument type mismatch for argument #3 of `preg_replace`: expected `array<array-key, string>|string`, but provided type `array<array-key, mixed>|false|string` is less specific."
+count = 1
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "nullable-return-statement"
+message = 'Function `Laragear\Dte\Xml\TimbreSigner::flatten` is declared to return `string` but possibly returns a nullable value (inferred as `array<array-key, string>|null|string`).'
+count = 1
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 1
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "possibly-false-argument"
+message = "Argument #3 of function `preg_replace` is possibly `false`, but parameter type `array<array-key, string>|string` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "possibly-null-iterator"
+message = "Expression being iterated (type `DOMNamedNodeMap<DOMAttr>|null`) might be `null` at runtime."
+count = 1
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "possibly-null-property-access"
+message = "Attempting to access a property on a possibly `null` value."
+count = 1
+
+[[issues]]
+file = "src/Xml/TimbreSigner.php"
+code = "redundant-logical-operation"
+message = "Redundant `&&` operation: left operand is always truthy and right operand is evaluated."
+count = 1
+
+[[issues]]
+file = "src/Xml/XmlSigner.php"
+code = "falsable-return-statement"
+message = '''Function `Laragear\Dte\Xml\XmlSigner::signString` is declared to return `string` but possibly returns 'false' (inferred as `false|string`).'''
+count = 1
+
+[[issues]]
+file = "src/Xml/XmlSigner.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Xml\XmlSigner::signString`: expected `string`, but found `false|string`.'
+count = 1
+
+[[issues]]
+file = "src/Xml/XmlSigner.php"
+code = "non-existent-method"
+message = "Method `importnode` does not exist on type `DOMNode`."
+count = 1
+
+[[issues]]
+file = "src/Xml/XmlSigner.php"
+code = "possibly-false-argument"
+message = "Argument #1 of function `sha1` is possibly `false`, but parameter type `string` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Xml/XmlSigner.php"
+code = "possibly-null-argument"
+message = "Argument #1 of method `DOMDocument::importNode` is possibly `null`, but parameter type `DOMNode` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Xml/XmlSigner.php"
+code = "possibly-null-argument"
+message = 'Argument #3 of method `Laragear\Dte\Xml\XmlSigner::injectSignature` is possibly `null`, but parameter type `DOMNode` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Xml/XmlValidator.php"
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 2

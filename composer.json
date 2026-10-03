@@ -1,0 +1,138 @@
+{
+    "name": "laragear/dte",
+    "description": "Comply with SII within your Laravel application.",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "keywords": [
+        "laravel",
+        "chile",
+        "sii",
+        "tax",
+        "taxing",
+        "irs"
+    ],
+    "authors": [
+        {
+            "name": "Italo Israel Baeza Cabrera",
+            "email": "DarkGhostHunter@Gmail.com",
+            "role": "Developer",
+            "homepage": "https://github.com/sponsors/DarkGhostHunter"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/Laragear/Dte",
+        "issues": "https://github.com/Laragear/Dte/issues"
+    },
+    "require": {
+        "php": "^8.5",
+        "ext-dom": "*",
+        "ext-libxml": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "ext-simplexml": "*",
+        "ext-bcmath": "*",
+        "ext-gd": "*",
+        "ext-soap": "*",
+        "ext-xmlwriter": "*",
+        "illuminate/broadcasting": "^13.27",
+        "illuminate/bus": "^13.27",
+        "illuminate/cache": "^13.27",
+        "illuminate/config": "^13.27",
+        "illuminate/console": "^13.27",
+        "illuminate/database": "^13.27",
+        "illuminate/events": "^13.27",
+        "illuminate/filesystem": "^13.27",
+        "illuminate/http": "^13.27",
+        "illuminate/mail": "^13.27",
+        "illuminate/pipeline": "^13.27",
+        "illuminate/queue": "^13.27",
+        "illuminate/support": "^13.27",
+        "illuminate/validation": "^13.27",
+        "illuminate/view": "^13.27",
+        "laragear/rut": "^5.1.4",
+        "laravel/prompts": "^0.3.22",
+        "spatie/laravel-pdf": "^2.13",
+        "spatie/temporary-directory": "^2.4",
+        "zbateson/mail-mime-parser": "^4.0.3"
+    },
+    "require-dev": {
+        "ext-zlib": "*",
+        "aws/aws-sdk-php": "^3.392",
+        "dompdf/dompdf": "^3.1",
+        "google/apiclient": "^2.19.4",
+        "laragear/meta-testing": "^4.3",
+        "laravel/pao": "^1.1",
+        "laravel/boost": "^2.8.1",
+        "laravel/pint": "^1.30",
+        "microsoft/microsoft-graph": "^3.5.0",
+        "orchestra/testbench": "^11.0"
+    },
+    "suggest": {
+        "ext-imap": "Required to use the IMAP mailbox driver for inbound DTE documents.",
+        "dompdf/dompdf": "Default driver for DTE PDF Generation.",
+        "spatie/browsershot": "Headless Chrome driver for DTE PDF Generation.",
+        "laravel/boost": "AI companion for using this library skills"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laragear\\Dte\\": "src/",
+            "Laragear\\Dte\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Laragear\\Dte\\Dev\\": "dev/",
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --coverage-clover build/logs/clover-unit-actions.xml --coverage-filter src",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "dte:rules": "php dev/generate-rules.php",
+        "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
+    },
+    "config": {
+        "sort-packages": true,
+        "process-timeout": 600,
+        "allow-plugins": {
+            "php-http/discovery": false,
+            "tbachert/spi": false
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laragear\\Dte\\DteServiceProvider"
+            ],
+            "aliases": {
+                "Caf": "Laragear\\Dte\\Facades\\Caf",
+                "Certificate": "Laragear\\Dte\\Facades\\Certificate",
+                "Claim": "Laragear\\Dte\\Facades\\Claim",
+                "SiiAec": "Laragear\\Dte\\Facades\\SiiAec",
+                "SiiAecCession": "Laragear\\Dte\\Facades\\SiiAecCession",
+                "SiiCreditNote": "Laragear\\Dte\\Facades\\SiiCreditNote",
+                "SiiDebitNote": "Laragear\\Dte\\Facades\\SiiDebitNote",
+                "SiiDispatchGuide": "Laragear\\Dte\\Facades\\SiiDispatchGuide",
+                "SiiInvoice": "Laragear\\Dte\\Facades\\SiiInvoice",
+                "SiiInvoiceLiquidation": "Laragear\\Dte\\Facades\\SiiInvoiceLiquidation",
+                "SiiPurchaseInvoice": "Laragear\\Dte\\Facades\\SiiPurchaseInvoice",
+                "SiiReceipt": "Laragear\\Dte\\Facades\\SiiReceipt"
+            }
+        },
+        "google/apiclient-services": [
+            "Gmail"
+        ]
+    },
+    "funding": [
+        {
+            "type": "Github Sponsorship",
+            "url": "https://github.com/sponsors/DarkGhostHunter"
+        },
+        {
+            "type": "Paypal",
+            "url": "https://paypal.me/darkghosthunter"
+        }
+    ]
+}

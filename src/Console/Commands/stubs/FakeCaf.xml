@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<AUTORIZACION>
+<CAF version="1.0">
+<DA>
+<RE>{rut}</RE>
+<RS>DUMMY COMPANY</RS>
+<TD>{type}</TD>
+<RNG><D>{from}</D><H>{to}</H></RNG>
+<FA>{date}</FA>
+<RSAPK><M>{modulus}</M><E>{exponent}</E></RSAPK>
+<IDK>100</IDK>
+</DA>
+<FRMA algoritmo="SHA1withRSA">dummy-signature</FRMA>
+</CAF>
+<RSASK>{privateKey}
+</RSASK>
+
+<RSAPUBK>{publicKey}
+</RSAPUBK>
+</AUTORIZACION>

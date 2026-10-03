@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioDTE xmlns="http://www.sii.cl/SiiDte" version="1.0">
+  <Documento ID="FET33">
+    <Encabezado>
+      <IdDoc>
+        <TipoDTE>33</TipoDTE>
+        <Folio>1</Folio>
+        <FchEmis>2025-01-01</FchEmis>
+      </IdDoc>
+      <Emisor>
+        <RUTEmisor>76123456-0</RUTEmisor>
+        <RznSocEmisor>Test Company</RznSocEmisor>
+      </Emisor>
+      <Receptor>
+        <RUTRecep>12345678-5</RUTRecep>
+        <RznSocRecep>Customer</RznSocRecep>
+      </Receptor>
+      <Totales>
+        <MntNeto>1000</MntNeto>
+        <IVA>190</IVA>
+        <MntTotal>1190</MntTotal>
+      </Totales>
+    </Encabezado>
+    <Detalle>
+      <NroLinDet>1</NroLinDet>
+      <NmbItem>Test Item</NmbItem>
+      <MontoItem>1000</MontoItem>
+    </Detalle>
+    <TED version="1.0">
+      <DD>
+        <RE>76123456-0</RE>
+        <TD>33</TD>
+        <F>1</F>
+        <FE>2025-01-01</FE>
+        <RR>12345678-5</RR>
+        <RSR>Customer</RSR>
+        <MNT>1190</MNT>
+        <IT1>Test Item</IT1>
+        <CAF version="1.0">
+          <DA>
+            <RE>76123456-0</RE>
+            <RS>Test Company</RS>
+            <TD>33</TD>
+            <RNG>
+              <D>1</D>
+              <H>1000</H>
+            </RNG>
+            <FA>2025-01-01</FA>
+            <RSAPK>
+              <M>AAAA</M>
+              <E>Aw==</E>
+            </RSAPK>
+            <IDK>100</IDK>
+          </DA>
+          <FRMA algoritmo="SHA1withRSA">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</FRMA>
+        </CAF>
+        <TSTED>2025-01-01T00:00:00</TSTED>
+      </DD>
+      <FRMT algoritmo="SHA1withRSA">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</FRMT>
+    </TED>
+    <TmstFirma>2025-01-01T00:00:00</TmstFirma>
+  </Documento>
+</EnvioDTE>

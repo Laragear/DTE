@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<DTE version="1.0">
+<Documento ID="F2T61">
+<Encabezado>
+<IdDoc>
+<TipoDTE>61</TipoDTE>
+<Folio>2</Folio>
+<FchEmis>2020-09-27</FchEmis>
+</IdDoc>
+<Emisor>
+<RUTEmisor>11111111-1</RUTEmisor>
+<RznSoc>EJEMPLO S.A.</RznSoc>
+<GiroEmis>Insumos de Computacion</GiroEmis>
+<Acteco>31341</Acteco>
+<DirOrigen>Teatinos 120, Piso 4</DirOrigen>
+<CmnaOrigen>Santiago</CmnaOrigen>
+</Emisor>
+<Receptor>
+<RUTRecep>77777777-7</RUTRecep>
+<RznSocRecep>EMPRESA  LTDA</RznSocRecep>
+<GiroRecep>COMPUTACION</GiroRecep>
+<DirRecep>SAN DIEGO 2222</DirRecep>
+<CmnaRecep>LA FLORIDA</CmnaRecep>
+</Receptor>
+<Totales>
+<MntNeto>823905</MntNeto>
+<TasaIVA>19</TasaIVA>
+<IVA>156542</IVA>
+<MntTotal>980447</MntTotal>
+</Totales>
+</Encabezado>
+<Detalle>
+<NroLinDet>1</NroLinDet>
+<NmbItem>CORRIGE GIRO DEL RECEPTOR</NmbItem>
+<QtyItem>1</QtyItem>
+<PrcItem>1</PrcItem>
+<MontoItem>1</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>2</NroLinDet>
+<NmbItem>Pañuelo AFECTO</NmbItem>
+<QtyItem>137</QtyItem>
+<PrcItem>2966</PrcItem>
+<MontoItem>406342</MontoItem>
+</Detalle>
+<Detalle>
+<NroLinDet>3</NroLinDet>
+<NmbItem>ITEM 2 AFECTO</NmbItem>
+<QtyItem>206</QtyItem>
+<PrcItem>2027</PrcItem>
+<MontoItem>417562</MontoItem>
+</Detalle>
+<Referencia>
+<NroLinRef>1</NroLinRef>
+<TpoDocRef>33</TpoDocRef>
+<FolioRef>2</FolioRef>
+<FchRef>2020-09-27</FchRef>
+<CodRef>3</CodRef>
+<RazonRef>Devolución de mercaderías</RazonRef>
+</Referencia>
+<TED version="1.0"><DD><RE>11111111-1</RE><TD>61</TD><F>2</F><FE>2020-09-27</FE><RR>77777777-7</RR><RSR>EMPRESA  LTDA</RSR><MNT>980447</MNT><IT1>CORRIGE GIRO DEL RECEPTOR</IT1><CAF version="1.0">
+<DA>
+<RE>11111111-1</RE>
+<RS>DUMMY COMPANY</RS>
+<TD>61</TD>
+<RNG><D>1</D><H>200</H></RNG>
+<FA>2020-05-31</FA>
+<RSAPK><M>r2x2pLTnl5WGAJAyMhxsUe1JpIOyTpEoMKtMrPQ3RW4ZunjJ5iQ+kCv6V5o3gFL8vHOcgvL7+LunIZGwfczSjAQhWdtfI1ipqUJNmRgNehkrLgek1CJ+l01FMAWPOaVhQd/SN4d8VgzkDEIZqIOkk/Zdp66zJrxEE1rDERlsics=</M><E>AQAB</E></RSAPK>
+<IDK>100</IDK>
+</DA>
+<FRMA algoritmo="SHA1withRSA">c2lpLXNpZ25hdHVyZQ==</FRMA>
+</CAF><TSTED>2020-09-27T18:37:31</TSTED></DD><FRMT algoritmo="SHA1withRSA">TEWzoWPNh3nzf/IZwOI0f69uJYonJ03LbTmUiUzFXeefag581MZnlSQNrAYrqaomLARjrq0vRORvQhSJPRfrBHVD0DiiKKy2tT35H+umHX7P7Ias3uuQRFh9zlY5r2uPyJFN+rmCurt4FGrbHQthoc1dTJOMq9B9EcMDJhPM+ng=</FRMT></TED><TmstFirma>2020-09-27T18:37:31</TmstFirma>
+</Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#F2T61">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>HOfb+E15CWs6G7URa6ky9RZsANg=</DigestValue>
+</Reference>
+</SignedInfo>
+
+<SignatureValue>MMX+r6f7W5PJJNcnVpYT8M76LazmuHiptMLXVYJ4iFyCf7UDloN7U6ADoDAARe4KcbvUMWzYTpgB
+W2OaaWWcRtWw1iIBlrUHD9V9bUoVxPCppHIvNSu5weTam6VZ5G3hJDNJuRIQa/pr1i5IJaQPnkui
+m3lLCjPNpNzOxvgcYnQ=
+</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>s4xlbaMp94XAtsWB5ARcmfYh0pX6C6nKhvozwNjgO74P5AgUmEhkPywWUUsq9nuwSXovq75diZ6f32yMkAE7yJv7pfVj09dHi03Qf6V8TVbKVB07vLvJyV7hPvNhnKU8kvqM9mB9Ubco3NPtSpSNnAM44swRbH4Vh6xwKnrLETE=</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>MIICejCCAeOgAwIBAgIKek1x7KhX1auNejANBgkqhkiG9w0BAQUFADBcMQswCQYDVQQGEwJDTDEnMCUGA1UEChMeRW1pc29yIGRlIGNlcnRpZmljYWRvIGZpY3RpY2lvMSQwIgYDVQQDExtQUlVFQkEgQ0EgRklSTUEgRUxFQ1RST05JQ0EwHhcNMjAwNjAxMDAwMDAxWhcNMzAwNjAxMDAwMDAxWjA/MQswCQYDVQQGEwJDTDEZMBcGA1UEChMQVXN1YXJpbyBmaWN0aWNpbzEVMBMGA1UEAxMMRWplbXBsbyBTLkEuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCzjGVtoyn3hcC2xYHkBFyZ9iHSlfoLqcqG+jPA2OA7vg/kCBSYSGQ/LBZRSyr2e7BJei+rvl2Jnp/fbIyQATvIm/ul9WPT10eLTdB/pXxNVspUHTu8u8nJXuE+82GcpTyS+oz2YH1Rtyjc0+1KlI2cAzjizBFsfhWHrHAqessRMQIDAQABo2AwXjAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIE8DAfBgNVHSMEGDAWgBTrYOCJEDumJxvBR6WnHWJv95/9TjAdBgNVHQ4EFgQUxc5OqOWmmDGvOFViJBCVSOLOqrswDQYJKoZIhvcNAQEFBQADgYEARFSdwN4QhIJBF7F4WP4CNwOKvrBqbaoe4FOED6/XhSfWUB8qoyWt5bed6b7FY300ZRfcl+C2VaFzWCkogzfXVPNhewgiIe2BV4ip3YpgA/W3TN2PjMbgM7GWHj2oJPmsVU8N3HXx+j7ZqcxrVHMzy73IWXYs9psAzkXVqzUTy3M=</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE>

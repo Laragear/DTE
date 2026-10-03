@@ -164,7 +164,7 @@ class RulesGeneratorTest extends TestCase
         $emitter->expects('emit')->never();
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Unmapped XSD elements (add them to dev/field-map.php): ');
+        $this->expectExceptionMessageIs('Unmapped XSD elements (add them to dev/field-map.php): ');
 
         $this->generator($this->parserReturning([]), null, $emitter)->generate($this->root);
     }

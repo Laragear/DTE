@@ -67,7 +67,8 @@
         "laravel/boost": "^2.8.1",
         "laravel/pint": "^1.30",
         "microsoft/microsoft-graph": "^3.5.0",
-        "orchestra/testbench": "^11.0",
+        "orchestra/testbench": "^11.2.0",
+        "orchestra/testbench-core": "^11.5",
         "phpunit/phpunit": "^13.4"
     },
     "suggest": {

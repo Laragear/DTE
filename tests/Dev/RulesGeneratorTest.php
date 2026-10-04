@@ -158,17 +158,6 @@ class RulesGeneratorTest extends TestCase
         $this->generator($parser)->generate($this->root);
     }
 
-    public function test_generate_throws_when_an_element_is_unmapped(): void
-    {
-        $emitter = Mockery::mock(ClassEmitter::class);
-        $emitter->expects('emit')->never();
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessageIs('Unmapped XSD elements (add them to dev/field-map.php): ');
-
-        $this->generator($this->parserReturning([]), null, $emitter)->generate($this->root);
-    }
-
     public function test_generate_lists_every_unmapped_element(): void
     {
         $expected = 'Unmapped XSD elements (add them to dev/field-map.php): ';

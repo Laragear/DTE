@@ -916,13 +916,15 @@ When satisfying complex *Libro de Compras* setups with "Proportional IVA" requir
 Assign the `iva_uso_comun` flag, and map the custom `IecvProperty::CommonIvaFactor` property so the `IecvBuilder` can correctly remap traditional nodes towards `<TotOpIVAUsoComun>`, `<TotCredIVAUsoComun>` and other advanced retention structures natively.
 
 ```php
-use Laragear\Dte\Builders\Iecv\IecvBuilder;use Laragear\Dte\Enums\IecvProperty;use Laragear\Dte\Enums\IecvType;
+use Laragear\Dte\Builders\Iecv\IecvBuilder;
+use Laragear\Dte\Enums\IecvProperty;
+use Laragear\Dte\Enums\IecvType;
 
 $invoice->iva_uso_comun = true; 
 
 $xml = app(IecvBuilder::class)->build(
     dtes: $dtes,
-    type: IecvType::Compras, 
+    type: IecvType::Sales, 
     period: '2024-03', 
     resolutionDate: '2024-01-01', 
     resolutionNumber: 123, 

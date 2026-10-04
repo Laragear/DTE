@@ -69,7 +69,7 @@
         "microsoft/microsoft-graph": "^3.7.0",
         "orchestra/testbench": "^11.3.0",
         "orchestra/testbench-core": "^11.5",
-        "phpunit/phpunit": "^13.0"
+        "phpunit/phpunit": "^13.3.6"
     },
     "suggest": {
         "ext-imap": "Required to use the IMAP mailbox driver for inbound DTE documents.",

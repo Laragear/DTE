@@ -60,16 +60,16 @@
     "require-dev": {
         "ext-zlib": "*",
         "aws/aws-sdk-php": "^3.392",
-        "dompdf/dompdf": "^3.1",
-        "google/apiclient": "^2.19.4",
+        "dompdf/dompdf": "^3.1.6",
+        "google/apiclient": "^2.20.1",
         "laragear/meta-testing": "^4.3",
         "laravel/pao": "^1.1",
-        "laravel/boost": "^2.8.1",
-        "laravel/pint": "^1.30",
-        "microsoft/microsoft-graph": "^3.5.0",
-        "orchestra/testbench": "^11.2.0",
+        "laravel/boost": "^2.10.1",
+        "laravel/pint": "^1.32",
+        "microsoft/microsoft-graph": "^3.7.0",
+        "orchestra/testbench": "^11.3.0",
         "orchestra/testbench-core": "^11.5",
-        "phpunit/phpunit": "^13.0"
+        "phpunit/phpunit": "^13.3"
     },
     "suggest": {
         "ext-imap": "Required to use the IMAP mailbox driver for inbound DTE documents.",

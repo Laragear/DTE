@@ -81,9 +81,7 @@ class MakeFakeCertificateCommand extends Command
 
         $this->saveCertificate($p12, $storage, $options['disk'], $options['path']);
 
-        $disk = $options['disk'] instanceof Filesystem ? 'the given disk' : $options['disk'];
-
-        $this->info("Successfully created fake certificate at disk {$disk}: {$options['path']}");
+        $this->info("Successfully created fake certificate at disk {$options['disk']}: {$options['path']}");
         $this->info("Password: {$options['password']}");
 
         return self::SUCCESS;

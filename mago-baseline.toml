@@ -1,66 +1,6 @@
 variant = "loose"
 
 [[issues]]
-file = "database/factories/DteFactory.php"
-code = "missing-template-parameter"
-message = 'Too few template arguments for `Illuminate\Database\Eloquent\Factories\Factory`: expected at least 1, but found 0.'
-count = 1
-
-[[issues]]
-file = "database/factories/SiiAecCessionFactory.php"
-code = "excess-template-parameter"
-message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
-count = 1
-
-[[issues]]
-file = "database/factories/SiiCafFactory.php"
-code = "excess-template-parameter"
-message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
-count = 1
-
-[[issues]]
-file = "database/factories/SiiDteEnvelopeFactory.php"
-code = "excess-template-parameter"
-message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
-count = 1
-
-[[issues]]
-file = "database/factories/SiiDteEnvelopePayloadFactory.php"
-code = "excess-template-parameter"
-message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
-count = 1
-
-[[issues]]
-file = "database/factories/SiiDteFactory.php"
-code = "excess-template-parameter"
-message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
-count = 1
-
-[[issues]]
-file = "database/factories/SiiDtePayloadFactory.php"
-code = "excess-template-parameter"
-message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
-count = 1
-
-[[issues]]
-file = "database/factories/SiiInboundDocumentFactory.php"
-code = "excess-template-parameter"
-message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
-count = 1
-
-[[issues]]
-file = "database/factories/SiiInboundDocumentPayloadFactory.php"
-code = "excess-template-parameter"
-message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
-count = 1
-
-[[issues]]
-file = "database/factories/SiiInterchangeLogFactory.php"
-code = "excess-template-parameter"
-message = 'Too many template arguments for `Laragear\Dte\Database\Factories\DteFactory`: expected 0, but found 1.'
-count = 1
-
-[[issues]]
 file = "src/Actions/Aec/CompileAec.php"
 code = "incompatible-property-type"
 message = 'Property `Laragear\Dte\Actions\Aec\CompileAec::$pipes` has an incompatible type declaration from docblock.'
@@ -136,7 +76,7 @@ count = 1
 file = "src/Actions/CompileDte/Pipes/BuildXml.php"
 code = "invalid-type-cast"
 message = "Casting `mixed` to `float`."
-count = 5
+count = 6
 
 [[issues]]
 file = "src/Actions/CompileDte/Pipes/BuildXml.php"
@@ -650,6 +590,12 @@ count = 4
 
 [[issues]]
 file = "src/Builders/DocumentBuilder.php"
+code = "redundant-cast"
+message = "Redundant cast to `(bool)`: the expression already has this type."
+count = 1
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
 code = "redundant-null-coalesce"
 message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
 count = 1
@@ -1105,6 +1051,12 @@ message = 'Argument #3 of method `Laragear\Dte\Services\PackDtesService::packMan
 count = 1
 
 [[issues]]
+file = "src/Console/Commands/PollIecvStatusCommand.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Console\Commands\PollIecvStatusCommand::books`: expected `Illuminate\Support\LazyCollection<int, Laragear\Dte\Models\SiiIecv>`, but found `Illuminate\Support\LazyCollection<int, Laragear\Dte\Models\SiiIecv|Laragear\Dte\Models\SiiIecv&static|stdClass>`.'
+count = 1
+
+[[issues]]
 file = "src/Console/Commands/PollTrackStatusCommand.php"
 code = "invalid-return-statement"
 message = 'Invalid return type for function `Laragear\Dte\Console\Commands\PollTrackStatusCommand::envelopes`: expected `Illuminate\Support\LazyCollection<int, Laragear\Dte\Models\SiiDteEnvelope>`, but found `Illuminate\Support\LazyCollection<int, Laragear\Dte\Models\SiiDteEnvelope|Laragear\Dte\Models\SiiDteEnvelope&static|stdClass>`.'
@@ -1144,6 +1096,12 @@ count = 2
 file = "src/Console/Commands/RejectExpiringPhantomInvoicesCommand.php"
 code = "less-specific-return-statement"
 message = 'Returned type `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiInboundDocument|Laragear\Dte\Models\SiiInboundDocument&static>|Illuminate\Support\Collection<int, stdClass>` is less specific than the declared return type `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiInboundDocument>` for function `Laragear\Dte\Console\Commands\RejectExpiringPhantomInvoicesCommand::queryExpiringPhantomInvoices`.'
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/SendIecvCommand.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Console\Commands\SendIecvCommand::documents`: expected `Illuminate\Support\Collection<int, Laragear\Dte\Models\SiiDte>`, but found `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiDte|Laragear\Dte\Models\SiiDte&static>|Illuminate\Support\Collection<int, stdClass>`.'
 count = 1
 
 [[issues]]
@@ -1534,30 +1492,6 @@ count = 1
 file = "src/Mailbox/Drivers/AwsSesDriver.php"
 code = "invalid-iterator"
 message = "The expression provided to `foreach` is not iterable. It resolved to type `nonnull`, which is not iterable."
-count = 1
-
-[[issues]]
-file = "src/Mailbox/Drivers/AwsSesDriver.php"
-code = "less-specific-nested-argument-type"
-message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::copyObject`: expected `array{'ACL'?: string('authenticated-read')|string('aws-exec-read')|string('bucket-owner-full-control')|string('bucket-owner-read')|string('private')|string('public-read')|string('public-read-write'), 'AnnotationDirective'?: string('COPY')|string('EXCLUDE'), 'Bucket'?: string, 'BucketKeyEnabled'?: bool, 'CacheControl'?: string, 'ChecksumAlgorithm'?: string('CRC32')|string('CRC32C')|string('CRC64NVME')|string('MD5')|string('SHA1')|string('SHA256')|string('SHA512')|string('XXHASH128')|string('XXHASH3')|string('XXHASH64'), 'ContentDisposition'?: string, 'ContentEncoding'?: string, 'ContentLanguage'?: string, 'ContentType'?: string, 'CopySource'?: string, 'CopySourceIfMatch'?: string, 'CopySourceIfModifiedSince'?: DateTimeInterface|int|string, 'CopySourceIfNoneMatch'?: string, 'CopySourceIfUnmodifiedSince'?: DateTimeInterface|int|string, 'CopySourceSSECustomerAlgorithm'?: string, 'CopySourceSSECustomerKey'?: string, 'CopySourceSSECustomerKeyMD5'?: string, 'ExpectedBucketOwner'?: string, 'ExpectedSourceBucketOwner'?: string, 'Expires'?: string, 'GrantFullControl'?: string, 'GrantRead'?: string, 'GrantReadACP'?: string, 'GrantWriteACP'?: string, 'IfMatch'?: string, 'IfNoneMatch'?: string, 'Key'?: string, 'Metadata'?: array<string, string>, 'MetadataDirective'?: string('COPY')|string('REPLACE'), 'ObjectLockEventHold'?: string('OFF')|string('ON'), 'ObjectLockEventHoldDurationDays'?: int, 'ObjectLockEventHoldDurationYears'?: int, 'ObjectLockLegalHoldStatus'?: string('OFF')|string('ON'), 'ObjectLockMode'?: string('COMPLIANCE')|string('GOVERNANCE'), 'ObjectLockRetainUntilDate'?: DateTimeInterface|int|string, 'RequestPayer'?: string('requester'), 'SSECustomerAlgorithm'?: string, 'SSECustomerKey'?: string, 'SSECustomerKeyMD5'?: string, 'SSEKMSEncryptionContext'?: string, 'SSEKMSKeyId'?: string, 'ServerSideEncryption'?: string('AES256')|string('aws:backup')|string('aws:fsx')|string('aws:kms')|string('aws:kms:dsse'), 'StorageClass'?: string('AWS_BACKUP_LOW_COST_WARM')|string('AWS_BACKUP_WARM')|string('DEEP_ARCHIVE')|string('EXPRESS_ONEZONE')|string('FSX_ONTAP')|string('FSX_OPENZFS')|string('GLACIER')|string('GLACIER_IR')|string('INTELLIGENT_TIERING')|string('ONEZONE_IA')|string('OUTPOSTS')|string('REDUCED_REDUNDANCY')|string('SNOW')|string('STANDARD')|string('STANDARD_IA'), 'Tagging'?: string, 'TaggingDirective'?: string('COPY')|string('REPLACE'), 'WebsiteRedirectLocation'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'CopySource': truthy-string, 'Key': string}` is less specific.'''
-count = 1
-
-[[issues]]
-file = "src/Mailbox/Drivers/AwsSesDriver.php"
-code = "less-specific-nested-argument-type"
-message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::deleteObject`: expected `array{'Bucket'?: string, 'BypassGovernanceRetention'?: bool, 'ExpectedBucketOwner'?: string, 'IfMatch'?: string, 'IfMatchLastModifiedTime'?: DateTimeInterface|int|string, 'IfMatchSize'?: int, 'Key'?: string, 'MFA'?: string, 'RequestPayer'?: string('requester'), 'VersionId'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'Key': string}` is less specific.'''
-count = 1
-
-[[issues]]
-file = "src/Mailbox/Drivers/AwsSesDriver.php"
-code = "less-specific-nested-argument-type"
-message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::getObject`: expected `array{'Bucket'?: string, 'ChecksumMode'?: string('ENABLED'), 'ExpectedBucketOwner'?: string, 'IfMatch'?: string, 'IfModifiedSince'?: DateTimeInterface|int|string, 'IfNoneMatch'?: string, 'IfUnmodifiedSince'?: DateTimeInterface|int|string, 'Key'?: string, 'PartNumber'?: int, 'Range'?: string, 'RequestPayer'?: string('requester'), 'ResponseCacheControl'?: string, 'ResponseContentDisposition'?: string, 'ResponseContentEncoding'?: string, 'ResponseContentLanguage'?: string, 'ResponseContentType'?: string, 'ResponseExpires'?: DateTimeInterface|int|string, 'SSECustomerAlgorithm'?: string, 'SSECustomerKey'?: string, 'SSECustomerKeyMD5'?: string, 'VersionId'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'Key': mixed}` is less specific.'''
-count = 1
-
-[[issues]]
-file = "src/Mailbox/Drivers/AwsSesDriver.php"
-code = "less-specific-nested-argument-type"
-message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::listObjectsV2`: expected `array{'Bucket'?: string, 'ContinuationToken'?: string, 'Delimiter'?: string, 'EncodingType'?: string('url'), 'ExpectedBucketOwner'?: string, 'FetchOwner'?: bool, 'MaxKeys'?: int, 'OptionalObjectAttributes'?: list<string('RestoreStatus')>, 'Prefix'?: string, 'RequestPayer'?: string('requester'), 'StartAfter'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'MaxKeys': mixed, 'Prefix': nonnull}` is less specific.'''
 count = 1
 
 [[issues]]
@@ -2060,12 +1994,6 @@ count = 6
 
 [[issues]]
 file = "src/Proxies/ImapProxy.php"
-code = "non-existent-constant"
-message = 'Undefined constant: `Laragear\Dte\Proxies\SE_FREE`.'
-count = 1
-
-[[issues]]
-file = "src/Proxies/ImapProxy.php"
 code = "non-existent-function"
 message = 'Could not find definition for function `Laragear\Dte\Proxies\imap_body` (also tried as `imap_body` in a broader scope).'
 count = 1
@@ -2188,6 +2116,24 @@ count = 1
 file = "src/Services/IecvGenerator.php"
 code = "invalid-return-statement"
 message = 'Invalid return type for function `Laragear\Dte\Services\IecvGenerator::signXml`: expected `string`, but found `false|string`.'
+count = 1
+
+[[issues]]
+file = "src/Services/IecvService.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Services\IecvService::documentsFor`: expected `array<int, Laragear\Dte\Models\SiiDte>`, but found `list<Laragear\Dte\Models\SiiDte|Laragear\Dte\Models\SiiDte&static|stdClass>`.'
+count = 1
+
+[[issues]]
+file = "src/Services/IecvService.php"
+code = "less-specific-return-statement"
+message = '''Returned type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)` is less specific than the declared return type `Laragear\Dte\Models\SiiIecv` for function `Laragear\Dte\Services\IecvService::persist`.'''
+count = 1
+
+[[issues]]
+file = "src/Services/IecvService.php"
+code = "non-existent-method"
+message = "Method `getkey` does not exist on type `stdClass`."
 count = 1
 
 [[issues]]
@@ -2416,6 +2362,12 @@ count = 1
 file = "src/Testing/InteractsWithDigitalCertificates.php"
 code = "invalid-method-access"
 message = "Attempting to access a method on a non-object type (`string`)."
+count = 1
+
+[[issues]]
+file = "src/Testing/InteractsWithDigitalCertificates.php"
+code = "non-existent-method"
+message = 'Method `andreturnusing` does not exist on type `Mockery\ExpectationInterface`.'
 count = 1
 
 [[issues]]

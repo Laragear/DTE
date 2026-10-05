@@ -140,7 +140,7 @@ class PollIecvTrackIdJob implements ShouldQueue
                 'status' => IecvStatus::Accepted,
                 'accepted_at' => $date->now(),
                 // The file is accepted but the book may still carry errors; keep them.
-                'errors' => $status->errors ?: null,
+                'errors' => $status->errors === [] ? null : $status->errors,
             ]);
 
             if ($status->hasBookErrors()) {
@@ -167,7 +167,7 @@ class PollIecvTrackIdJob implements ShouldQueue
             $this->book->update([
                 'status' => IecvStatus::Rejected,
                 'rejected_at' => $date->now(),
-                'errors' => $status->errors ?: null,
+                'errors' => $status->errors === [] ? null : $status->errors,
             ]);
 
             $event->dispatch(new IecvRejected($this->book));

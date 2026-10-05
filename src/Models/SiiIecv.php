@@ -79,7 +79,7 @@ class SiiIecv extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string|class-string>
+     * @var array<array-key, mixed>
      */
     protected $casts = [
         'type' => IecvType::class,

@@ -41,7 +41,10 @@ class SendIecvCommand extends Command
      */
     public function handle(IecvService $service, DateFactory $date): int
     {
-        $period = $this->option('period') ?: $date->now()->subMonth()->format('Y-m');
+        $period = $this->option('period');
+        $period = is_string($period) && $period !== ''
+            ? $period
+            : $date->now()->subMonth()->format('Y-m');
 
         $issuer = $this->rut('issuer') ?? SiiDte::query()->latest('id')->first()?->issuer_rut;
 
@@ -79,7 +82,9 @@ class SendIecvCommand extends Command
      */
     protected function bookType(): IecvType
     {
-        return match (mb_strtolower((string) $this->option('type'))) {
+        $type = $this->option('type');
+
+        return match (mb_strtolower(is_string($type) ? $type : '')) {
             'purchases',
             'purchase',
             'compra' => IecvType::Purchases,
@@ -94,7 +99,7 @@ class SendIecvCommand extends Command
     {
         $value = $this->option($option);
 
-        if (is_numeric($value) || (is_string($value) && str_contains($value, '-'))) {
+        if (is_string($value) && (is_numeric($value) || str_contains($value, '-'))) {
             return Rut::parse($value);
         }
 
@@ -111,7 +116,7 @@ class SendIecvCommand extends Command
         return SiiDte::query()
             ->whereNotNull('folio')
             ->whereIn('status', [DteStatus::Accepted, DteStatus::Sent])
-            ->whereBetween('issued_on', ["$period-01", "$period-31"])
+            ->whereBetween('issued_on', ["{$period}-01", "{$period}-31"])
             ->oldest('issued_on')
             ->get();
     }
@@ -126,8 +131,10 @@ class SendIecvCommand extends Command
     {
         return $dtes->map(static fn (SiiDte $dte): IecvPurchaseData => new IecvPurchaseData(
             $dte->document_type,
-            $dte->folio,
-            $dte->issued_on->format('Y-m-d'),
+            // Only documents with a folio and issue date are collected, so both
+            // are always set here.
+            (int) $dte->folio,
+            $dte->issued_on?->format('Y-m-d') ?? '',
             $dte->issuer_rut,
             $dte->amount_net,
             $dte->amount_exempt,

@@ -24,7 +24,7 @@ class SiiIecvFactory extends DteFactory
             'type' => IecvType::Sales,
             'period' => now()->subMonth()->format('Y-m'),
             'resolution_date' => now()->subDays(30)->format('Y-m-d'),
-            'resolution_number' => 12345,
+            'resolution_number' => 12_345,
             'xml' => '<LibroCompraVenta/>',
             'track_id' => null,
             'status' => IecvStatus::DEFAULT,

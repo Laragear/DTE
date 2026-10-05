@@ -199,9 +199,7 @@ class IecvService
         $ids = [];
 
         foreach ($dtes as $dte) {
-            if ($dte instanceof SiiDte) {
-                $ids[] = $dte->getKey();
-            }
+            $ids[] = $dte->getKey();
         }
 
         if ($ids !== []) {

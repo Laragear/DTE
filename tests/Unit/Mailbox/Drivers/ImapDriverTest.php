@@ -2,39 +2,50 @@
 
 namespace Tests\Unit\Mailbox\Drivers;
 
+use const FT_UID;
+use const SE_UID;
+
 use Illuminate\Contracts\Mail\Mailer as MailerContract;
-use IMAP\Connection;
 use Laragear\Dte\Data\InboundEmailData;
 use Laragear\Dte\Mailbox\Drivers\ImapDriver;
 use Laragear\Dte\Proxies\ImapProxy;
-use Mockery;
 use Mockery\MockInterface;
 use RuntimeException;
 use Tests\TestCase;
-use const FT_UID;
-use const SE_UID;
 
 /**
  * These constants are defined to avoid testing on PHP without IMAP.
  */
-if (!defined('SE_UID')) {
+if (! defined('SE_UID')) {
     define('SE_UID', 1);
 }
-if (!defined('FT_UID')) {
+if (! defined('FT_UID')) {
     define('FT_UID', 1);
 }
-if (!defined('ST_UID')) {
+if (! defined('ST_UID')) {
     define('ST_UID', 1);
 }
-if (!defined('SE_FREE')) {
+if (! defined('SE_FREE')) {
     define('SE_FREE', 2);
 }
-if (!defined('SE_NOPREFETCH')) {
+if (! defined('SE_NOPREFETCH')) {
     define('SE_NOPREFETCH', 4);
 }
 
 class ImapDriverTest extends TestCase
 {
+    /**
+     * Build an opaque stand-in for the IMAP connection.
+     *
+     * `IMAP\Connection` is final since PHP 8.4, so Mockery cannot replace its
+     * methods. The driver never dereferences the connection -- it only hands it
+     * to the ImapProxy, which is mocked here -- so an untyped object is enough.
+     */
+    protected function fakeConnection(): object
+    {
+        return new class {};
+    }
+
     protected function makeDriver(array $config = []): ImapDriver
     {
         $this->config('dte.mailbox.drivers.imap', array_merge([
@@ -50,7 +61,7 @@ class ImapDriverTest extends TestCase
 
     public function test_yields_unread_emails_and_extracts_xml(): void
     {
-        $connection = Mockery::mock(Connection::class);
+        $connection = $this->fakeConnection();
 
         $this->mock(ImapProxy::class, static function (MockInterface $mock) use ($connection): void {
             $mock
@@ -118,7 +129,7 @@ class ImapDriverTest extends TestCase
 
     public function test_marks_as_read(): void
     {
-        $connection = Mockery::mock(Connection::class);
+        $connection = $this->fakeConnection();
 
         $this->mock(ImapProxy::class, static function (MockInterface $mock) use ($connection): void {
             $mock->expects('open')->andReturn($connection);
@@ -161,7 +172,7 @@ class ImapDriverTest extends TestCase
 
     public function test_returns_raw_body_if_xml_not_detected(): void
     {
-        $connection = Mockery::mock(Connection::class);
+        $connection = $this->fakeConnection();
 
         $this->mock(ImapProxy::class, static function (MockInterface $mock) use ($connection): void {
             $mock->expects('open')->andReturn($connection);

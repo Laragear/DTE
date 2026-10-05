@@ -105,7 +105,7 @@ class IecvStatusGateway
      */
     protected function value(SimpleXMLElement $simple, string $name): ?string
     {
-        $nodes = $simple->xpath("//*[local-name()='$name']");
+        $nodes = $simple->xpath("//*[local-name()='{$name}']");
 
         $value = $nodes !== false ? trim((string) ($nodes[0] ?? '')) : '';
 
@@ -123,7 +123,7 @@ class IecvStatusGateway
 
         $errors = [];
 
-        foreach ($nodes as $node) {
+        foreach ($nodes ?: [] as $node) {
             $error = trim((string) $node);
 
             if ($error !== '') {

@@ -14,6 +14,51 @@ use Tests\DatabaseTestCase;
 
 class IecvBuilderTest extends DatabaseTestCase
 {
+    /**
+     * Whether this libxml build can compile the SII schema's decimal facets.
+     *
+     * The official SII schemas cap `MontoType` at 30 integer digits
+     * (`999999999999999999999999999999.9999`). XSD 1.0 leaves `xs:decimal`
+     * unbounded, so older libxml accepts it, while newer builds enforce a
+     * fixed precision and reject the facet as an invalid literal -- failing
+     * schema compilation before the generated document is ever examined.
+     * That is a property of the validator, not of the XML under test.
+     */
+    protected function libxmlRejectsSiiDecimalFacet(): bool
+    {
+        $schema = <<<'XSD'
+            <?xml version="1.0"?>
+            <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+              <xs:element name="MontoType">
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:maxInclusive value="999999999999999999999999999999.9999"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:schema>
+            XSD;
+
+        $path = tempnam(sys_get_temp_dir(), 'sii-decimal-').'.xsd';
+
+        file_put_contents($path, $schema);
+
+        $probe = new \DOMDocument;
+        $probe->loadXML('<?xml version="1.0"?><MontoType>1000</MontoType>');
+
+        $previous = libxml_use_internal_errors(true);
+
+        try {
+            $compiles = $probe->schemaValidate($path);
+        } finally {
+            libxml_clear_errors();
+            libxml_use_internal_errors($previous);
+            unlink($path);
+        }
+
+        return $compiles === false;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Happy paths
@@ -22,6 +67,12 @@ class IecvBuilderTest extends DatabaseTestCase
 
     public function test_builds_valid_iecv_sales_xml_against_schema(): void
     {
+        if ($this->libxmlRejectsSiiDecimalFacet()) {
+            $this->markTestSkipped(
+                'This libxml build rejects the 30-digit SII MontoType facet, so the official schema cannot compile here.'
+            );
+        }
+
         $dtes = SiiDte::factory()
             ->count(2)
             ->sequence(

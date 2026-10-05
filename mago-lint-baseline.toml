@@ -655,6 +655,12 @@ message = "Parameters that may contain sensitive information should be marked wi
 count = 1
 
 [[issues]]
+file = "src/Gateways/IecvStatusGateway.php"
+code = "no-shorthand-ternary"
+message = "Use of the shorthand ternary operator."
+count = 1
+
+[[issues]]
 file = "src/Gateways/IecvUploadGateway.php"
 code = "sensitive-parameter"
 message = "Parameters that may contain sensitive information should be marked with the `#[SensitiveParameter]` attribute."
@@ -754,6 +760,18 @@ count = 4
 file = "src/Jobs/PollEnvelopeTrackIdJob.php"
 code = "prefer-static-closure"
 message = "This arrow function does not use `$this` and should be declared static."
+count = 2
+
+[[issues]]
+file = "src/Jobs/PollIecvTrackIdJob.php"
+code = "no-else-clause"
+message = "Avoid `else` clauses."
+count = 1
+
+[[issues]]
+file = "src/Jobs/PollIecvTrackIdJob.php"
+code = "no-else-clause"
+message = "Avoid `elseif` clauses."
 count = 2
 
 [[issues]]
@@ -874,6 +892,12 @@ count = 1
 file = "src/Models/SiiDteReference.php"
 code = "prefer-static-closure"
 message = "This closure does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "src/Models/SiiIecv.php"
+code = "prefer-casts-method"
+message = "Define model casts in the `casts()` method instead of the `$casts` property."
 count = 1
 
 [[issues]]

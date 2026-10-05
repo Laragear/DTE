@@ -163,4 +163,31 @@ class SendIecvCommandTest extends DatabaseTestCase
             '--sender' => '98999999-9',
         ])->assertSuccessful();
     }
+
+    public function test_defaults_to_sales_for_an_unusable_type_option(): void
+    {
+        $this->document('2026-07');
+
+        $this->mockService(IecvType::Sales);
+
+        // A non-string option cannot name a book type, so it must fall back to sales.
+        $this->artisan('dte:send-iecv', [
+            '--period' => '2026-07',
+            '--issuer' => '76123456-0',
+            '--type' => ['unexpected'],
+        ])->assertSuccessful();
+    }
+
+    public function test_accepts_the_compra_alias_for_purchases(): void
+    {
+        $this->document('2026-07');
+
+        $this->mockService(IecvType::Purchases);
+
+        $this->artisan('dte:send-iecv', [
+            '--period' => '2026-07',
+            '--issuer' => '76123456-0',
+            '--type' => 'compra',
+        ])->assertSuccessful();
+    }
 }

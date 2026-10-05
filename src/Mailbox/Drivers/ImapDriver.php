@@ -85,7 +85,8 @@ class ImapDriver implements MailboxDriver
     /**
      * Open an authenticated IMAP connection using the configured credentials.
      *
-     * @return resource
+     * The shape is an ext-imap resource before PHP 8.4 and a final
+     * `IMAP\Connection` object afterwards, so it is kept opaque here.
      */
     protected function connect(): mixed
     {

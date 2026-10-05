@@ -121,10 +121,6 @@ class IecvStatusGateway
     {
         $nodes = $simple->xpath("//*[local-name()='DetErrEnvio']");
 
-        if ($nodes === false) {
-            return [];
-        }
-
         $errors = [];
 
         foreach ($nodes as $node) {

@@ -3,7 +3,7 @@
 namespace Laragear\Dte\Mailbox\Drivers;
 
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
-use Laragear\Dte\Contracts\MailboxDriverInterface;
+use Laragear\Dte\Contracts\MailboxDriver;
 use Laragear\Dte\Data\InboundEmailData;
 use Laragear\Dte\Mailbox\XmlExtractor;
 use Microsoft\Graph\Generated\Models\FileAttachment;
@@ -18,7 +18,7 @@ use function base64_decode;
  *
  * Required: microsoft/microsoft-graph.
  */
-class Microsoft365Driver implements MailboxDriverInterface
+class Microsoft365Driver implements MailboxDriver
 {
     /**
      * Create a new Microsoft 365 Driver instance.

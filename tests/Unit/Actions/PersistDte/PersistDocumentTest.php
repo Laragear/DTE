@@ -11,6 +11,7 @@ use Laragear\Dte\Enums\DteType;
 use Laragear\Dte\Enums\ReferenceType;
 use Laragear\Dte\Models\SiiDte;
 use Laragear\Dte\Models\SiiDteReference;
+use LogicException;
 use Mockery;
 use Psr\Log\LoggerInterface;
 use Tests\DatabaseTestCase;
@@ -69,9 +70,9 @@ class PersistDocumentTest extends DatabaseTestCase
                         'reason' => 'Purchase order',
                         'reference_code' => null,
                     ],
-                ]
+                ],
             ]),
-            static fn(DteData $data): DteData => $data,
+            static fn (DteData $data): DteData => $data,
         );
 
         static::assertTrue($data->dte->exists);
@@ -93,7 +94,7 @@ class PersistDocumentTest extends DatabaseTestCase
             ->once()
             ->with(
                 'DTE persistence failed, rolling back to the pre-persist state.',
-                Mockery::on(static fn(array $context): bool => $context['flow'] === 'dte-persist'
+                Mockery::on(static fn (array $context): bool => $context['flow'] === 'dte-persist'
                     && $context['operation'] === 'create'
                     && $context['exception'] === QueryException::class),
             );
@@ -103,7 +104,7 @@ class PersistDocumentTest extends DatabaseTestCase
         try {
             $pipe->handle(
                 $this->data([], []),
-                static fn(DteData $data): DteData => $data,
+                static fn (DteData $data): DteData => $data,
             );
 
             static::fail('Expected persistence to fail.');
@@ -112,5 +113,24 @@ class PersistDocumentTest extends DatabaseTestCase
         }
 
         static::assertDatabaseCount('sii_dtes', 0);
+    }
+
+    public function test_refuses_to_update_a_document_that_was_not_hydrated(): void
+    {
+        $log = $this->mock(LoggerInterface::class);
+        $log->expects('error')->once()->withArgs(static fn (string $message, array $context): bool => $context['flow'] === 'dte-persist'
+            && $context['operation'] === 'update'
+            && $context['exception'] === LogicException::class
+        );
+
+        $pipe = new PersistDocument($log);
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Cannot update a document that has not been hydrated.');
+
+        $pipe->handle(
+            $this->data($this->attributes(), [], isUpdate: true),
+            static fn (DteData $data): DteData => $data,
+        );
     }
 }

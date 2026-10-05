@@ -3,7 +3,6 @@
 namespace Tests\Unit\Jobs;
 
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Support\DateFactory;
 use Illuminate\Support\Facades\Bus;
 use Laragear\Dte\Data\IecvTrackStatus;
 use Laragear\Dte\Enums\IecvStatus;
@@ -13,7 +12,9 @@ use Laragear\Dte\Gateways\IecvStatusGateway;
 use Laragear\Dte\Jobs\PollIecvTrackIdJob;
 use Laragear\Dte\Models\SiiIecv;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 use Tests\DatabaseTestCase;
+use Throwable;
 
 class PollIecvTrackIdJobTest extends DatabaseTestCase
 {
@@ -38,7 +39,7 @@ class PollIecvTrackIdJobTest extends DatabaseTestCase
         );
 
         $job = $this->app->make(PollIecvTrackIdJob::class, [
-            'book' => $book
+            'book' => $book,
         ]);
 
         $this->app->call($job->handle(...), [
@@ -65,7 +66,7 @@ class PollIecvTrackIdJobTest extends DatabaseTestCase
         );
 
         $job = $this->app->make(PollIecvTrackIdJob::class, [
-            'book' => $book
+            'book' => $book,
         ]);
 
         $this->app->call($job->handle(...), [
@@ -87,7 +88,7 @@ class PollIecvTrackIdJobTest extends DatabaseTestCase
         $book = SiiIecv::factory()->uploaded()->create();
 
         $job = $this->app->make(PollIecvTrackIdJob::class, [
-            'book' => $book
+            'book' => $book,
         ]);
 
         $this->app->call($job->handle(...), [
@@ -105,7 +106,7 @@ class PollIecvTrackIdJobTest extends DatabaseTestCase
         $book = SiiIecv::factory()->uploaded()->create();
 
         $job = $this->app->make(PollIecvTrackIdJob::class, [
-            'book' => $book
+            'book' => $book,
         ]);
 
         $this->app->call($job->handle(...), [
@@ -128,7 +129,7 @@ class PollIecvTrackIdJobTest extends DatabaseTestCase
         $gateway->expects('trackStatus')->zeroOrMoreTimes()->andReturn(new IecvTrackStatus(sendState: 'EPR'));
 
         $job = $this->app->make(PollIecvTrackIdJob::class, [
-            'book' => $book
+            'book' => $book,
         ]);
 
         $this->app->call($job->handle(...), [
@@ -153,13 +154,101 @@ class PollIecvTrackIdJobTest extends DatabaseTestCase
         });
 
         $job = $this->app->make(PollIecvTrackIdJob::class, [
-            'book' => $book
+            'book' => $book,
         ]);
 
         $this->app->call($job->handle(...), [
-            'gateway' => $gateway
+            'gateway' => $gateway,
         ]);
 
         static::assertSame(IecvStatus::Accepted, $book->fresh()->status);
+    }
+
+    public function test_warns_and_keeps_the_status_on_an_unknown_sii_state(): void
+    {
+        $book = SiiIecv::factory()->uploaded()->create();
+
+        $log = $this->mock(LoggerInterface::class);
+        $log->expects('warning')
+            ->once()
+            ->withArgs(static fn (string $message): bool => str_contains($message, 'Unknown SII book status'));
+
+        $job = $this->app->make(PollIecvTrackIdJob::class, [
+            'book' => $book,
+        ]);
+
+        $this->app->call($job->handle(...), [
+            'gateway' => $this->gatewayReturning(new IecvTrackStatus(sendState: 'XXX')),
+            'log' => $log,
+        ]);
+
+        static::assertSame(IecvStatus::Uploaded, $book->fresh()->status);
+    }
+
+    public function test_logs_and_rethrows_when_the_gateway_fails(): void
+    {
+        $book = SiiIecv::factory()->uploaded()->create();
+
+        $gateway = $this->mock(IecvStatusGateway::class);
+        $gateway->expects('trackStatus')->andThrow(new RuntimeException('SII is down.'));
+
+        $log = $this->mock(LoggerInterface::class);
+        $log->expects('error')
+            ->once()
+            ->withArgs(static fn (string $message): bool => str_contains($message, 'SII is down.'));
+
+        $job = $this->app->make(PollIecvTrackIdJob::class, [
+            'book' => $book,
+        ]);
+
+        try {
+            $this->app->call($job->handle(...), [
+                'gateway' => $gateway,
+                'log' => $log,
+            ]);
+
+            static::fail('The polling failure was not rethrown.');
+        } catch (RuntimeException $e) {
+            static::assertSame('SII is down.', $e->getMessage());
+        }
+
+        static::assertSame(IecvStatus::Uploaded, $book->fresh()->status);
+    }
+
+    public function test_logs_and_rethrows_when_the_status_decision_fails(): void
+    {
+        $book = SiiIecv::factory()->uploaded()->create();
+
+        // Fail the update from inside the locked transaction so the job's rollback
+        // path runs: the decision closure writes, the event listener throws, and the
+        // book must be left on its pre-decision state.
+        SiiIecv::updating(static function (SiiIecv $book): void {
+            throw new RuntimeException('Database write refused.');
+        });
+
+        $log = $this->mock(LoggerInterface::class);
+        $log->expects('error')
+            ->once()
+            ->withArgs(static fn (string $message): bool => str_contains($message, 'rolling back'));
+        $log->expects('error')
+            ->once()
+            ->withArgs(static fn (string $message): bool => str_contains($message, 'Failed to poll TrackID'));
+
+        $job = $this->app->make(PollIecvTrackIdJob::class, [
+            'book' => $book,
+        ]);
+
+        try {
+            $this->app->call($job->handle(...), [
+                'gateway' => $this->gatewayReturning(new IecvTrackStatus(sendState: 'EPR')),
+                'log' => $log,
+            ]);
+
+            static::fail('The decision failure was not rethrown.');
+        } catch (Throwable $e) {
+            static::assertSame('Database write refused.', $e->getMessage());
+        }
+
+        static::assertSame(IecvStatus::Uploaded, $book->fresh()->status);
     }
 }

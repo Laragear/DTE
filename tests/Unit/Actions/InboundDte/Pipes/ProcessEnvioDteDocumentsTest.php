@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Event;
 use Laragear\Dte\Actions\InboundDte\InboundDteData;
 use Laragear\Dte\Actions\InboundDte\Pipes\ProcessEnvioDteDocuments;
 use Laragear\Dte\Actions\InboundDte\ProcessInboundDte;
-use Laragear\Dte\Contracts\TenantResolverInterface;
+use Laragear\Dte\Contracts\TenantResolver;
 use Laragear\Dte\Data\InboundEmailData;
 use Laragear\Dte\Enums\InboundDteStatus;
 use Laragear\Dte\Events\InboundDteReceived;
@@ -31,7 +31,7 @@ class ProcessEnvioDteDocumentsTest extends DatabaseTestCase
 
     public function test_skips_non_envio_dte(): void
     {
-        $this->mock(TenantResolverInterface::class);
+        $this->mock(TenantResolver::class);
 
         $data = new InboundDteData(
             new InboundEmailData('msg-1', 'a@b.cl', 'Subject', '<RespuestaDTE></RespuestaDTE>'),
@@ -57,7 +57,7 @@ class ProcessEnvioDteDocumentsTest extends DatabaseTestCase
 
         $tenant = (object) ['id' => 1];
 
-        $this->mock(TenantResolverInterface::class, static function ($mock) use ($tenant) {
+        $this->mock(TenantResolver::class, static function ($mock) use ($tenant) {
             $mock->expects('resolve')->andReturn($tenant);
         });
 
@@ -97,7 +97,7 @@ class ProcessEnvioDteDocumentsTest extends DatabaseTestCase
 
         $tenant = (object) ['id' => 1];
 
-        $this->mock(TenantResolverInterface::class, static function ($mock) use ($tenant) {
+        $this->mock(TenantResolver::class, static function ($mock) use ($tenant) {
             $mock->expects('resolve')->andReturn($tenant);
         });
 
@@ -138,7 +138,7 @@ class ProcessEnvioDteDocumentsTest extends DatabaseTestCase
     {
         $xmlString = '<EnvioDTE><SetDTE><Caratula></Caratula></SetDTE></EnvioDTE>';
 
-        $this->mock(TenantResolverInterface::class);
+        $this->mock(TenantResolver::class);
 
         $data = new InboundDteData(
             new InboundEmailData('msg-1', 'a@b.cl', 'Subject', $xmlString),
@@ -160,7 +160,7 @@ class ProcessEnvioDteDocumentsTest extends DatabaseTestCase
     {
         $xmlString = static::getStub('EnvioDteSingleDocument.xml');
 
-        $this->mock(TenantResolverInterface::class, static function ($mock) {
+        $this->mock(TenantResolver::class, static function ($mock) {
             $mock->expects('resolve')->andReturnNull();
         });
 

@@ -3,14 +3,14 @@
 namespace Laragear\Dte\Mailbox;
 
 use Illuminate\Support\Manager;
-use Laragear\Dte\Contracts\MailboxDriverInterface;
+use Laragear\Dte\Contracts\MailboxDriver;
 use Laragear\Dte\Proxies\ImapProxy;
 use RuntimeException;
 
 /**
  * Resolves the configured mailbox driver for fetching and processing DTE interchange emails.
  *
- * @method MailboxDriverInterface driver(string|null $driver = null)
+ * @method MailboxDriver driver(string|null $driver = null)
  */
 class MailboxManager extends Manager
 {
@@ -25,7 +25,7 @@ class MailboxManager extends Manager
     /**
      * Create the IMAP driver instance.
      */
-    protected function createImapDriver(): MailboxDriverInterface
+    protected function createImapDriver(): MailboxDriver
     {
         if ($this->getContainer()->make(ImapProxy::class)->isNotExtensionEnabled()) {
             throw new RuntimeException(
@@ -39,7 +39,7 @@ class MailboxManager extends Manager
     /**
      * Create the Google Workspace (Gmail) driver instance.
      */
-    protected function createGoogleDriver(): MailboxDriverInterface
+    protected function createGoogleDriver(): MailboxDriver
     {
         return $this->container->make(Drivers\GoogleWorkspaceDriver::class);
     }
@@ -47,7 +47,7 @@ class MailboxManager extends Manager
     /**
      * Create the Microsoft 365 (Graph API) driver instance.
      */
-    protected function createMicrosoftDriver(): MailboxDriverInterface
+    protected function createMicrosoftDriver(): MailboxDriver
     {
         return $this->container->make(Drivers\Microsoft365Driver::class);
     }
@@ -55,7 +55,7 @@ class MailboxManager extends Manager
     /**
      * Create the AWS SES driver instance.
      */
-    protected function createAwsSesDriver(): MailboxDriverInterface
+    protected function createAwsSesDriver(): MailboxDriver
     {
         return $this->container->make(Drivers\AwsSesDriver::class);
     }

@@ -5,7 +5,7 @@ namespace Laragear\Dte\Contracts;
 use Laragear\Dte\Data\Token;
 use Laragear\Rut\Rut;
 
-interface TokenProviderInterface
+interface TokenProvider
 {
     /**
      * Get a valid authentication token for the given taxpayer.

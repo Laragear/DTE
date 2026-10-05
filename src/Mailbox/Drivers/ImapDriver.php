@@ -3,7 +3,7 @@
 namespace Laragear\Dte\Mailbox\Drivers;
 
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
-use Laragear\Dte\Contracts\MailboxDriverInterface;
+use Laragear\Dte\Contracts\MailboxDriver;
 use Laragear\Dte\Data\InboundEmailData;
 use Laragear\Dte\Mailbox\XmlExtractor;
 use Laragear\Dte\Proxies\ImapProxy;
@@ -12,7 +12,7 @@ use RuntimeException;
 /**
  * Fetches UNREAD DTE exchange emails via traditional IMAP protocol.
  */
-class ImapDriver implements MailboxDriverInterface
+class ImapDriver implements MailboxDriver
 {
     protected const string INBOX = 'INBOX';
 

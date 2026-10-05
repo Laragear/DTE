@@ -39,6 +39,11 @@ class DteServiceProviderTest extends TestCase
 
         static::assertSame(
             $this->app->make(CertificateResolver::class),
+            $this->app->make(CertificateResolver::class),
+        );
+
+        static::assertInstanceOf(
+            CertificateResolver::class,
             $this->app->make(CertificateResolverInterface::class),
         );
     }

@@ -993,7 +993,7 @@ Because a period is a one-shot attestation, re-filing throws a `LogicException`:
 
 ## DTE Interchange Mailbox (DIM/DXM)
 
-SII forces business to use a specific email address to send/receive DTE, called the _DTE Interchange Mailbox_ (Correo Electŕonico de Intercambio de DTE). 
+SII forces business to use a specific email address to send/receive DTE, called the _DTE Interchange Mailbox_ (Correo Electrónico de Intercambio de DTE). 
 
 Incoming SII responses (ACK, respuesta) and B2B DTEs from other companies arrive via email to the DIM, while outbound interchange envelopes and commercial receipts must be emailed back to them.
 
@@ -1006,7 +1006,7 @@ The library ships four mailbox drivers to fetch and parse unread emails:
 - `imap`: standard IMAP (default, slow)
 - `microsoft`: Microsoft 365 / Exchange
 - `googleworkspace`: Google Workspace API
-- `aws_ses`: AWS SES incoming mail via S3
+- `aws_ses`: AWS SES incoming mail via S3, requires `zbateson/mail-mime-parser` or similar by contract.
 
 > [!IMPORTANT]
 >
@@ -1030,6 +1030,25 @@ public function register(): void
         });
     });
 }
+```
+
+#### AWS SES XML Parser
+
+When using AWS SES as driver, you will be required to install `zbateson/mail-mime-parser` to parse the email contents.
+
+```shell
+composer install zbateson/mail-mime-parser
+```
+
+It's recommended, but not mandatory to use that package. You can bring your own MIME parser or package for AWS SES emails as long as it implements the `MimeMessageParser` contract in your `AppServiceProvider` or `bootstrap/app.php`.
+
+```php
+use App\Mail\FastMimeParser;
+use Laragear\Dte\Contracts\MimeMessageParser;
+
+$this->app->bind(MimeMessageParser::class, function () {
+    return new FastMimeParser();
+});
 ```
 
 ### Sending (Outbound)

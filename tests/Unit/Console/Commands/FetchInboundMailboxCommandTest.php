@@ -4,7 +4,7 @@ namespace Tests\Unit\Console\Commands;
 
 use Exception;
 use Laragear\Dte\Actions\InboundDte\ProcessInboundDte;
-use Laragear\Dte\Contracts\MailboxDriverInterface;
+use Laragear\Dte\Contracts\MailboxDriver;
 use Laragear\Dte\Data\InboundEmailData;
 use Laragear\Dte\Mailbox\MailboxManager;
 use Mockery\MockInterface;
@@ -25,7 +25,7 @@ class FetchInboundMailboxCommandTest extends TestCase
         $email2 = new InboundEmailData('msg-2', 'sender@test.cl', 'Subject 2', '<xml></xml>');
 
         $driver = $this->mock(
-            MailboxDriverInterface::class,
+            MailboxDriver::class,
             static function (MockInterface $mock) use ($email1, $email2): void {
                 $mock->expects('unread')->andReturn([$email1, $email2]);
                 $mock->expects('markAsRead')->with($email1);
@@ -55,7 +55,7 @@ class FetchInboundMailboxCommandTest extends TestCase
         $other = new InboundEmailData('msg-2', 'factura@empresa.cl', 'Subject 2', '<xml></xml>');
 
         $driver = $this->mock(
-            MailboxDriverInterface::class,
+            MailboxDriver::class,
             static function (MockInterface $mock) use ($matching, $other): void {
                 $mock->expects('unread')->andReturn([$matching, $other]);
                 $mock->expects('markAsRead')->with($matching);
@@ -87,7 +87,7 @@ class FetchInboundMailboxCommandTest extends TestCase
         $email = new InboundEmailData('msg-1', 'sii_dte_intercambio@sii.cl', 'Subject 1', '<xml></xml>');
 
         $driver = $this->mock(
-            MailboxDriverInterface::class,
+            MailboxDriver::class,
             static function (MockInterface $mock) use ($email): void {
                 $mock->expects('unread')->andReturn([$email]);
                 $mock->expects('markAsRead')->with($email);
@@ -121,7 +121,7 @@ class FetchInboundMailboxCommandTest extends TestCase
         $disallowedDomain = new InboundEmailData('msg-3', 'info@gmail.com', 'Subject 3', '<xml></xml>');
 
         $driver = $this->mock(
-            MailboxDriverInterface::class,
+            MailboxDriver::class,
             static function (MockInterface $mock) use ($allowed, $disallowedPrefix, $disallowedDomain): void {
                 $mock->expects('unread')->andReturn([$allowed, $disallowedPrefix, $disallowedDomain]);
                 $mock->expects('markAsRead')->with($allowed);
@@ -169,7 +169,7 @@ class FetchInboundMailboxCommandTest extends TestCase
             });
 
         $driver = $this->mock(
-            MailboxDriverInterface::class,
+            MailboxDriver::class,
             static function (MockInterface $mock) use ($email1, $email2): void {
                 $mock->expects('unread')->andReturn([$email1, $email2]);
                 $mock->expects('markAsRead')->with($email1)->never();

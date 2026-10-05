@@ -4,7 +4,7 @@ namespace Laragear\Dte\Contracts;
 
 use Laragear\Rut\Rut;
 
-interface TenantResolverInterface
+interface TenantResolver
 {
     /**
      * Resolve the application tenant that owns the taxpayer RUT.

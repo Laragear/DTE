@@ -3,7 +3,7 @@
 namespace Laragear\Dte\Support;
 
 use Illuminate\Support\DateFactory;
-use Laragear\Dte\Contracts\TokenProviderInterface;
+use Laragear\Dte\Contracts\TokenProvider;
 use Laragear\Dte\Data\Token;
 use Laragear\Dte\Enums\TokenType;
 use Laragear\Dte\Gateways\Exceptions\TokenInvalidException;
@@ -13,7 +13,7 @@ use Laragear\Rut\Rut;
 use Throwable;
 
 /** @internal */
-class TokenAuthenticator implements TokenProviderInterface
+class TokenAuthenticator implements TokenProvider
 {
     /**
      * Create a new Token Authenticator instance.

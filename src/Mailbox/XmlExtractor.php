@@ -2,21 +2,29 @@
 
 namespace Laragear\Dte\Mailbox;
 
-use ZBateson\MailMimeParser\Message;
+use Laragear\Dte\Contracts\MimeMessageParser;
 
 class XmlExtractor
 {
+    /**
+     * Create a new Xml Extractor instance.
+     */
+    public function __construct(protected MimeMessageParser $parser)
+    {
+        //
+    }
+
     /**
      * Extracts XML from a raw email payload using standards-compliant MIME parsing.
      */
     public function extractFromRaw(string $raw): string
     {
-        $message = Message::from($raw, true);
+        $message = $this->parser->parse($raw);
 
         // First, try to find XML attachments identified by their content type.
-        foreach ($message->getAllAttachmentParts() as $part) {
-            if (in_array($part->getContentType(), ['text/xml', 'application/xml'], true)) {
-                $content = $part->getContent();
+        foreach ($message->getParts() as $part) {
+            if (in_array($part->contentType, ['text/xml', 'application/xml'], true)) {
+                $content = $part->content;
 
                 if ($content !== null && str_contains($content, '<?xml')) {
                     return $content;
@@ -25,11 +33,11 @@ class XmlExtractor
         }
 
         // If there are none, we can always find attachments with an `.xml` filename.
-        foreach ($message->getAllAttachmentParts() as $part) {
-            $filename = $part->getFilename();
+        foreach ($message->getParts() as $part) {
+            $filename = $part->filename;
 
             if ($filename !== null && str_ends_with(strtolower($filename), '.xml')) {
-                $content = $part->getContent();
+                $content = $part->content;
 
                 if ($content !== null && str_contains($content, '<?xml')) {
                     return $content;
@@ -38,7 +46,7 @@ class XmlExtractor
         }
 
         // Finally, resort to find the XML embedded directly in the text body.
-        $text = $message->getTextContent();
+        $text = $message->textContent;
 
         if ($text !== null) {
             $extracted = $this->extractXmlFromText($text);

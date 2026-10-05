@@ -4,6 +4,7 @@ namespace Tests\Unit\Gateways;
 
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http as HttpFacade;
 use Illuminate\Support\Sleep;
@@ -44,7 +45,7 @@ class UploadGatewayTest extends DatabaseTestCase
         $this->mock(TokenAuthenticator::class, static function (MockInterface $mock) use ($token): void {
             $mock->expects('token')->zeroOrMoreTimes()->andReturn($token);
             $mock->expects('retryWithFreshToken')->zeroOrMoreTimes()
-                ->andReturnUsing(fn($request, $issuer) => $request());
+                ->andReturnUsing(fn ($request, $issuer) => $request());
         });
 
         $this->instance(EnvironmentResolver::class, $this->makeEnvironmentResolver($environment));
@@ -244,5 +245,27 @@ class UploadGatewayTest extends DatabaseTestCase
         $this->expectExceptionMessageIs('SII Upload response did not contain a valid TrackID.');
 
         $gateway->upload($envelope, '<EnvioDTE/>');
+    }
+
+    public function test_wraps_a_connection_failure_into_a_runtime_exception(): void
+    {
+        $envelope = $this->makeEnvelope();
+
+        // A cURL failure never produces an HTTP response, so the gateway must
+        // surface it as a connection failure rather than a status error.
+        HttpFacade::fake(static function () {
+            throw new ConnectionException('Could not resolve host: palena.sii.cl');
+        });
+
+        $gateway = $this->makeGateway();
+
+        try {
+            $gateway->upload($envelope, '<EnvioDTE/>');
+
+            static::fail('Expected the upload to fail.');
+        } catch (RuntimeException $e) {
+            static::assertSame('SII connection failed', $e->getMessage());
+            static::assertInstanceOf(ConnectionException::class, $e->getPrevious());
+        }
     }
 }

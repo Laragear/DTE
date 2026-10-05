@@ -81,6 +81,37 @@ class ProcessAndSendEnvelopeCommandTest extends DatabaseTestCase
         ]);
     }
 
+    public function test_leaves_dtes_that_were_not_packed_untouched(): void
+    {
+        $this->config('dte.environment', DteEnvironment::Local->value);
+        $this->app->make(EnvironmentResolver::class)->flush();
+
+        // A DTE that is not Packed must be skipped by the bulk update and by the
+        // in-memory sync, keeping its own status.
+        $envelope = SiiDteEnvelope::factory()
+            ->has(SiiDte::factory()->state(['status' => DteStatus::Outbox]), 'dtes')
+            ->create();
+
+        $this->mock(CreateEnvelope::class, function (MockInterface $mock) use ($envelope): void {
+            $mock->expects('forEnvelope')->andReturnUsing(function () use ($envelope) {
+                $envelope->setRelation(
+                    'payload',
+                    SiiDteEnvelopePayload::factory()->make(['xml' => 'signed-xml']),
+                );
+
+                return $envelope;
+            });
+        });
+
+        $this->artisan('dte:process-envelope', ['envelope_id' => $envelope->getKey()])
+            ->assertSuccessful();
+
+        $this->assertDatabaseHas('sii_dtes', [
+            'id' => $envelope->dtes()->value('id'),
+            'status' => DteStatus::Outbox->value,
+        ]);
+    }
+
     public function test_processes_and_sends_boleta_envelope(): void
     {
         $now = $this->freezeSecond();
@@ -124,7 +155,7 @@ class ProcessAndSendEnvelopeCommandTest extends DatabaseTestCase
 
         $this->mock(CreateEnvelope::class)
             ->expects('forEnvelope')
-            ->withArgs(fn($s) => $s->is($envelope))
+            ->withArgs(fn ($s) => $s->is($envelope))
             ->andReturnUsing(function () use ($envelope) {
                 $payload = SiiDteEnvelopePayload::factory()->make(['xml' => 'signed-xml']);
                 $envelope->setRelation('payload', $payload);

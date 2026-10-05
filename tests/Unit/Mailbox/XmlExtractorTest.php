@@ -2,7 +2,12 @@
 
 namespace Tests\Unit\Mailbox;
 
+use Laragear\Dte\Contracts\MimeMessageParser;
+use Laragear\Dte\Data\MimeMessage;
+use Laragear\Dte\Data\MimePart;
 use Laragear\Dte\Mailbox\XmlExtractor;
+use Laragear\Dte\Mailbox\ZbatesonMimeMessageParser;
+use Mockery\MockInterface;
 use Tests\TestCase;
 
 class XmlExtractorTest extends TestCase
@@ -34,7 +39,7 @@ class XmlExtractorTest extends TestCase
 
     public function test_extracts_from_string(): void
     {
-        $extractor = new XmlExtractor;
+        $extractor = $this->app->make(XmlExtractor::class);
 
         static::assertSame('<?xml version="1.0"?>', $extractor->extractFromString('bla <?xml version="1.0"?>'));
         static::assertSame('<?xml content tag', $extractor->extractFromString(base64_encode('<?xml content tag')));
@@ -48,7 +53,7 @@ class XmlExtractorTest extends TestCase
     {
         $xml = '<?xml version="1.0"?><DTE><Documento ID="F1">x</Documento></DTE>';
 
-        $extractor = new XmlExtractor;
+        $extractor = $this->app->make(XmlExtractor::class);
 
         static::assertSame(
             $xml,
@@ -60,7 +65,7 @@ class XmlExtractorTest extends TestCase
     {
         $xml = '<?xml version="1.0"?><DTE><Documento ID="F1">x</Documento></DTE>';
 
-        $extractor = new XmlExtractor;
+        $extractor = $this->app->make(XmlExtractor::class);
 
         static::assertSame(
             $xml,
@@ -72,7 +77,7 @@ class XmlExtractorTest extends TestCase
     {
         $xml = '<?xml version="1.0"?><DTE><Documento ID="F1">x</Documento></DTE>';
 
-        $extractor = new XmlExtractor;
+        $extractor = $this->app->make(XmlExtractor::class);
 
         static::assertSame(
             $xml,
@@ -84,7 +89,7 @@ class XmlExtractorTest extends TestCase
     {
         $xml = '<?xml version="1.0"?><DTE><A>1 & 2</A></DTE>';
 
-        $extractor = new XmlExtractor;
+        $extractor = $this->app->make(XmlExtractor::class);
 
         static::assertSame(
             $xml,
@@ -94,7 +99,7 @@ class XmlExtractorTest extends TestCase
 
     public function test_returns_empty_when_no_xml_found(): void
     {
-        $extractor = new XmlExtractor;
+        $extractor = $this->app->make(XmlExtractor::class);
 
         static::assertSame('', $extractor->extractFromRaw("Content-Type: text/plain\r\n\r\njust text, no xml here"));
         static::assertSame('', $extractor->extractFromRaw($this->multipart('nothing here', 'text/plain', 'note.txt')));
@@ -107,7 +112,7 @@ class XmlExtractorTest extends TestCase
         $xml = '<?xml version="1.0"?><DTE><Documento ID="F1">x</Documento></DTE>';
         $raw = "Content-Type: text/plain\r\n\r\n{$xml}";
 
-        $extractor = new XmlExtractor;
+        $extractor = $this->app->make(XmlExtractor::class);
 
         static::assertSame($xml, $extractor->extractFromRaw($raw));
     }
@@ -117,8 +122,91 @@ class XmlExtractorTest extends TestCase
         $xml = '<?xml version="1.0"?><DTE><Documento ID="F1">y</Documento></DTE>';
         $raw = "Content-Type: text/plain\r\n\r\nSome preamble text\r\n{$xml}";
 
-        $extractor = new XmlExtractor;
+        $extractor = $this->app->make(XmlExtractor::class);
 
         static::assertSame($xml, $extractor->extractFromRaw($raw));
+    }
+
+    public function test_binds_the_zbateson_parser_by_default(): void
+    {
+        $extractor = $this->app->make(XmlExtractor::class);
+
+        // The concrete parser is only reachable through the contract, so prove the
+        // binding by resolving it directly and exercising the extractor with it.
+        static::assertInstanceOf(
+            ZbatesonMimeMessageParser::class,
+            $this->app->make(MimeMessageParser::class),
+        );
+
+        static::assertSame(
+            '<?xml version="1.0"?><DTE/>',
+            $extractor->extractFromRaw($this->multipart('<?xml version="1.0"?><DTE/>', 'application/xml', 'envio.xml')),
+        );
+    }
+
+    public function test_extracts_the_xml_attachment_from_a_faked_parser(): void
+    {
+        $xml = '<?xml version="1.0"?><DTE><Documento ID="F1">z</Documento></DTE>';
+
+        $this->mock(MimeMessageParser::class, static function (MockInterface $mock) use ($xml): void {
+            $mock->expects('parse')->with('raw-payload')->andReturn(
+                new MimeMessage([new MimePart('text/xml', null, $xml)], null)
+            );
+        });
+
+        static::assertSame($xml, $this->app->make(XmlExtractor::class)->extractFromRaw('raw-payload'));
+    }
+
+    public function test_falls_back_to_the_text_body_when_the_parser_yields_no_xml_parts(): void
+    {
+        $xml = '<?xml version="1.0"?><DTE><Documento ID="F1">w</Documento></DTE>';
+
+        $this->mock(MimeMessageParser::class, static function (MockInterface $mock) use ($xml): void {
+            $mock->expects('parse')->andReturn(new MimeMessage([], "preamble\n{$xml}"));
+        });
+
+        static::assertSame($xml, $this->app->make(XmlExtractor::class)->extractFromRaw('raw-payload'));
+    }
+
+    public function test_falls_back_to_the_filename_when_the_content_type_does_not_match(): void
+    {
+        $xml = '<?xml version="1.0"?><DTE><Documento ID="F1">v</Documento></DTE>';
+
+        $this->mock(MimeMessageParser::class, static function (MockInterface $mock) use ($xml): void {
+            $mock->expects('parse')->andReturn(new MimeMessage(
+                [new MimePart('application/octet-stream', 'ENVIO.XML', $xml)],
+                null,
+            ));
+        });
+
+        static::assertSame($xml, $this->app->make(XmlExtractor::class)->extractFromRaw('raw-payload'));
+    }
+
+    public function test_skips_parts_without_content_while_looking_for_xml(): void
+    {
+        $xml = '<?xml version="1.0"?><DTE><Documento ID="F1">u</Documento></DTE>';
+
+        $this->mock(MimeMessageParser::class, static function (MockInterface $mock) use ($xml): void {
+            $mock->expects('parse')->andReturn(new MimeMessage([
+                new MimePart('text/xml', null, null),
+                new MimePart('text/xml', null, 'no declaration here'),
+                new MimePart('application/octet-stream', null, null),
+                new MimePart('application/xml', 'envio.xml', $xml),
+            ], null));
+        });
+
+        static::assertSame($xml, $this->app->make(XmlExtractor::class)->extractFromRaw('raw-payload'));
+    }
+
+    public function test_returns_empty_when_the_parser_yields_nothing_usable(): void
+    {
+        $this->mock(MimeMessageParser::class, static function (MockInterface $mock): void {
+            $mock->expects('parse')->andReturn(new MimeMessage(
+                [new MimePart('text/plain', 'note.txt', 'nothing here')],
+                'no xml at all',
+            ));
+        });
+
+        static::assertSame('', $this->app->make(XmlExtractor::class)->extractFromRaw('raw-payload'));
     }
 }

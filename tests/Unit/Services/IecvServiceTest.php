@@ -255,4 +255,57 @@ class IecvServiceTest extends DatabaseTestCase
 
         static::assertSame(IecvStatus::Uploaded, $result->status);
     }
+
+    public function test_links_purchase_documents_resolved_from_a_raw_rut_string(): void
+    {
+        $issuer = Rut::parse('76123456-0');
+        $dte = SiiDte::factory()->create([
+            'issuer_rut' => $issuer,
+            'issued_on' => '2026-09-15',
+        ]);
+
+        $upload = $this->mock(IecvUploadGateway::class);
+        $upload->expects('upload')->zeroOrMoreTimes()->andReturn('123456789');
+
+        $generator = $this->mock(IecvGenerator::class);
+        $generator->expects('generatePurchases')->once()->andReturn('<LibroCompraVenta/>');
+
+        $book = $this->makeService($generator, $upload)->sendPurchases(
+            $issuer,
+            // A raw string RUT must be parsed to match the stored document.
+            [new IecvPurchaseData(33, 1, '2026-09-15', '76123456-0')],
+            '2026-09',
+            '2026-08-24',
+            0,
+            $issuer,
+        );
+
+        static::assertSame($book->getKey(), SiiDte::query()->find($dte->getKey())->sii_iecv_id);
+    }
+
+    public function test_skips_purchase_entries_that_match_no_stored_document(): void
+    {
+        $issuer = Rut::parse('76123456-0');
+
+        // A document from another issuer and another date must not be linked.
+        SiiDte::factory()->create([
+            'issuer_rut' => Rut::parse('98999999-9'),
+            'issued_on' => '2026-09-20',
+        ]);
+
+        $generator = $this->mock(IecvGenerator::class);
+        $generator->expects('generatePurchases')->once()->andReturn('<LibroCompraVenta/>');
+
+        $book = $this->makeService($generator)->sendPurchases(
+            $issuer,
+            [new IecvPurchaseData(33, 1, '2026-09-15', $issuer)],
+            '2026-09',
+            '2026-08-24',
+            0,
+            $issuer,
+        );
+
+        static::assertSame(0, SiiDte::query()->whereNotNull('sii_iecv_id')->count());
+        static::assertSame(IecvStatus::Uploaded, $book->status);
+    }
 }

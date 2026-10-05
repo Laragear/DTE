@@ -4,7 +4,7 @@ namespace Laragear\Dte\Mailbox\Drivers;
 
 use Aws\S3\S3Client;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
-use Laragear\Dte\Contracts\MailboxDriverInterface;
+use Laragear\Dte\Contracts\MailboxDriver;
 use Laragear\Dte\Data\InboundEmailData;
 use Laragear\Dte\Mailbox\XmlExtractor;
 use function preg_match;
@@ -14,7 +14,7 @@ use function preg_match;
  *
  * Required: aws/aws-sdk-php.
  */
-class AwsSesDriver implements MailboxDriverInterface
+class AwsSesDriver implements MailboxDriver
 {
     /**
      * Create a new AWS SES Driver instance.

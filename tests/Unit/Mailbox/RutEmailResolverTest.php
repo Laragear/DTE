@@ -4,7 +4,7 @@ namespace Tests\Unit\Mailbox;
 
 use Illuminate\Contracts\Cache\Factory;
 use Illuminate\Support\Sleep;
-use Laragear\Dte\Contracts\TokenProviderInterface;
+use Laragear\Dte\Contracts\TokenProvider;
 use Laragear\Dte\Data\Token;
 use Laragear\Dte\Environment\EnvironmentResolver;
 use Laragear\Dte\Gateways\Exceptions\TokenInvalidException;
@@ -43,7 +43,7 @@ class RutEmailResolverTest extends TestCase
         bool $cacheEnabled = true,
     ): RutEmailResolver {
         $token = new Token('sii-dir-token', time() + 3600);
-        $this->mock(TokenProviderInterface::class, static function (MockInterface $mock) use ($token): void {
+        $this->mock(TokenProvider::class, static function (MockInterface $mock) use ($token): void {
             $mock->expects('token')
                 ->zeroOrMoreTimes()
                 ->andReturn($token);
@@ -125,7 +125,7 @@ class RutEmailResolverTest extends TestCase
             'cached@empresa.cl');
 
         $this->mock(SoapProxy::class)->shouldNotReceive('build');
-        $this->mock(TokenProviderInterface::class)->shouldNotReceive('token');
+        $this->mock(TokenProvider::class)->shouldNotReceive('token');
 
         $this->config([
             'dte.environment' => 'certification',
@@ -147,7 +147,7 @@ class RutEmailResolverTest extends TestCase
         $rut = Rut::parse('76.123.456-7');
 
         $token = new Token('tok', time() + 3600);
-        $this->mock(TokenProviderInterface::class, static function (MockInterface $mock) use ($token): void {
+        $this->mock(TokenProvider::class, static function (MockInterface $mock) use ($token): void {
             $mock->expects('token')->zeroOrMoreTimes()->andReturn($token);
             $mock->expects('retryWithFreshToken')->zeroOrMoreTimes()
                 ->andReturnUsing(fn ($request, $issuer) => $request());
@@ -196,7 +196,7 @@ class RutEmailResolverTest extends TestCase
     public function test_returns_null_and_logs_warning_on_soap_fault(): void
     {
         $token = new Token('tok', time() + 3600);
-        $this->mock(TokenProviderInterface::class, static function (MockInterface $mock) use ($token): void {
+        $this->mock(TokenProvider::class, static function (MockInterface $mock) use ($token): void {
             $mock->expects('token')->zeroOrMoreTimes()->andReturn($token);
             $mock->expects('retryWithFreshToken')->zeroOrMoreTimes()
                 ->andReturnUsing(fn ($request, $issuer) => $request());
@@ -236,7 +236,7 @@ class RutEmailResolverTest extends TestCase
     public function test_throws_token_invalid_exception_when_sii_returns_invalid_token_status(): void
     {
         $token = new Token('tok', time() + 3600);
-        $this->mock(TokenProviderInterface::class, static function (MockInterface $mock) use ($token): void {
+        $this->mock(TokenProvider::class, static function (MockInterface $mock) use ($token): void {
             $mock->expects('token')->zeroOrMoreTimes()->andReturn($token);
             $mock->expects('retryWithFreshToken')->zeroOrMoreTimes()
                 ->andReturnUsing(fn ($request, $issuer) => $request());

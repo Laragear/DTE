@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mailbox;
 
-use Laragear\Dte\Contracts\MailboxDriverInterface;
+use Laragear\Dte\Contracts\MailboxDriver;
 use Laragear\Dte\Mailbox\Drivers\AwsSesDriver;
 use Laragear\Dte\Mailbox\Drivers\GoogleWorkspaceDriver;
 use Laragear\Dte\Mailbox\Drivers\ImapDriver;
@@ -35,7 +35,7 @@ class MailboxManagerTest extends TestCase
 
         $driver = $this->makeManager('aws_ses')->driver();
 
-        static::assertInstanceOf(MailboxDriverInterface::class, $driver);
+        static::assertInstanceOf(MailboxDriver::class, $driver);
     }
 
     public function test_imap_driver_requires_the_imap_extension(): void
@@ -67,9 +67,9 @@ class MailboxManagerTest extends TestCase
             $driver = $manager->driver($driverName);
 
             static::assertInstanceOf(
-                MailboxDriverInterface::class,
+                MailboxDriver::class,
                 $driver,
-                "Driver {$driverName} must implement MailboxDriverInterface",
+                "Driver {$driverName} must implement MailboxDriver",
             );
         }
     }
@@ -91,14 +91,14 @@ class MailboxManagerTest extends TestCase
         $this->mock(ImapDriver::class);
 
         static::assertInstanceOf(
-            MailboxDriverInterface::class,
+            MailboxDriver::class,
             $this->makeManager('imap')->driver(),
         );
     }
 
     public function test_can_extend_with_custom_driver(): void
     {
-        $customDriver = Mockery::mock(MailboxDriverInterface::class);
+        $customDriver = Mockery::mock(MailboxDriver::class);
 
         $manager = $this->makeManager('custom');
 

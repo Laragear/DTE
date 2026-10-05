@@ -7,7 +7,7 @@ use Google\Service\Gmail;
 use Google\Service\Gmail\Message;
 use Google\Service\Gmail\ModifyMessageRequest;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
-use Laragear\Dte\Contracts\MailboxDriverInterface;
+use Laragear\Dte\Contracts\MailboxDriver;
 use Laragear\Dte\Data\InboundEmailData;
 use Laragear\Dte\Mailbox\XmlExtractor;
 use function base64_decode;
@@ -18,7 +18,7 @@ use function strtr;
  *
  * Required: google/apiclient with the Gmail service.
  */
-class GoogleWorkspaceDriver implements MailboxDriverInterface
+class GoogleWorkspaceDriver implements MailboxDriver
 {
     /**
      * Create a new Google Workspace Driver instance.

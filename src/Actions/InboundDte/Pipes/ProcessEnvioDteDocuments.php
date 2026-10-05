@@ -7,7 +7,7 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\DateFactory;
 use Laragear\Dte\Actions\InboundDte\InboundDteData;
-use Laragear\Dte\Contracts\TenantResolverInterface;
+use Laragear\Dte\Contracts\TenantResolver;
 use Laragear\Dte\Enums\DteType;
 use Laragear\Dte\Enums\InboundDteStatus;
 use Laragear\Dte\Events\InboundDteReceived;
@@ -25,7 +25,7 @@ class ProcessEnvioDteDocuments
      * Create a new Process Envio Dte Documents instance.
      */
     public function __construct(
-        protected TenantResolverInterface $tenantResolver,
+        protected TenantResolver $tenantResolver,
         protected DteAuthenticityVerifier $authenticityVerifier,
         protected Dispatcher $event,
         protected DateFactory $date,

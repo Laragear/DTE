@@ -12,7 +12,7 @@ use Illuminate\Queue\Attributes\Timeout;
 use Illuminate\Queue\Attributes\Tries;
 use Illuminate\Support\Facades\Mail;
 use Laragear\Dte\Actions\CreateEnvelope\CreateEnvelope;
-use Laragear\Dte\Contracts\TokenProviderInterface;
+use Laragear\Dte\Contracts\TokenProvider;
 use Laragear\Dte\Data\Token;
 use Laragear\Dte\Enums\DteType;
 use Laragear\Dte\Jobs\SendInterchangeEnvelopeJob;
@@ -49,7 +49,7 @@ class SendInterchangeEnvelopeJobTest extends TestCase
         $this->app->make(CacheFactory::class)->put('dte|exchange_email|rut:761234560', 'test@example.com');
         $this->app->make(CacheFactory::class)->put('dte|exchange_email|rut:771234569', 'test@example.com');
 
-        $this->mock(TokenProviderInterface::class)
+        $this->mock(TokenProvider::class)
             ->expects('token')
             ->zeroOrMoreTimes()
             ->andReturn(new Token('test', time() + 3600));
@@ -83,7 +83,7 @@ class SendInterchangeEnvelopeJobTest extends TestCase
         ]);
 
         // Don't cache anything, testing environment returns null
-        $this->mock(TokenProviderInterface::class)->expects('token')
+        $this->mock(TokenProvider::class)->expects('token')
             ->zeroOrMoreTimes()->andReturn(new Token('test',
                 time() + 3600));
         $this->mock(CreateEnvelope::class)->expects('forSharing')->never();
@@ -105,7 +105,7 @@ class SendInterchangeEnvelopeJobTest extends TestCase
             'sii_dte_envelope_id' => $envelope->id, 'receiver_rut' => '76123456-0', 'document_type' => 39,
         ]); // Boleta
 
-        $this->mock(TokenProviderInterface::class)->expects('token')
+        $this->mock(TokenProvider::class)->expects('token')
             ->zeroOrMoreTimes()->andReturn(new Token('test',
                 time() + 3600));
         $this->mock(CreateEnvelope::class);
@@ -127,7 +127,7 @@ class SendInterchangeEnvelopeJobTest extends TestCase
 
         $this->app->make(CacheFactory::class)->put('dte|exchange_email|rut:761234560',
             'test@example.com');
-        $this->mock(TokenProviderInterface::class)->expects('token')
+        $this->mock(TokenProvider::class)->expects('token')
             ->zeroOrMoreTimes()->andReturn(new Token('test',
                 time() + 3600));
         $this->mock(CreateEnvelope::class)->expects('forSharing')->andThrow(new RuntimeException('Compilation Failed'));
@@ -152,7 +152,7 @@ class SendInterchangeEnvelopeJobTest extends TestCase
 
         $this->app->make(CacheFactory::class)->put('dte|exchange_email|rut:761234560',
             'test@example.com');
-        $this->mock(TokenProviderInterface::class)->expects('token')
+        $this->mock(TokenProvider::class)->expects('token')
             ->zeroOrMoreTimes()->andReturn(new Token('test',
                 time() + 3600));
         $this->mock(CreateEnvelope::class, function (MockInterface $mock) {
@@ -194,7 +194,7 @@ class SendInterchangeEnvelopeJobTest extends TestCase
 
         $this->app->make(CacheFactory::class)->put('dte|exchange_email|rut:761234560',
             'test@example.com');
-        $this->mock(TokenProviderInterface::class)
+        $this->mock(TokenProvider::class)
             ->expects('token')
             ->zeroOrMoreTimes()
             ->andReturn(new Token('test', time() + 3600));

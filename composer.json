@@ -54,8 +54,7 @@
         "laragear/rut": "^5.3.0",
         "laravel/prompts": "^0.3.22",
         "spatie/laravel-pdf": "^2.13",
-        "spatie/temporary-directory": "^2.4",
-        "zbateson/mail-mime-parser": "^4.0.3"
+        "spatie/temporary-directory": "^2.4"
     },
     "require-dev": {
         "ext-zlib": "*",
@@ -69,10 +68,17 @@
         "microsoft/microsoft-graph": "^3.7.0",
         "orchestra/testbench": "^11.3.0",
         "orchestra/testbench-core": "^11.5",
-        "phpunit/phpunit": "^13.3.6"
+        "php-di/php-di": "^7.1",
+        "phpunit/phpunit": "^13.3.6",
+        "symfony/translation": "^7.3.10",
+        "zbateson/mail-mime-parser": "^4.0.6"
     },
     "suggest": {
         "ext-imap": "Required to use the IMAP mailbox driver for inbound DTE documents.",
+        "aws/aws-sdk-php": "Required to use the AWS SES mailbox driver for inbound DTE documents.",
+        "zbateson/mail-mime-parser": "Required to use the AWS SES mailbox driver to parse MIME emails.",
+        "google/apiclient": "Required to use the Google Workspace mailbox driver for inbound DTE documents.",
+        "microsoft/microsoft-graph": "Required to use the Microsoft 365 mailbox driver for inbound DTE documents.",
         "dompdf/dompdf": "Default driver for DTE PDF Generation.",
         "spatie/browsershot": "Headless Chrome driver for DTE PDF Generation.",
         "laravel/boost": "AI companion for using this library skills"

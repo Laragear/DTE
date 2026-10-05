@@ -24,11 +24,14 @@ use Laragear\Dte\Console\Commands\PurgeDatabaseCommand;
 use Laragear\Dte\Console\Commands\RejectExpiringPhantomInvoicesCommand;
 use Laragear\Dte\Console\Commands\SendIecvCommand;
 use Laragear\Dte\Contracts\CertificateResolverInterface;
-use Laragear\Dte\Contracts\TokenProviderInterface;
+use Laragear\Dte\Contracts\MimeMessageParser;
+use Laragear\Dte\Contracts\TokenProvider;
 use Laragear\Dte\Environment\EnvironmentResolver;
 use Laragear\Dte\Events\InboundDteAcknowledged;
 use Laragear\Dte\Listeners\SendCommercialReceiptListener;
 use Laragear\Dte\Mailbox\MailboxManager;
+use Laragear\Dte\Mailbox\XmlExtractor;
+use Laragear\Dte\Mailbox\ZbatesonMimeMessageParser;
 use Laragear\Dte\Pdf\Ted\Pdf417Encoder;
 use Laragear\Dte\Pdf\Ted\Pdf417Lookup;
 use Laragear\Dte\Pdf\Ted\Pdf417Renderer;
@@ -87,9 +90,15 @@ class DteServiceProvider extends ServiceProvider
         $this->app->scoped(TokenAuthenticator::class);
 
         // Bind the token interface to the authenticator (gateways no longer authenticate).
-        $this->app->bind(TokenProviderInterface::class, TokenAuthenticator::class);
+        $this->app->bind(TokenProvider::class, TokenAuthenticator::class);
 
         $this->app->scoped(MailboxManager::class);
+
+        // The MIME parser is only needed by the AWS SES driver. It is bound to the
+        // contract so consumers can swap it, and scoped so the extractor and any
+        // other consumer share one parser per request.
+        $this->app->bind(MimeMessageParser::class, ZbatesonMimeMessageParser::class);
+        $this->app->scoped(XmlExtractor::class);
 
         $this->app->bind(Pdf417Encoder::class, static function (Container $app): Pdf417Encoder {
             $encoder = new Pdf417Encoder(

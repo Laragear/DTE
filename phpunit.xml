@@ -4,11 +4,19 @@
   bootstrap="vendor/autoload.php" colors="true"
   xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/13.0/phpunit.xsd"
   cacheDirectory=".phpunit.cache"
-  displayDetailsOnTestsThatTriggerDeprecations="true"
-  displayDetailsOnTestsThatTriggerNotices="true"
-  displayDetailsOnPhpunitDeprecations="true"
-  displayDetailsOnPhpunitNotices="true"
->
+ displayDetailsOnTestsThatTriggerDeprecations="true"
+ displayDetailsOnTestsThatTriggerNotices="true"
+ displayDetailsOnTestsThatTriggerWarnings="true"
+ displayDetailsOnPhpunitDeprecations="true"
+ displayDetailsOnPhpunitNotices="true"
+ failOnDeprecation="true"
+ failOnNotice="true"
+ failOnWarning="true"
+ failOnRisky="true"
+ failOnPhpunitDeprecation="true"
+ failOnPhpunitNotice="true"
+ failOnPhpunitWarning="true"
+ >
   <testsuites>
     <testsuite name="Unit">
       <directory>tests/Unit</directory>

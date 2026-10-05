@@ -5,7 +5,7 @@ namespace Laragear\Dte\Mailbox;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Support\DateFactory;
-use Laragear\Dte\Contracts\TokenProviderInterface;
+use Laragear\Dte\Contracts\TokenProvider;
 use Laragear\Dte\Data\Token;
 use Laragear\Dte\Environment\EnvironmentResolver;
 use Laragear\Dte\Gateways\Exceptions\TokenInvalidException;
@@ -31,7 +31,7 @@ class RutEmailResolver
         protected Cache $cache,
         protected ConfigRepository $config,
         protected DateFactory $date,
-        protected TokenProviderInterface $tokenProvider,
+        protected TokenProvider $tokenProvider,
         protected SoapClientFactory $soapClientFactory,
         protected EnvironmentResolver $environment,
         protected LoggerInterface $logger,

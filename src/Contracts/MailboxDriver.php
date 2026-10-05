@@ -4,7 +4,7 @@ namespace Laragear\Dte\Contracts;
 
 use Laragear\Dte\Data\InboundEmailData;
 
-interface MailboxDriverInterface
+interface MailboxDriver
 {
     /**
      * Returns a list of all the email inbound

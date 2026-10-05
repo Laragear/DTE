@@ -1501,6 +1501,30 @@ message = "Reference created from a previously undefined variable `$matches`."
 count = 1
 
 [[issues]]
+file = "src/Mailbox/Drivers/AwsSesDriver.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::copyObject`: expected `array{'ACL'?: string('authenticated-read')|string('aws-exec-read')|string('bucket-owner-full-control')|string('bucket-owner-read')|string('private')|string('public-read')|string('public-read-write'), 'AnnotationDirective'?: string('COPY')|string('EXCLUDE'), 'Bucket'?: string, 'BucketKeyEnabled'?: bool, 'CacheControl'?: string, 'ChecksumAlgorithm'?: string('CRC32')|string('CRC32C')|string('CRC64NVME')|string('MD5')|string('SHA1')|string('SHA256')|string('SHA512')|string('XXHASH128')|string('XXHASH3')|string('XXHASH64'), 'ContentDisposition'?: string, 'ContentEncoding'?: string, 'ContentLanguage'?: string, 'ContentType'?: string, 'CopySource'?: string, 'CopySourceIfMatch'?: string, 'CopySourceIfModifiedSince'?: DateTimeInterface|int|string, 'CopySourceIfNoneMatch'?: string, 'CopySourceIfUnmodifiedSince'?: DateTimeInterface|int|string, 'CopySourceSSECustomerAlgorithm'?: string, 'CopySourceSSECustomerKey'?: string, 'CopySourceSSECustomerKeyMD5'?: string, 'ExpectedBucketOwner'?: string, 'ExpectedSourceBucketOwner'?: string, 'Expires'?: string, 'GrantFullControl'?: string, 'GrantRead'?: string, 'GrantReadACP'?: string, 'GrantWriteACP'?: string, 'IfMatch'?: string, 'IfNoneMatch'?: string, 'Key'?: string, 'Metadata'?: array<string, string>, 'MetadataDirective'?: string('COPY')|string('REPLACE'), 'ObjectLockEventHold'?: string('OFF')|string('ON'), 'ObjectLockEventHoldDurationDays'?: int, 'ObjectLockEventHoldDurationYears'?: int, 'ObjectLockLegalHoldStatus'?: string('OFF')|string('ON'), 'ObjectLockMode'?: string('COMPLIANCE')|string('GOVERNANCE'), 'ObjectLockRetainUntilDate'?: DateTimeInterface|int|string, 'RequestPayer'?: string('requester'), 'SSECustomerAlgorithm'?: string, 'SSECustomerKey'?: string, 'SSECustomerKeyMD5'?: string, 'SSEKMSEncryptionContext'?: string, 'SSEKMSKeyId'?: string, 'ServerSideEncryption'?: string('AES256')|string('aws:backup')|string('aws:fsx')|string('aws:kms')|string('aws:kms:dsse'), 'StorageClass'?: string('AWS_BACKUP_LOW_COST_WARM')|string('AWS_BACKUP_WARM')|string('DEEP_ARCHIVE')|string('EXPRESS_ONEZONE')|string('FSX_ONTAP')|string('FSX_OPENZFS')|string('GLACIER')|string('GLACIER_IR')|string('INTELLIGENT_TIERING')|string('ONEZONE_IA')|string('OUTPOSTS')|string('REDUCED_REDUNDANCY')|string('SNOW')|string('STANDARD')|string('STANDARD_IA'), 'Tagging'?: string, 'TaggingDirective'?: string('COPY')|string('REPLACE'), 'WebsiteRedirectLocation'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'CopySource': truthy-string, 'Key': string}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/AwsSesDriver.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::deleteObject`: expected `array{'Bucket'?: string, 'BypassGovernanceRetention'?: bool, 'ExpectedBucketOwner'?: string, 'IfMatch'?: string, 'IfMatchLastModifiedTime'?: DateTimeInterface|int|string, 'IfMatchSize'?: int, 'Key'?: string, 'MFA'?: string, 'RequestPayer'?: string('requester'), 'VersionId'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'Key': string}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/AwsSesDriver.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::getObject`: expected `array{'Bucket'?: string, 'ChecksumMode'?: string('ENABLED'), 'ExpectedBucketOwner'?: string, 'IfMatch'?: string, 'IfModifiedSince'?: DateTimeInterface|int|string, 'IfNoneMatch'?: string, 'IfUnmodifiedSince'?: DateTimeInterface|int|string, 'Key'?: string, 'PartNumber'?: int, 'Range'?: string, 'RequestPayer'?: string('requester'), 'ResponseCacheControl'?: string, 'ResponseContentDisposition'?: string, 'ResponseContentEncoding'?: string, 'ResponseContentLanguage'?: string, 'ResponseContentType'?: string, 'ResponseExpires'?: DateTimeInterface|int|string, 'SSECustomerAlgorithm'?: string, 'SSECustomerKey'?: string, 'SSECustomerKeyMD5'?: string, 'VersionId'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'Key': mixed}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Mailbox/Drivers/AwsSesDriver.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::listObjectsV2`: expected `array{'Bucket'?: string, 'ContinuationToken'?: string, 'Delimiter'?: string, 'EncodingType'?: string('url'), 'ExpectedBucketOwner'?: string, 'FetchOwner'?: bool, 'MaxKeys'?: int, 'OptionalObjectAttributes'?: list<string('RestoreStatus')>, 'Prefix'?: string, 'RequestPayer'?: string('requester'), 'StartAfter'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'MaxKeys': mixed, 'Prefix': nonnull}` is less specific.'''
+count = 1
+
+[[issues]]
 file = "src/Mailbox/Drivers/GoogleWorkspaceDriver.php"
 code = "invalid-iterator"
 message = "The expression provided to `foreach` is not iterable. It resolved to type `nonnull`, which is not iterable."

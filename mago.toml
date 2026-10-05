@@ -1,6 +1,6 @@
-#:schema https://mago.carthage.software/1.46.0/schema.json
+#:schema https://mago.carthage.software/1.51.0/schema.json
 # Welcome to Mago!
-# For full documentation, see https://mago.carthage.software/1.46.0/en/tools/overview/
+# For full documentation, see https://mago.carthage.software/1.51.0/en/tools/overview/
 version = "1"
 php-version = "8.5.0"
 

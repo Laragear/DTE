@@ -3,6 +3,8 @@
 namespace Tests\Unit\Services;
 
 use DOMDocument;
+use DOMElement;
+use DOMNode;
 use DOMNodeList;
 use DOMXPath;
 use Laragear\Dte\Builders\Iecv\IecvBuilder;
@@ -12,11 +14,13 @@ use Laragear\Dte\Certificate\DigitalCertificate;
 use Laragear\Dte\Enums\DteType;
 use Laragear\Dte\Enums\IecvType;
 use Laragear\Dte\Models\SiiDte;
+use Laragear\Dte\Proxies\LibxmlProxy;
 use Laragear\Dte\Services\IecvGenerator;
 use Laragear\Dte\Support\XmlDomFactory;
 use Laragear\Dte\Xml\XmlSigner;
 use Laragear\Dte\Xml\XsdValidator;
 use Laragear\Rut\Rut;
+use Mockery\MockInterface;
 use RuntimeException;
 use Tests\TestCase;
 
@@ -43,6 +47,17 @@ class IecvGeneratorTest extends TestCase
         return '<?xml version="1.0" encoding="ISO-8859-1"?><EnvioLibro ID="test"></EnvioLibro>';
     }
 
+    /**
+     * A namespaced IECV document, as produced by IecvBuilder.
+     */
+    protected function namespacedEnvioLibroXml(): string
+    {
+        return '<?xml version="1.0" encoding="ISO-8859-1"?>'
+            .'<LibroCompraVenta xmlns="'.XmlDomFactory::XML_NAMESPACE.'" version="1.0">'
+            .'<EnvioLibro ID="test"></EnvioLibro>'
+            .'</LibroCompraVenta>';
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Happy paths
@@ -59,28 +74,31 @@ class IecvGeneratorTest extends TestCase
         $builder = $this->mock(IecvBuilder::class);
         $builder->expects('build')
             ->with($dtes, IecvType::Sales, '2024-01', '2024-01-01', 1, $senderRut, [])
-            ->once()
+
             ->andReturn($xmlString);
 
         $certificate = $this->mock(CertificateResolver::class);
         $cert = new DigitalCertificate('fake', 'fake');
-        $certificate->expects('resolve')->with($issuer)->once()->andReturn($cert);
+        $certificate->expects('resolve')->with($issuer)->andReturn($cert);
 
         $xsd = $this->mock(XsdValidator::class);
-        $xsd->expects('validate')->once();
+        $xsd->expects('validate');
 
         $signer = $this->mock(XmlSigner::class);
-        $signer->expects('sign')->once();
+        $signer->expects('sign');
 
-        $xml = $this->mock(XmlDomFactory::class);
         $dom = new DOMDocument('1.0', 'ISO-8859-1');
         $dom->loadXML($xmlString);
-        $xml->expects('document')->once()->andReturn($dom);
+
         $xpath = $this->mock(DOMXPath::class);
-        $xpath->expects('query')->with('//EnvioLibro')->once()->andReturnUsing(function () use ($dom) {
-            return $dom->getElementsByTagName('EnvioLibro');
+        $xpath->expects('query')
+            ->with("//*[local-name()='EnvioLibro']")
+            ->andReturnUsing(fn() => $dom->getElementsByTagName('EnvioLibro'));
+
+        $xml = $this->mock(XmlDomFactory::class, static function (MockInterface $mock) use ($dom, $xpath): void {
+            $mock->expects('document')->andReturn($dom);
+            $mock->expects('xpath')->with($dom)->andReturn($xpath);
         });
-        $xml->expects('xpath')->with($dom)->once()->andReturn($xpath);
 
         $generator = $this->makeGenerator($builder, $certificate, $xml, $xsd, $signer);
 
@@ -102,28 +120,31 @@ class IecvGeneratorTest extends TestCase
         $builder = $this->mock(IecvBuilder::class);
         $builder->expects('buildPurchases')
             ->with($entries, '2024-01', '2024-01-01', 1, $issuer, $senderRut, [])
-            ->once()
+
             ->andReturn($xmlString);
 
         $certificate = $this->mock(CertificateResolver::class);
         $cert = new DigitalCertificate('fake', 'fake');
-        $certificate->expects('resolve')->with($issuer)->once()->andReturn($cert);
+        $certificate->expects('resolve')->with($issuer)->andReturn($cert);
 
         $xsd = $this->mock(XsdValidator::class);
-        $xsd->expects('validate')->once();
+        $xsd->expects('validate');
 
         $signer = $this->mock(XmlSigner::class);
-        $signer->expects('sign')->once();
+        $signer->expects('sign');
 
-        $xml = $this->mock(XmlDomFactory::class);
         $dom = new DOMDocument('1.0', 'ISO-8859-1');
         $dom->loadXML($xmlString);
-        $xml->expects('document')->once()->andReturn($dom);
+
         $xpath = $this->mock(DOMXPath::class);
-        $xpath->expects('query')->with('//EnvioLibro')->once()->andReturnUsing(function () use ($dom) {
-            return $dom->getElementsByTagName('EnvioLibro');
+        $xpath->expects('query')
+            ->with("//*[local-name()='EnvioLibro']")
+            ->andReturnUsing(fn() => $dom->getElementsByTagName('EnvioLibro'));
+
+        $xml = $this->mock(XmlDomFactory::class, static function (MockInterface $mock) use ($dom, $xpath): void {
+            $mock->expects('document')->andReturn($dom);
+            $mock->expects('xpath')->with($dom)->andReturn($xpath);
         });
-        $xml->expects('xpath')->with($dom)->once()->andReturn($xpath);
 
         $generator = $this->makeGenerator($builder, $certificate, $xml, $xsd, $signer);
 
@@ -175,13 +196,13 @@ class IecvGeneratorTest extends TestCase
         $certificate->expects('resolve')->andReturn($cert);
 
         $xsd = $this->mock(XsdValidator::class);
-        $xsd->expects('validate')->once();
+        $xsd->expects('validate');
 
         $domMock = $this->mock(DOMDocument::class);
         $domMock->expects('loadXML')->andReturn(false);
 
         $xml = $this->mock(XmlDomFactory::class);
-        $xml->expects('document')->once()->andReturn($domMock);
+        $xml->expects('document')->andReturn($domMock);
 
         $generator = $this->makeGenerator($builder, $certificate, $xml, $xsd);
 
@@ -206,17 +227,18 @@ class IecvGeneratorTest extends TestCase
         $certificate->expects('resolve')->andReturn($cert);
 
         $xsd = $this->mock(XsdValidator::class);
-        $xsd->expects('validate')->once();
+        $xsd->expects('validate');
 
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->loadXML('<?xml version="1.0"?><Root></Root>');
 
         $xpathMock = $this->mock(DOMXPath::class);
-        $xpathMock->expects('query')->with('//EnvioLibro')->once()->andReturn(new DOMNodeList);
+        $xpathMock->expects('query')->with("//*[local-name()='EnvioLibro']")->andReturn(new DOMNodeList);
 
-        $xml = $this->mock(XmlDomFactory::class);
-        $xml->expects('document')->once()->andReturn($dom);
-        $xml->expects('xpath')->with($dom)->once()->andReturn($xpathMock);
+        $xml = $this->mock(XmlDomFactory::class, static function (MockInterface $mock) use ($dom, $xpathMock): void {
+            $mock->expects('document')->andReturn($dom);
+            $mock->expects('xpath')->with($dom)->andReturn($xpathMock);
+        });
 
         $generator = $this->makeGenerator($builder, $certificate, $xml, $xsd);
 
@@ -226,5 +248,41 @@ class IecvGeneratorTest extends TestCase
         $generator->generateSales(
             $issuer, $dtes, '2024-01', '2024-01-01', 1, $issuer,
         );
+    }
+
+    public function test_sign_xml_finds_envio_libro_within_default_namespace(): void
+    {
+        $xmlString = $this->namespacedEnvioLibroXml();
+        $issuer = Rut::parse('76123456-0');
+        $senderRut = Rut::parse('76123456-0');
+        $dtes = collect([$this->mock(SiiDte::class)]);
+
+        $builder = $this->mock(IecvBuilder::class);
+        $builder->expects('build')->andReturn($xmlString);
+
+        $certificate = $this->mock(CertificateResolver::class);
+        $certificate->expects('resolve')->andReturn(new DigitalCertificate('fake', 'fake'));
+
+        $xsd = $this->mock(XsdValidator::class);
+        $xsd->expects('validate');
+
+        $signed = null;
+        $signer = $this->mock(XmlSigner::class);
+        $signer->expects('sign')->andReturnUsing(
+            static function (DOMElement $element) use (&$signed): DOMNode {
+                return $signed = $element;
+            }
+        );
+
+        $xml = new XmlDomFactory(new LibxmlProxy);
+
+        $generator = $this->makeGenerator($builder, $certificate, $xml, $xsd, $signer);
+
+        $generator->generateSales(
+            $issuer, $dtes, '2024-01', '2024-01-01', 1, $senderRut,
+        );
+
+        static::assertInstanceOf(DOMElement::class, $signed);
+        static::assertSame('EnvioLibro', $signed->localName);
     }
 }

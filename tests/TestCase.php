@@ -10,6 +10,7 @@ use Laragear\Dte\Facades\SiiCreditNote;
 use Laragear\Dte\Facades\SiiDebitNote;
 use Laragear\Dte\Facades\SiiDispatchGuide;
 use Laragear\Dte\Facades\SiiEnvelope;
+use Laragear\Dte\Facades\SiiIecv;
 use Laragear\Dte\Facades\SiiInvoice;
 use Laragear\Dte\Facades\SiiInvoiceLiquidation;
 use Laragear\Dte\Facades\SiiPurchaseInvoice;
@@ -54,6 +55,7 @@ abstract class TestCase extends BaseTestCase
             SiiDebitNote::class,
             SiiDispatchGuide::class,
             SiiEnvelope::class,
+            SiiIecv::class,
             SiiPurchaseInvoice::class,
             SiiInvoiceLiquidation::class,
             SiiAec::class,

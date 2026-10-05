@@ -17,10 +17,12 @@ use Laragear\Dte\Console\Commands\MakeFakeCafCommand;
 use Laragear\Dte\Console\Commands\MakeFakeCertificateCommand;
 use Laragear\Dte\Console\Commands\PackManualDtesCommand;
 use Laragear\Dte\Console\Commands\PackReadyDtesCommand;
+use Laragear\Dte\Console\Commands\PollIecvStatusCommand;
 use Laragear\Dte\Console\Commands\PollTrackStatusCommand;
 use Laragear\Dte\Console\Commands\ProcessAndSendEnvelopeCommand;
 use Laragear\Dte\Console\Commands\PurgeDatabaseCommand;
 use Laragear\Dte\Console\Commands\RejectExpiringPhantomInvoicesCommand;
+use Laragear\Dte\Console\Commands\SendIecvCommand;
 use Laragear\Dte\Contracts\CertificateResolverInterface;
 use Laragear\Dte\Contracts\TokenProviderInterface;
 use Laragear\Dte\Environment\EnvironmentResolver;
@@ -144,6 +146,8 @@ class DteServiceProvider extends ServiceProvider
             FetchInboundMailboxCommand::class,
             RejectExpiringPhantomInvoicesCommand::class,
             PollTrackStatusCommand::class,
+            PollIecvStatusCommand::class,
+            SendIecvCommand::class,
             CompileDteXmlCommand::class,
             ProcessAndSendEnvelopeCommand::class,
             PackManualDtesCommand::class,

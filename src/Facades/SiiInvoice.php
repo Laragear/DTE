@@ -55,6 +55,7 @@ use Laragear\Rut\Rut;
  * @method static ?int exemptAmountOverride()
  * @method static ?int netAmountIndicator()
  * @method static int getNonBillableAmount()
+ * @method static bool hasCommonUseIva()
  * @method static array globalModifiers()
  * @method static array attributes()
  * @method static array payloadData()

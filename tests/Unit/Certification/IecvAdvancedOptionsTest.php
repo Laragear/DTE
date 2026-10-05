@@ -12,7 +12,7 @@ use Tests\DatabaseTestCase;
 
 class IecvAdvancedOptionsTest extends DatabaseTestCase
 {
-    public function test_compiles_advanced_book_with_uso_comun_and_retentions()
+    public function test_compiles_advanced_book_with_uso_comun_and_retentions(): void
     {
         $dteUsoComun = SiiDte::factory()->create([
             'issuer_rut' => Rut::parse('11111111-1'),
@@ -23,9 +23,8 @@ class IecvAdvancedOptionsTest extends DatabaseTestCase
             'amount_net' => 30082,
             'amount_taxes' => 5716, // 19%
             'amount_total' => 35798,
+            'iva_common_use' => true,
         ]);
-
-        $dteUsoComun->iva_common_use = true;
 
         $dteRetention = SiiDte::factory()->create([
             'issuer_rut' => Rut::parse('11111111-1'),

@@ -23,8 +23,7 @@ readonly class IecvPurchaseData
         public DteType|int|null $referenceType = null,
         public ?int $referenceFolio = null,
     ) {
-        // Represents a single document from the SII Test Set for the Purchases
-        // Book (IECV).
+        //
     }
 
     /**

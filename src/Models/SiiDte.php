@@ -94,6 +94,7 @@ use function filled;
     'amount_total',
     'status',
     'repairs',
+    'sii_iecv_id',
 )]
 class SiiDte extends Model
 {
@@ -154,6 +155,18 @@ class SiiDte extends Model
     public function envelope(): BelongsTo
     {
         return $this->belongsTo(SiiDteEnvelope::class, 'sii_dte_envelope_id');
+    }
+
+    public ?SiiIecv $iecv {
+        get => $this->getRelationValue(__PROPERTY__);
+    }
+
+    /**
+     * @return BelongsTo<SiiIecv, static>
+     */
+    public function iecv(): BelongsTo
+    {
+        return $this->belongsTo(SiiIecv::class, 'sii_iecv_id');
     }
 
     public ?SiiDtePayload $payload {

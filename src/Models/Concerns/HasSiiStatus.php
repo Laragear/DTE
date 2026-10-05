@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Laragear\Dte\Enums\AecStatus;
 use Laragear\Dte\Enums\DteStatus;
 use Laragear\Dte\Enums\EnvelopeStatus;
+use Laragear\Dte\Enums\IecvStatus;
 use Laragear\Dte\Enums\InboundDteStatus;
 use LogicException;
 use function value;
@@ -67,7 +68,7 @@ trait HasSiiStatus
      * Transition the model into another state from the same status family.
      */
     public function transitionTo(
-        DteStatus|EnvelopeStatus|InboundDteStatus|AecStatus $status,
+        DteStatus|EnvelopeStatus|InboundDteStatus|AecStatus|IecvStatus $status,
         mixed $save = true,
     ): static {
         $current = $this->currentSiiStatus();
@@ -86,8 +87,8 @@ trait HasSiiStatus
      * Guard a transition from an incompatible or terminal status.
      */
     protected function guardStatusTransition(
-        DteStatus|EnvelopeStatus|InboundDteStatus|AecStatus $current,
-        DteStatus|EnvelopeStatus|InboundDteStatus|AecStatus $next,
+        DteStatus|EnvelopeStatus|InboundDteStatus|AecStatus|IecvStatus $current,
+        DteStatus|EnvelopeStatus|InboundDteStatus|AecStatus|IecvStatus $next,
     ): void {
         if ($current::class !== $next::class) {
             throw new LogicException('The next status must belong to the same SII status enum.');
@@ -101,7 +102,7 @@ trait HasSiiStatus
     /**
      * Return the model SII status.
      */
-    protected function currentSiiStatus(): DteStatus|EnvelopeStatus|InboundDteStatus|AecStatus
+    protected function currentSiiStatus(): DteStatus|EnvelopeStatus|InboundDteStatus|AecStatus|IecvStatus
     {
         $status = $this->getAttribute('status');
 
@@ -110,6 +111,7 @@ trait HasSiiStatus
             && !$status instanceof EnvelopeStatus
             && !$status instanceof InboundDteStatus
             && !$status instanceof AecStatus
+            && !$status instanceof IecvStatus
         ) {
             throw new LogicException('The model status must be cast to a supported SII status enum.');
         }

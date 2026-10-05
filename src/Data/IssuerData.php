@@ -33,7 +33,7 @@ readonly class IssuerData implements Arrayable, ArrayAccess, Jsonable, JsonSeria
         public string $address,
         public string $commune,
         public string $resolutionDate,
-        public int $resolutionNumber = 0,
+        public int $resolutionNumber,
         public ?string $city = null,
         public ?string $telephone = null,
         public ?string $email = null,
@@ -53,7 +53,7 @@ readonly class IssuerData implements Arrayable, ArrayAccess, Jsonable, JsonSeria
         string $address,
         string $commune,
         string $resolutionDate,
-        int $resolutionNumber,
+        int $resolutionNumber = 0,
         ?string $city = null,
         ?string $telephone = null,
         ?string $email = null,
@@ -88,7 +88,7 @@ readonly class IssuerData implements Arrayable, ArrayAccess, Jsonable, JsonSeria
             $array['address'],
             $array['commune'],
             $array['resolution_date'],
-            $array['resolution_number'],
+            $array['resolution_number'] ?? 0,
             $array['city'] ?? null,
             $array['telephone'] ?? null,
             $array['email'] ?? null,
@@ -113,8 +113,7 @@ readonly class IssuerData implements Arrayable, ArrayAccess, Jsonable, JsonSeria
     {
         $rules = DteRules::ISSUER;
 
-        // The economic activity may be a single code
-        // or a list of up to 4 codes of up to 6 digits.
+        // The economic activity may be a single code or a list of up to 4 codes of up to 6 digits.
         $rules['activity_code'] = static function (string $attribute, mixed $value, Closure $fail): void {
             $codes = is_array($value) ? $value : [$value];
 

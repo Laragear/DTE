@@ -841,6 +841,48 @@ SiiDteEnvelope::whereHasRepairs()->get();
 SiiDteEnvelope::whereDoesntHaveRepairs()->get();
 ```
 
+## SII IECV
+
+While technically abolished, on certification you will be required to upload a Sales/Purchase Book ("Libro de Compras" / "Libro de Ventas"). This can be done using the `SiiIecv` facade.
+
+For purchases, you will be required to issue the existing DTE models that were completely accepted, along with their associated Credit Notes and Debit Notes.
+
+```php
+use Laragear\Dte\Builders\Iecv\IecvPurchaseData;use Laragear\Dte\Facades\SiiIecv;use Laragear\Dte\Models\SiiDte;
+
+$entries = [
+    IecvPurchaseData::make(/* ... */),
+    IecvPurchaseData::make(/* ... */),
+];
+
+$book = SiiIecv::sendPurchases(
+    issuer: $rut,
+    entries: $entries,
+    period: '2024-03',
+    resolutionDate: '2024-01-01',
+    resolutionNumber: 123,
+    senderRut: $rut,
+);
+
+$book = SiiIecv::sendSales(
+    issuer: $rut,
+    dtes: SiiDte::findMany([1, 2, 3, 4, 5, 6, 7, 8]),
+    period: '2024-03',
+    resolutionDate: '2024-01-01',
+    resolutionNumber: 123,
+    senderRut: $rut,
+)
+```
+
+The same flow applies to both operations. Books are persisted before upload, so a crash mid-send leaves a recoverable row. The period may be filed again when the previous book is still local (`Pending`, `Building`, `Signing`, `Sending`) or `Failed`; once the SII ruled on it, as `Accepted` or `Rejected`, the period is closed.
+
+Both entry points are also available as Artisan commands for periods that are assembled outside the request lifecycle:
+
+```bash
+php artisan dte:send-iecv --period=2024-03 --type=sales --issuer=76.543.210-K
+php artisan dte:poll-iecv-status
+```
+
 ## SII RCV (Registro de Compras y Ventas)
 
 This library provides a robust **Cuadratura Engine** that parses official SII *Registro de Compras y Ventas* CSV exports to securely synchronize and reconcile your database automatically. 
@@ -897,9 +939,9 @@ If the month has already been closed, the taxes were paid, and you subsequently 
 
 - **Solution:** Go to the SII portal and _Rectify_ the Formulario 29 (F29). The RCV of that past month remains as-is, but the F29 is updated to pay the correct tax difference (along with applicable fines/interest).
 
-### 5. Advanced Purchase/Sale Books (IECV Proportional IVA)
+### 5. Advanced Purchase Books (IECV Proportional IVA)
 
-When satisfying complex *Libro de Compras* setups with "Proportional IVA" requirements (like during certification steps for *IVA Uso Común*), you can flag transient properties dynamically on your intercepted collections before passing them to the generator. 
+When satisfying complex *Libro de Compras* setups with "Proportional IVA" requirements (like during certification steps for *IVA Uso Común*), you can flag individual purchases when building them, then supply the period factor when assembling the book. 
 
 > [!TIP]
 >
@@ -913,29 +955,43 @@ When satisfying complex *Libro de Compras* setups with "Proportional IVA" requir
 > 
 > From $3.800 of IVA from the bill, $3.040 becomes Fiscal Credit, and $760 is cost. The latter goes into _Impuesto de Primera Categoría_ since it's assumed cost.
 
-Assign the `iva_uso_comun` flag, and map the custom `IecvProperty::CommonIvaFactor` property so the `IecvBuilder` can correctly remap traditional nodes towards `<TotOpIVAUsoComun>`, `<TotCredIVAUsoComun>` and other advanced retention structures natively.
+Flag the purchase when you build it, and supply the period factor when assembling the book. The builder needs both: the flag marks *which* purchases are subject to Uso Común, while the factor tells it *how much* of that IVA is actually creditable.
 
 ```php
-use Laragear\Dte\Builders\Iecv\IecvBuilder;
 use Laragear\Dte\Enums\IecvProperty;
-use Laragear\Dte\Enums\IecvType;
+use Laragear\Dte\Facades\SiiIecv;
+use Laragear\Dte\Facades\SiiPurchaseInvoice;
 
-$invoice->iva_uso_comun = true; 
+$invoice = SiiPurchaseInvoice::issuedBy($electricityCompany)
+    ->receivedBy($receiver)
+    ->addItem($item)
+    ->withCommonUseIva() // destined in part to exempt sales
+    ->buildSync();
 
-$xml = app(IecvBuilder::class)->build(
-    dtes: $dtes,
-    type: IecvType::Sales, 
-    period: '2024-03', 
-    resolutionDate: '2024-01-01', 
-    resolutionNumber: 123, 
-    senderRut: $rut, 
+$book = SiiIecv::sendPurchases(
+    issuer: $receiver->rut,
+    entries: $entries,
+    period: '2024-03',
+    resolutionDate: '2024-01-01',
+    resolutionNumber: 123,
+    senderRut: $rut,
     properties: [
-        IecvProperty::CommonIvaFactor->of(0.60) // Proportional scale Factor
-    ]
+        IecvProperty::CommonIvaFactor->of(0.60), // Proportional scale Factor
+    ],
 );
 ```
 
-## DTE Interchange Mailbox (DIM)
+The flag is persisted on the document, so it survives refetching and can be applied at any time before the period is filed. The builder then emits `<IVAUsoComun>` on the flagged document's `<Detalle>` entry (instead of `<MntIVA>`), plus `<TotOpIVAUsoComun>`, `<TotIVAUsoComun>`, `<FctProp>` and `<TotCredIVAUsoComun>` in the period totals.
+
+> [!IMPORTANT]
+>
+> Proportional IVA is a **purchases-only** mechanism. `<FctProp>` and `<TotCredIVAUsoComun>` exist solely in the *Libro de Compras* structure of the SII schema; the *Libro de Ventas* structure has no such nodes.
+
+The call persists the book, uploads it, and returns the `SiiIecv` model in [`IecvStatus::Uploaded`](src/Enums/IecvStatus.php) once the SII assigned a Track ID. The verdict is then polled asynchronously by the `dte:poll-iecv-status` command, which moves the book to `Accepted` or `Rejected` and dispatches `IecvAccepted` / `IecvRejected`.
+
+Because a period is a one-shot attestation, re-filing throws a `LogicException`: a DTE already sitting in a terminal book, or a period already in flight, will be rejected rather than silently uploaded again.
+
+## DTE Interchange Mailbox (DIM/DXM)
 
 SII forces business to use a specific email address to send/receive DTE, called the _DTE Interchange Mailbox_ (Correo Electŕonico de Intercambio de DTE). 
 

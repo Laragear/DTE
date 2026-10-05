@@ -106,6 +106,7 @@ class MigrationsTest extends TestCase
             'sii_inbound_documents',
             'sii_inbound_document_payloads',
             'sii_aec_cessions',
+            'sii_iecvs',
         ];
     }
 
@@ -117,7 +118,7 @@ class MigrationsTest extends TestCase
     protected function foreignKeyCounts(): array
     {
         return [
-            'sii_dtes' => 2,
+            'sii_dtes' => 3,
             'sii_dte_payloads' => 1,
             'sii_dte_references' => 2,
             'sii_dte_envelope_payloads' => 1,

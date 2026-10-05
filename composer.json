@@ -117,6 +117,7 @@
                 "SiiCreditNote": "Laragear\\Dte\\Facades\\SiiCreditNote",
                 "SiiDebitNote": "Laragear\\Dte\\Facades\\SiiDebitNote",
                 "SiiDispatchGuide": "Laragear\\Dte\\Facades\\SiiDispatchGuide",
+                "SiiIecv": "Laragear\\Dte\\Facades\\SiiIecv",
                 "SiiInvoice": "Laragear\\Dte\\Facades\\SiiInvoice",
                 "SiiInvoiceLiquidation": "Laragear\\Dte\\Facades\\SiiInvoiceLiquidation",
                 "SiiPurchaseInvoice": "Laragear\\Dte\\Facades\\SiiPurchaseInvoice",

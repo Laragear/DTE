@@ -94,6 +94,15 @@ abstract class DocumentBuilder
     protected ?int $indMntNeto = null;
 
     /**
+     * Whether the purchase IVA is subject to the Proportional IVA (IVA Uso Común).
+     *
+     * A per-document fact, unlike the proportional factor itself: the factor is
+     * a whole-period property supplied when the Libro de Compras is assembled,
+     * because only the period totals can tell taxable sales from total sales.
+     */
+    protected bool $commonUseIva = false;
+
+    /**
      * Create a Document Builder instance.
      */
     public function __construct(
@@ -161,6 +170,30 @@ abstract class DocumentBuilder
     public function getNonBillableAmount(): int
     {
         return $this->nonBillableAmount;
+    }
+
+    /**
+     * Flag the purchase as subject to the Proportional IVA (IVA Uso Común).
+     *
+     * Marks this purchase as destined in part to exempt sales, such as
+     * electricity, rent or cleaning. The credit is proportional: the book
+     * builder needs the period factor to split it between fiscal credit and
+     * cost, so pass IecvProperty::CommonIvaFactor when assembling the
+     * Libro de Compras.
+     */
+    public function withCommonUseIva(bool $commonUse = true): static
+    {
+        $this->commonUseIva = $commonUse;
+
+        return $this;
+    }
+
+    /**
+     * Check whether the purchase is subject to the Proportional IVA.
+     */
+    public function hasCommonUseIva(): bool
+    {
+        return $this->commonUseIva;
     }
 
     /**
@@ -278,6 +311,11 @@ abstract class DocumentBuilder
         $this->globalModifiers = $data['global_modifiers'] ?? [];
 
         $this->nonBillableAmount = $data['totals']['non_billable'] ?? 0;
+
+        // The flag lives on the model column rather than the payload, so it is
+        // restored from the document itself to survive a rehydrate-and-rebuild.
+        // Coerced because an unhydrated or partial model may expose no value.
+        $this->commonUseIva = (bool) $dte->iva_common_use;
 
         $this->hydrateAdditional($data);
 
@@ -426,6 +464,7 @@ abstract class DocumentBuilder
             'amount_taxes' => $totals['tax'],
             'taxes' => empty($taxes = $this->aggregateTaxes()) ? null : $taxes,
             'amount_total' => $totals['total'],
+            'iva_common_use' => $this->commonUseIva,
             'status' => $this->asDraft ? DteStatus::Draft : DteStatus::Pending,
         ];
     }

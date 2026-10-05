@@ -17,6 +17,14 @@ class IecvUploadGateway
     use Concerns\SupportsTls;
 
     /**
+     * SII upload endpoint path for electronic books.
+     *
+     * Books are posted to the same CGI as document envelopes; the SII routes
+     * them by the payload rather than by URL.
+     */
+    public const string UPLOAD_PATH = '/cgi_dte/UPL/DTEUpload';
+
+    /**
      * Create a new IECV Upload Gateway instance.
      */
     public function __construct(
@@ -53,7 +61,7 @@ class IecvUploadGateway
                     $signedXml,
                     'iecv.xml',
                 )
-                ->post(UploadGateway::UPLOAD_PATH, [
+                ->post(self::UPLOAD_PATH, [
                     'rutSender' => $sender->num,
                     'dvSender' => $sender->vd,
                     'rutCompany' => $issuer->num,

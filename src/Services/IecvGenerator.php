@@ -126,7 +126,7 @@ class IecvGenerator
      */
     protected function findEnvioLibro(DOMDocument $document): DOMElement
     {
-        $nodes = $this->xml->xpath($document)->query('//EnvioLibro');
+        $nodes = $this->xml->xpath($document)->query("//*[local-name()='EnvioLibro']");
         $element = $nodes !== false ? $nodes->item(0) : null;
 
         if (!$element instanceof DOMElement) {

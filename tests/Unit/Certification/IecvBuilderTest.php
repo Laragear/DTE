@@ -48,9 +48,16 @@ class IecvBuilderTest extends DatabaseTestCase
 
         $previous = libxml_use_internal_errors(true);
 
+        // A schema that fails to compile raises a PHP E_WARNING ("Invalid Schema")
+        // that libxml_use_internal_errors() does not suppress, and the test error
+        // handler turns it into an ErrorException. Swallow it for this call only,
+        // so the probe can report the rejection and the test can skip.
+        set_error_handler(static fn (): bool => true);
+
         try {
             $compiles = $probe->schemaValidate($path);
         } finally {
+            restore_error_handler();
             libxml_clear_errors();
             libxml_use_internal_errors($previous);
             unlink($path);

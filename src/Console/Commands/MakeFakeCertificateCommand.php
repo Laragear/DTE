@@ -81,7 +81,7 @@ class MakeFakeCertificateCommand extends Command
 
         $this->saveCertificate($p12, $storage, $options['disk'], $options['path']);
 
-        $this->info("Successfully created fake certificate at disk {$options['disk']}: {$options['path']}");
+        $this->info('Successfully created fake certificate at disk '.$this->diskLabel($options['disk']).": {$options['path']}");
         $this->info("Password: {$options['password']}");
 
         return self::SUCCESS;
@@ -181,6 +181,16 @@ class MakeFakeCertificateCommand extends Command
         } else {
             $storage->disk($disk)->put($path, $p12);
         }
+        // @codeCoverageIgnoreEnd
+    }
+
+    /**
+     * Resolve a printable label for the disk, which may be a name or a resolved filesystem.
+     */
+    protected function diskLabel(Filesystem|string $disk): string
+    {
+        // @codeCoverageIgnoreStart
+        return $disk instanceof Filesystem ? $disk->path('') : $disk;
         // @codeCoverageIgnoreEnd
     }
 }

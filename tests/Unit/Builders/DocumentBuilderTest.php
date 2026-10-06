@@ -80,8 +80,8 @@ class DocumentBuilderTest extends DatabaseTestCase
         static::assertSame(DteStatus::Pending, $dte->status);
         static::assertNull($dte->folio);
         static::assertSame(
-            ['net' => 1800, 'exempt' => 0, 'tax' => 342, 'total' => 2142, 'non_billable' => 0],
-            $dte->payload->data['totals'],
+            ['taxes' => [], 'net' => 1800, 'exempt' => 0, 'tax' => 342, 'total' => 2142, 'non_billable' => 0],
+            $dte->payload->header_totals->toArray(),
         );
         $issuer = Rut::parse($issuer);
         $receiver = Rut::parse($receiver);
@@ -122,8 +122,8 @@ class DocumentBuilderTest extends DatabaseTestCase
         $dte = $builder->build();
 
         static::assertPendingDocument($dte, $issuer->rut->formatRaw(), $receiver->rut->formatRaw());
-        static::assertSame('Consulting service', $dte->payload->data['items'][0]['name']);
-        static::assertSame('2026-08-13', $dte->payload->data['issued_on']);
+        static::assertSame('Consulting service', $dte->payload->detail_items['items'][0]['name']);
+        static::assertSame('2026-08-13', $dte->payload->header_id_doc['issued_on']);
         $events->assertDispatched(DteCreating::class, fn(DteCreating $event): bool => $event->builder === $builder);
         $events->assertDispatched(DteCreated::class, fn(DteCreated $event): bool => $event->dte->is($dte));
 
@@ -373,8 +373,8 @@ class DocumentBuilderTest extends DatabaseTestCase
 
         $dte = $builder->build();
 
-        static::assertSame('2', $dte->payload->data['payment']['condition']);
-        static::assertSame('2026-09-13', $dte->payload->data['payment']['expiration_date']);
+        static::assertSame('2', $dte->payload->header_id_doc['payment']['condition']);
+        static::assertSame('2026-09-13', $dte->payload->header_id_doc['payment']['expiration_date']);
     }
 
     public function test_throws_when_issuer_is_missing(): void
@@ -653,8 +653,8 @@ class DocumentBuilderTest extends DatabaseTestCase
         $builder->addItem(BuilderFixture::item());
         $dte = $builder->build();
 
-        static::assertNotNull($dte->payload->data['receiver']);
-        static::assertSame('Customer Company LLC', $dte->payload->data['receiver']['name']);
+        static::assertFalse($dte->payload->header_receiver->isEmpty());
+        static::assertSame('Customer Company LLC', $dte->payload->header_receiver['name']);
     }
 
     public function test_with_net_amount_indicator_sets_the_indicator(): void

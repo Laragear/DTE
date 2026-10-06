@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Laragear\Dte\DteServiceProvider;
 use Override;
 use Tests\TestCase;
+
 use function glob;
 use function unlink;
 
@@ -36,9 +37,18 @@ class MigrationsTest extends TestCase
 
         static::assertTablesExist();
         static::assertForeignKeysExist();
+        static::assertIndexesExist();
 
         $this->artisan('migrate:rollback')->assertSuccessful();
         static::assertTablesDoNotExist();
+    }
+
+    /**
+     * Assert that the queries filtered by issue date find their index.
+     */
+    protected static function assertIndexesExist(): void
+    {
+        static::assertContains('sii_dtes_issued_on_index', Schema::getIndexListing('sii_dtes'));
     }
 
     /**
@@ -51,11 +61,16 @@ class MigrationsTest extends TestCase
             '--tag' => 'migrations',
             '--force' => true,
         ])->run();
-        $files = glob($this->app->databasePath('migrations/*_create_sii_*_table.php'));
+        // Every published migration is remembered, not only the create-table
+        // ones: a leftover would collide with the package migrations.
+        $files = glob($this->app->databasePath('migrations/*.php'));
         static::$publishedMigrations = $files === false ? [] : $files;
 
         static::assertSame(0, $exitCode);
-        static::assertCount(count($this->tables()), static::$publishedMigrations);
+        static::assertCount(count($this->tables()), array_filter(
+            static::$publishedMigrations,
+            static fn (string $file): bool => (bool) preg_match('/_create_sii_.*_table\.php$/', $file),
+        ));
     }
 
     /**

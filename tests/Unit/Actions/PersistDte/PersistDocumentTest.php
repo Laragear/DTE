@@ -22,7 +22,7 @@ class PersistDocumentTest extends DatabaseTestCase
     {
         $builder = $this->createStub(DocumentBuilder::class);
         $builder->method('attributes')->willReturn($attributes);
-        $builder->method('payloadData')->willReturn($payloadData);
+        $builder->method('payloadBlocks')->willReturn($payloadData);
         $builder->method('dte')->willReturn(null);
 
         return new DteData($builder, $attributes, $payloadData, $isUpdate);
@@ -55,7 +55,7 @@ class PersistDocumentTest extends DatabaseTestCase
 
         $data = $pipe->handle(
             $this->data($this->attributes(), [
-                'references' => [
+                'references' => ['items' => [
                     [
                         'document_type' => DteType::Invoice->value,
                         'folio' => '100',
@@ -70,7 +70,7 @@ class PersistDocumentTest extends DatabaseTestCase
                         'reason' => 'Purchase order',
                         'reference_code' => null,
                     ],
-                ],
+                ]],
             ]),
             static fn (DteData $data): DteData => $data,
         );
@@ -84,6 +84,77 @@ class PersistDocumentTest extends DatabaseTestCase
         static::assertSame(DteType::Invoice, $references[0]->document_type);
         static::assertNull($references[1]->target_dte_id);
         static::assertSame(ReferenceType::PurchaseOrder, $references[1]->document_type);
+    }
+
+    public function test_resolves_multiple_reference_targets_with_a_single_query(): void
+    {
+        $issuer = '76192083-9';
+
+        $invoice = SiiDte::factory()->create([
+            'issuer_rut' => $issuer, 'document_type' => DteType::Invoice, 'folio' => 100,
+        ]);
+        $guide = SiiDte::factory()->create([
+            'issuer_rut' => $issuer, 'document_type' => DteType::DispatchGuide, 'folio' => 200,
+        ]);
+
+        $pipe = new PersistDocument($this->app->make(LoggerInterface::class));
+
+        $connection = $this->app->make('db')->connection();
+        $connection->enableQueryLog();
+
+        $data = $pipe->handle(
+            $this->data($this->attributes(), [
+                'references' => ['items' => [
+                    [
+                        'document_type' => DteType::Invoice->value,
+                        'folio' => '100',
+                        'date' => '2026-08-01',
+                        'reason' => 'Anula documento',
+                        'reference_code' => 1,
+                    ],
+                    [
+                        'document_type' => DteType::DispatchGuide->value,
+                        'folio' => '200',
+                        'date' => '2026-08-01',
+                        'reason' => 'Corrige texto',
+                        'reference_code' => 2,
+                    ],
+                    [
+                        'document_type' => DteType::Invoice->value,
+                        'folio' => '999',
+                        'date' => '2026-08-01',
+                        'reason' => 'Corrige montos',
+                        'reference_code' => 3,
+                    ],
+                    [
+                        'document_type' => ReferenceType::PurchaseOrder->value,
+                        'folio' => 'PO-1',
+                        'date' => '2026-08-01',
+                        'reason' => 'Purchase order',
+                        'reference_code' => null,
+                    ],
+                ]],
+            ]),
+            static fn (DteData $data): DteData => $data,
+        );
+
+        $references = SiiDteReference::query()->where('sii_dte_id', $data->dte->getKey())->orderBy('id')->get();
+
+        static::assertCount(4, $references);
+        static::assertSame($invoice->getKey(), $references[0]->target_dte_id);
+        static::assertSame($guide->getKey(), $references[1]->target_dte_id);
+        static::assertNull($references[2]->target_dte_id);
+        static::assertNull($references[3]->target_dte_id);
+
+        // The targets are resolved with one query, not one per reference. The
+        // closing quote excludes the other "sii_dte_*" tables from the match.
+        $selects = array_filter(
+            $connection->getQueryLog(),
+            static fn (array $entry): bool => str_starts_with(mb_strtolower($entry['query']), 'select')
+                && str_contains($entry['query'], '"sii_dtes"'),
+        );
+
+        static::assertCount(1, $selects);
     }
 
     public function test_failure_logs_and_rolls_back(): void

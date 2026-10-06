@@ -147,7 +147,7 @@ class BuildAecXml
      */
     protected function writeCedent(XMLWriter $writer, AecData $data): void
     {
-        $issuer = $data->dte->payload?->data->toArray()['issuer'] ?? [];
+        $issuer = $data->dte->payload?->header_issuer->toArray() ?? [];
 
         $writer->startElement('Cedente');
         $writer->writeElement('RUT', $data->dte->issuer_rut->formatBasic());
@@ -187,7 +187,7 @@ class BuildAecXml
             $writer->writeElement('OtrasCondiciones', $data->cession->terms);
         }
 
-        $email = $data->dte->payload?->data->toArray()['receiver']['email'] ?? null;
+        $email = $data->dte->payload?->header_receiver->email;
 
         if (is_string($email) && $email !== '') {
             $writer->writeElement('eMailDeudor', $email);

@@ -36,7 +36,7 @@ class PackManualTest extends DatabaseTestCase
     {
         parent::setUp();
 
-        ConfigurationManager::setCompany(fn() => CompanyData::make(
+        ConfigurationManager::setCompany(fn () => CompanyData::make(
             IssuerData::make(
                 '76.123.456-0',
                 'Test Company',
@@ -157,7 +157,7 @@ class PackManualTest extends DatabaseTestCase
 
         static::assertCount(3, $envelopes);
 
-        $mixed = $envelopes->first(fn(SiiDteEnvelope $envelope) => $envelope->dtes()->count() === 2);
+        $mixed = $envelopes->first(fn (SiiDteEnvelope $envelope) => $envelope->dtes()->count() === 2);
 
         static::assertNotNull($mixed);
         static::assertSame('dte', $mixed->type);
@@ -214,7 +214,7 @@ class PackManualTest extends DatabaseTestCase
         $this->mock(Compile::class, function (MockInterface $mock) use ($dte): void {
             $mock
                 ->expects('forDte')
-                ->withArgs(fn(SiiDte $sent): bool => $sent->is($dte))
+                ->withArgs(fn (SiiDte $sent): bool => $sent->is($dte))
                 ->andReturnUsing(function (SiiDte $sent): SiiDte {
                     $sent->forceFill(['status' => DteStatus::Outbox])->save();
 
@@ -240,7 +240,7 @@ class PackManualTest extends DatabaseTestCase
         $this->mock(Compile::class, function (MockInterface $mock) use ($dte): void {
             $mock
                 ->expects('forDte')
-                ->withArgs(fn(SiiDte $sent): bool => $sent->is($dte))
+                ->withArgs(fn (SiiDte $sent): bool => $sent->is($dte))
                 ->andReturnUsing(function (SiiDte $sent): SiiDte {
                     $sent->forceFill(['status' => DteStatus::Outbox])->save();
 
@@ -272,21 +272,26 @@ class PackManualTest extends DatabaseTestCase
         $this->assertDatabaseCount('sii_dte_envelopes', 0);
     }
 
-    public function test_retries_failed_dte_with_same_folio(): void
+    public function test_packs_failed_draft_without_opt_in(): void
     {
         Queue::fake();
 
+        // A DTE that failed is a Draft with a stored failure reason. The folio
+        // may have been consumed, so failToDraft() released it and a fresh one
+        // is allocated on compile. No opt-in is required anymore.
         $dte = SiiDte::factory()->has(SiiDtePayload::factory(), 'payload')->create([
             'issuer_rut' => Generator::asCompanies()->makeOne(),
-            'status' => DteStatus::Failed,
-            'pack_retries' => 0,
-            'acknowledged_at' => null,
+            'status' => DteStatus::Draft,
+            'folio' => null,
+            'sii_caf_id' => null,
+            'pack_retries' => 1,
+            'failure' => ['stage' => 'upload', 'exception' => null, 'error' => 'boom'],
         ]);
 
         $this->mock(Compile::class, function (MockInterface $mock) use ($dte): void {
             $mock
                 ->expects('forDte')
-                ->withArgs(fn(SiiDte $sent): bool => $sent->is($dte))
+                ->withArgs(fn (SiiDte $sent): bool => $sent->is($dte))
                 ->andReturnUsing(function (SiiDte $sent): SiiDte {
                     $sent->forceFill(['status' => DteStatus::Outbox])->save();
 
@@ -295,50 +300,6 @@ class PackManualTest extends DatabaseTestCase
         });
 
         $envelopes = SiiEnvelope::packManual([$dte->getKey()]);
-
-        static::assertCount(1, $envelopes);
-        static::assertSame(DteStatus::Packed, $dte->refresh()->status);
-    }
-
-    public function test_throws_for_failed_dte_with_consumed_folio_unless_opted_in(): void
-    {
-        $dte = SiiDte::factory()->has(SiiDtePayload::factory(), 'payload')->create([
-            'status' => DteStatus::Failed,
-            'pack_retries' => 1,
-        ]);
-
-        try {
-            SiiEnvelope::packManual([$dte->getKey()]);
-
-            static::fail('Expected LogicException was not thrown.');
-        } catch (LogicException $e) {
-            static::assertStringContainsString('$retryFailed = true', $e->getMessage());
-            $this->assertDatabaseCount('sii_dte_envelopes', 0);
-        }
-    }
-
-    public function test_packs_failed_dte_with_consumed_folio_when_opted_in(): void
-    {
-        Queue::fake();
-
-        $dte = SiiDte::factory()->has(SiiDtePayload::factory(), 'payload')->create([
-            'issuer_rut' => Generator::asCompanies()->makeOne(),
-            'status' => DteStatus::Failed,
-            'pack_retries' => 1,
-        ]);
-
-        $this->mock(Compile::class, function (MockInterface $mock) use ($dte): void {
-            $mock
-                ->expects('forDte')
-                ->withArgs(fn(SiiDte $sent): bool => $sent->is($dte))
-                ->andReturnUsing(function (SiiDte $sent): SiiDte {
-                    $sent->forceFill(['status' => DteStatus::Outbox])->save();
-
-                    return $sent;
-                });
-        });
-
-        $envelopes = app(PackDtesService::class)->packManual([$dte->getKey()], false, true);
 
         static::assertCount(1, $envelopes);
         static::assertSame(DteStatus::Packed, $dte->refresh()->status);
@@ -462,7 +423,7 @@ class PackManualTest extends DatabaseTestCase
         Queue::fake();
 
         $dte = SiiDte::factory()->has(
-            SiiDtePayload::factory()->state(['data' => []]), 'payload'
+            SiiDtePayload::factory()->state([]), 'payload'
         )->create(['status' => DteStatus::Outbox]);
 
         $this->app->make(ConfigurationManager::class)->setIssuerResolver(null);
@@ -473,7 +434,7 @@ class PackManualTest extends DatabaseTestCase
             ->once()
             ->with(
                 'Batch envelope pack failed, rolling back the batch linkage.',
-                Mockery::on(static fn(array $context): bool => $context['flow'] === 'batch-pack'
+                Mockery::on(static fn (array $context): bool => $context['flow'] === 'batch-pack'
                     && $context['dte_ids'] === [$dte->getKey()]
                     && $context['exception'] === RuntimeException::class),
             );
@@ -491,7 +452,7 @@ class PackManualTest extends DatabaseTestCase
         Queue::fake();
 
         $dte = SiiDte::factory()->has(
-            SiiDtePayload::factory()->state(['data' => []]), 'payload'
+            SiiDtePayload::factory()->state([]), 'payload'
         )->create(['status' => DteStatus::Outbox]);
 
         ConfigurationManager::setCompany(function () use ($dte) {
@@ -524,7 +485,7 @@ class PackManualTest extends DatabaseTestCase
             ->once()
             ->with(
                 'Batch envelope pack failed, rolling back the batch linkage.',
-                Mockery::on(static fn(array $context): bool => $context['flow'] === 'batch-pack'
+                Mockery::on(static fn (array $context): bool => $context['flow'] === 'batch-pack'
                     && $context['dte_ids'] === [$dte->getKey()]
                     && $context['exception'] === PackClaimException::class),
             );

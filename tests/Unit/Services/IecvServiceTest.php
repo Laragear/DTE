@@ -4,6 +4,7 @@ namespace Tests\Unit\Services;
 
 use Illuminate\Contracts\Config\Repository as ConfigContract;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
+use Illuminate\Database\ConnectionInterface;
 use Illuminate\Support\DateFactory;
 use Laragear\Dte\Builders\Iecv\IecvPurchaseData;
 use Laragear\Dte\Configuration\ConfigurationManager;
@@ -307,5 +308,87 @@ class IecvServiceTest extends DatabaseTestCase
 
         static::assertSame(0, SiiDte::query()->whereNotNull('sii_iecv_id')->count());
         static::assertSame(IecvStatus::Uploaded, $book->status);
+    }
+
+    public function test_links_every_document_of_the_issuer_issued_on_the_entry_date(): void
+    {
+        $issuer = Rut::parse('76123456-0');
+
+        $first = SiiDte::factory()->create(['issuer_rut' => $issuer, 'issued_on' => '2026-09-15']);
+        $second = SiiDte::factory()->create(['issuer_rut' => $issuer, 'issued_on' => '2026-09-15']);
+
+        $generator = $this->mock(IecvGenerator::class);
+        $generator->expects('generatePurchases')->once()->andReturn('<LibroCompraVenta/>');
+
+        $book = $this->makeService($generator)->sendPurchases(
+            $issuer,
+            [new IecvPurchaseData(33, 1, '2026-09-15', $issuer)],
+            '2026-09',
+            '2026-08-24',
+            0,
+            $issuer,
+        );
+
+        static::assertSame($book->getKey(), $first->fresh()->sii_iecv_id);
+        static::assertSame($book->getKey(), $second->fresh()->sii_iecv_id);
+    }
+
+    public function test_does_not_link_documents_outside_the_book_period(): void
+    {
+        $issuer = Rut::parse('76123456-0');
+
+        // The entry date matches the stored document, but both fall outside the period.
+        $outside = SiiDte::factory()->create(['issuer_rut' => $issuer, 'issued_on' => '2026-08-15']);
+
+        $generator = $this->mock(IecvGenerator::class);
+        $generator->expects('generatePurchases')->once()->andReturn('<LibroCompraVenta/>');
+
+        $book = $this->makeService($generator)->sendPurchases(
+            $issuer,
+            [new IecvPurchaseData(33, 1, '2026-08-15', $issuer)],
+            '2026-09',
+            '2026-08-24',
+            0,
+            $issuer,
+        );
+
+        static::assertNull($outside->fresh()->sii_iecv_id);
+        static::assertSame(IecvStatus::Uploaded, $book->status);
+    }
+
+    public function test_resolves_purchase_documents_with_a_single_query(): void
+    {
+        $issuer = Rut::parse('76123456-0');
+
+        SiiDte::factory()->times(3)->create(['issuer_rut' => $issuer, 'issued_on' => '2026-09-15']);
+
+        $entries = [];
+        foreach ([10, 20, 30] as $folio) {
+            $entries[] = new IecvPurchaseData(33, $folio, '2026-09-15', $issuer);
+        }
+
+        $generator = $this->mock(IecvGenerator::class);
+        $generator->expects('generatePurchases')->once()->andReturn('<LibroCompraVenta/>');
+
+        $connection = $this->app->make('db')->connection();
+        $connection->enableQueryLog();
+
+        $this->makeService($generator)->sendPurchases($issuer, $entries, '2026-09', '2026-08-24', 0, $issuer);
+
+        static::assertCount(1, $this->dteSelects($connection));
+    }
+
+    /**
+     * Filter the query log down to the SELECTs issued against the DTEs table.
+     *
+     * @return list<array<string, mixed>>
+     */
+    protected function dteSelects(ConnectionInterface $connection): array
+    {
+        return array_values(array_filter(
+            $connection->getQueryLog(),
+            static fn (array $entry): bool => str_starts_with(mb_strtolower($entry['query']), 'select')
+                && str_contains($entry['query'], '"sii_dtes"'),
+        ));
     }
 }

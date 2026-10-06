@@ -297,14 +297,16 @@ trait InteractsWithSiiDte
     }
 
     /**
-     * Assert the DTE payload contains the expected key-value pairs.
+     * Assert the DTE payload blocks contain the expected key-value pairs.
      *
      * @param  array<string, mixed>  $expected
      */
     protected function assertDtePayload(SiiDte $dte, array $expected): void
     {
+        $blocks = $dte->payload->blocksToArray();
+
         foreach ($expected as $key => $value) {
-            $this->assertSame($value, data_get($dte->payload->data->toArray(), $key));
+            $this->assertSame($value, data_get($blocks, $key));
         }
     }
 }

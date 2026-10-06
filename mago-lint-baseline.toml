@@ -61,18 +61,6 @@ message = "Numeric literal could use underscore separators for readability."
 count = 2
 
 [[issues]]
-file = "database/factories/SiiDtePayloadFactory.php"
-code = "prefer-fake-helper"
-message = "Use the `fake()` helper instead of the `$this->faker` property."
-count = 2
-
-[[issues]]
-file = "database/factories/SiiDtePayloadFactory.php"
-code = "readable-literal"
-message = "Numeric literal could use underscore separators for readability."
-count = 1
-
-[[issues]]
 file = "database/factories/SiiInboundDocumentFactory.php"
 code = "prefer-fake-helper"
 message = "Use the `fake()` helper instead of the `$this->faker` property."
@@ -106,36 +94,6 @@ count = 1
 file = "src/Actions/Aec/Pipes/BuildAecXml.php"
 code = "no-redundant-nullsafe"
 message = "The nullsafe operator (`?->`) is redundant when used with `??`."
-count = 1
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/BuildXml.php"
-code = "cyclomatic-complexity"
-message = "Class has high complexity."
-count = 1
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/BuildXml.php"
-code = "kan-defect"
-message = "Class has a high kan defect score."
-count = 1
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/BuildXml.php"
-code = "no-empty"
-message = "Use of the `empty` construct."
-count = 5
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/BuildXml.php"
-code = "no-isset"
-message = "Use of the `isset` construct."
-count = 3
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
-code = "no-isset"
-message = "Use of the `isset` construct."
 count = 1
 
 [[issues]]
@@ -218,12 +176,6 @@ count = 1
 
 [[issues]]
 file = "src/Actions/PersistDte/Pipes/PersistDocument.php"
-code = "no-implicit-model-query"
-message = "Query-builder methods on a model should be reached through an explicit `query()` call."
-count = 1
-
-[[issues]]
-file = "src/Actions/PersistDte/Pipes/PersistDocument.php"
 code = "prefer-arrow-function"
 message = "This closure can be simplified to a more concise arrow function."
 count = 1
@@ -283,18 +235,6 @@ message = "Avoid `else` clauses."
 count = 1
 
 [[issues]]
-file = "src/Builders/Concerns/PayloadSerializer.php"
-code = "no-redundant-use"
-message = "Unused import: `ConfigurationManager`."
-count = 1
-
-[[issues]]
-file = "src/Builders/Concerns/PayloadSerializer.php"
-code = "no-redundant-use"
-message = "Unused import: `app`."
-count = 1
-
-[[issues]]
 file = "src/Builders/Concerns/TotalsCalculator.php"
 code = "no-else-clause"
 message = "Avoid `else` clauses."
@@ -323,12 +263,6 @@ file = "src/Builders/DocumentBuilder.php"
 code = "no-empty"
 message = "Use of the `empty` construct."
 count = 1
-
-[[issues]]
-file = "src/Builders/DocumentBuilder.php"
-code = "no-isset"
-message = "Use of the `isset` construct."
-count = 3
 
 [[issues]]
 file = "src/Builders/DocumentBuilder.php"
@@ -502,30 +436,6 @@ count = 1
 file = "src/Console/Commands/RejectExpiringPhantomInvoicesCommand.php"
 code = "no-else-clause"
 message = "Avoid `else` clauses."
-count = 1
-
-[[issues]]
-file = "src/Data/DocumentPayload.php"
-code = "no-isset"
-message = "Use of the `isset` construct."
-count = 1
-
-[[issues]]
-file = "src/Data/DocumentPayload.php"
-code = "no-redundant-use"
-message = "Unused import: `collect`."
-count = 1
-
-[[issues]]
-file = "src/Data/DocumentPayload.php"
-code = "prefer-first-class-callable"
-message = "Use first-class callable syntax `...` instead of a arrow function."
-count = 3
-
-[[issues]]
-file = "src/Data/DocumentTotalsData.php"
-code = "no-isset"
-message = "Use of the `isset` construct."
 count = 1
 
 [[issues]]
@@ -877,12 +787,6 @@ message = "Define model casts in the `casts()` method instead of the `$casts` pr
 count = 1
 
 [[issues]]
-file = "src/Models/SiiDtePayload.php"
-code = "prefer-casts-method"
-message = "Define model casts in the `casts()` method instead of the `$casts` property."
-count = 1
-
-[[issues]]
 file = "src/Models/SiiDteReference.php"
 code = "prefer-casts-method"
 message = "Define model casts in the `casts()` method instead of the `$casts` property."
@@ -1072,7 +976,7 @@ count = 1
 file = "src/Services/PackDtesService.php"
 code = "no-boolean-flag-parameter"
 message = "Avoid boolean flag parameters."
-count = 3
+count = 1
 
 [[issues]]
 file = "src/Services/PackDtesService.php"
@@ -1150,12 +1054,6 @@ count = 1
 file = "src/Validation/DocumentValidator.php"
 code = "no-isset"
 message = "Use of the `isset` construct."
-count = 1
-
-[[issues]]
-file = "src/Validation/DocumentValidator.php"
-code = "prefer-array-validation-rules"
-message = "Validation rules should be declared as an array, not a `|`-delimited string."
 count = 1
 
 [[issues]]

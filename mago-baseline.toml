@@ -50,56 +50,26 @@ count = 1
 
 [[issues]]
 file = "src/Actions/CompileDte/Pipes/BuildXml.php"
-code = "impossible-nonnull-entry-check"
-message = "Impossible `isset` check on key `'non_billable'` accessed on `array{'exempt': int, 'net': int, 'tax': int, 'total': int}`."
-count = 1
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/BuildXml.php"
-code = "invalid-iterator"
-message = "The expression provided to `foreach` is not iterable. It resolved to type `truthy-mixed`, which is not iterable."
-count = 1
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/BuildXml.php"
-code = "invalid-return-statement"
-message = 'Invalid return type for function `Laragear\Dte\Actions\CompileDte\Pipes\BuildXml::itemTotal`: expected `int`, but found `float`.'
-count = 1
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/BuildXml.php"
-code = "invalid-type-cast"
-message = "Casting `mixed` to `array`."
-count = 1
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/BuildXml.php"
-code = "invalid-type-cast"
-message = "Casting `mixed` to `float`."
-count = 6
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/BuildXml.php"
-code = "less-specific-argument"
-message = 'Argument type mismatch for argument #2 of `Laragear\Dte\Actions\CompileDte\Pipes\BuildXml::appendHeader`: expected `array<string, mixed>`, but provided type `array<array-key, mixed>` is less specific.'
-count = 1
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/BuildXml.php"
 code = "possibly-null-argument"
 message = "Argument #1 of method `DOMDocument::loadXML` is possibly `null`, but parameter type `string` does not accept it."
 count = 1
 
 [[issues]]
-file = "src/Actions/CompileDte/Pipes/BuildXml.php"
-code = "redundant-logical-operation"
-message = "Redundant `&&` operation: left operand is always truthy and right operand is evaluated."
+file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('issued_on')` used for array access on `Laragear\Dte\Casts\DteHeaderIdDoc`.'''
 count = 1
 
 [[issues]]
-file = "src/Actions/CompileDte/Pipes/BuildXml.php"
-code = "redundant-null-coalesce"
-message = "Redundant null coalesce: left-hand side is always `null`."
+file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('items')` used for array access on `Laragear\Dte\Casts\DteDetailItems`.'''
+count = 1
+
+[[issues]]
+file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('name')` used for array access on `Laragear\Dte\Casts\DteHeaderReceiver`.'''
 count = 1
 
 [[issues]]
@@ -373,6 +343,12 @@ message = '''Returned type `('TModel.illuminate\database\eloquent\builder extend
 count = 1
 
 [[issues]]
+file = "src/Actions/PersistDte/Pipes/PersistDocument.php"
+code = "non-existent-method"
+message = "Method `getkey` does not exist on type `stdClass`."
+count = 1
+
+[[issues]]
 file = "src/Actions/RcvParsing/Parse.php"
 code = "incompatible-property-type"
 message = 'Property `Laragear\Dte\Actions\RcvParsing\Parse::$pipes` has an incompatible type declaration from docblock.'
@@ -464,6 +440,12 @@ count = 1
 
 [[issues]]
 file = "src/Builders/Concerns/PayloadSerializer.php"
+code = "less-specific-return-statement"
+message = '''Returned type `array{'detail_items': array{'items': list<array<string, mixed>>}, 'global_modifiers': array{'items': array<array-key, mixed>}, 'header_id_doc': array{'document_type': mixed, 'exempt_amount_override': mixed, 'ind_mnt_neto': mixed, 'ind_traslado': mixed, 'issued_on': mixed, 'payment': mixed, 'tax_exempt': mixed, 'tipo_despacho': mixed}, 'header_issuer': array<string, mixed>, 'header_receiver': array{'activity': null|string, 'address': null|string, 'city': null|string, 'commune': null|string, 'email': null|string, 'legal_name': string, 'rut': string}|null, 'header_totals': array{'taxes': array<int, int>, ...}, 'header_transport': mixed, 'references': array{'items': list<array<string, mixed>>}}` is less specific than the declared return type `array<string, array<string, mixed>|null>` for function `Laragear\Dte\Builders\Concerns\PayloadSerializer::payloadBlocks`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/Concerns/PayloadSerializer.php"
 code = "non-existent-property"
 message = 'Property `$configurationManager` does not exist on trait `Laragear\Dte\Builders\Concerns\PayloadSerializer`.'
 count = 1
@@ -548,9 +530,93 @@ count = 1
 
 [[issues]]
 file = "src/Builders/DispatchGuideBuilder.php"
-code = "invalid-property-assignment-value"
-message = '''Invalid type for property `$transport`: expected `array{'arrival_at'?: DateTimeImmutable, 'carrier'?: Laragear\Rut\Rut, 'departure_at'?: DateTimeImmutable, 'destination_address'?: string, 'destination_city'?: string, 'destination_commune'?: string, 'driver'?: Laragear\Rut\Rut, 'driver_name'?: string, 'ind_traslado'?: int, 'tipo_despacho'?: int, 'trailer_plate'?: string, 'vehicle_plate'?: string}`, but got `array{'arrival_at': DateTimeImmutable|null, 'carrier': Laragear\Rut\Rut|null, 'departure_at': DateTimeImmutable|null, 'destination_address': mixed, 'destination_city': mixed, 'destination_commune': mixed, 'driver': Laragear\Rut\Rut|null, 'driver_name': mixed, 'trailer_plate': mixed, 'vehicle_plate': mixed}`.'''
+code = "invalid-array-index"
+message = '''Invalid index type `string('arrival_at')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
+count = 2
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('carrier_rut')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
+count = 2
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('departure_at')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
+count = 2
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('destination_address')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
 count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('destination_city')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('destination_commune')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('driver_name')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('driver_rut')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
+count = 2
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('ind_traslado')` used for array access on `Laragear\Dte\Casts\DteHeaderIdDoc`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('tipo_despacho')` used for array access on `Laragear\Dte\Casts\DteHeaderIdDoc`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('trailer_plate')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('vehicle_plate')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "invalid-property-assignment-value"
+message = '''Invalid type for property `$transport`: expected `array{'arrival_at'?: DateTimeImmutable, 'carrier'?: Laragear\Rut\Rut, 'departure_at'?: DateTimeImmutable, 'destination_address'?: string, 'destination_city'?: string, 'destination_commune'?: string, 'driver'?: Laragear\Rut\Rut, 'driver_name'?: string, 'ind_traslado'?: int, 'tipo_despacho'?: int, 'trailer_plate'?: string, 'vehicle_plate'?: string}`, but got `array{'arrival_at': DateTimeImmutable|null, 'carrier': Laragear\Rut\Rut|null, 'departure_at': DateTimeImmutable|null, 'destination_address': ('TValue.illuminate\support\fluent extends nonnull)|null, 'destination_city': ('TValue.illuminate\support\fluent extends nonnull)|null, 'destination_commune': ('TValue.illuminate\support\fluent extends nonnull)|null, 'driver': Laragear\Rut\Rut|null, 'driver_name': ('TValue.illuminate\support\fluent extends nonnull)|null, 'trailer_plate': ('TValue.illuminate\support\fluent extends nonnull)|null, 'vehicle_plate': ('TValue.illuminate\support\fluent extends nonnull)|null}`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `DateTimeImmutable::__construct`: expected `string`, but provided type `('TValue.illuminate\support\fluent extends mixed)` is less specific.'''
+count = 2
+
+[[issues]]
+file = "src/Builders/DispatchGuideBuilder.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Laragear\Rut\Rut::parse`: expected `Laragear\Rut\Rut|int|null|string`, but provided type `('TValue.illuminate\support\fluent extends mixed)` is less specific.'''
+count = 2
 
 [[issues]]
 file = "src/Builders/DispatchGuideBuilder.php"
@@ -572,8 +638,26 @@ count = 1
 
 [[issues]]
 file = "src/Builders/DocumentBuilder.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #2 of `DateTimeImmutable::createFromFormat`: expected `string`, but provided type `('TValue.illuminate\support\fluent extends nonnull)` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #2 of `array_map`: expected `array<('K.array_map() extends array-key), array<array-key, mixed>>`, but provided type `('TValue.illuminate\support\fluent extends nonnull)|array{}` is less specific.'''
+count = 2
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
 code = "possible-method-access-on-null"
 message = "Attempting to call a method on `null`."
+count = 4
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laragear\Dte\Builders\DocumentBuilder::hydrateAdditional` is possibly `null`, but parameter type `Laragear\Dte\Models\SiiDtePayload` does not accept it.'
 count = 1
 
 [[issues]]
@@ -584,9 +668,15 @@ count = 1
 
 [[issues]]
 file = "src/Builders/DocumentBuilder.php"
+code = "possibly-null-array-access"
+message = "Cannot perform array access on possibly `null` value."
+count = 1
+
+[[issues]]
+file = "src/Builders/DocumentBuilder.php"
 code = "possibly-null-property-access"
 message = "Attempting to access a property on a possibly `null` value."
-count = 4
+count = 8
 
 [[issues]]
 file = "src/Builders/DocumentBuilder.php"
@@ -603,7 +693,7 @@ count = 1
 [[issues]]
 file = "src/Builders/DocumentBuilder.php"
 code = "unused-parameter"
-message = "Parameter `$data` is never used."
+message = "Parameter `$payload` is never used."
 count = 1
 
 [[issues]]
@@ -734,6 +824,24 @@ count = 1
 
 [[issues]]
 file = "src/Builders/InvoiceBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('exempt_amount_override')` used for array access on `Laragear\Dte\Casts\DteHeaderIdDoc`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/InvoiceBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('payment')` used for array access on `Laragear\Dte\Casts\DteHeaderIdDoc`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/InvoiceBuilder.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('tax_exempt')` used for array access on `Laragear\Dte\Casts\DteHeaderIdDoc`.'''
+count = 1
+
+[[issues]]
+file = "src/Builders/InvoiceBuilder.php"
 code = "invalid-return-statement"
 message = '''Invalid return type for function `Laragear\Dte\Builders\InvoiceBuilder::calculatedTotals`: expected `array{'exempt': int, 'net': int, 'tax': int, 'total': int}`, but found `array{'exempt': int, 'net': int(0), 'non_billable': int, 'tax': int(0), 'total': int}`.'''
 count = 1
@@ -853,27 +961,513 @@ message = 'Argument type mismatch for argument #1 of `Laragear\Dte\Caf\Folio::me
 count = 1
 
 [[issues]]
-file = "src/Casts/AsDocumentPayload.php"
-code = "falsable-return-statement"
-message = '''Function `Laragear\Dte\Casts\AsDocumentPayload::set` is declared to return `string` but possibly returns 'false' (inferred as `false|string`).'''
-count = 2
-
-[[issues]]
-file = "src/Casts/AsDocumentPayload.php"
-code = "invalid-return-statement"
-message = 'Invalid return type for function `Laragear\Dte\Casts\AsDocumentPayload::set`: expected `string`, but found `false|string`.'
-count = 2
-
-[[issues]]
-file = "src/Casts/AsDocumentPayload.php"
+file = "src/Casts/AsFolio.php"
 code = "missing-template-parameter"
 message = 'Too few template arguments for `Illuminate\Contracts\Database\Eloquent\CastsAttributes`: expected at least 2, but found 0.'
 count = 1
 
 [[issues]]
-file = "src/Casts/AsFolio.php"
+file = "src/Casts/DteBlock.php"
+code = "incompatible-parameter-type"
+message = 'Parameter `$attributes` of `Laragear\Dte\Casts\DteBlock::make()` expects type `iterable<string, mixed>` but parent `Illuminate\Support\Fluent::make()` expects type `iterable<array-key, mixed>`'
+count = 1
+
+[[issues]]
+file = "src/Casts/DteBlock.php"
+code = "incompatible-parameter-type"
+message = 'Parameter `$key` of `Laragear\Dte\Casts\DteBlock::__get()` expects type `string` but parent `Illuminate\Support\Fluent::__get()` expects type `array-key`'
+count = 1
+
+[[issues]]
+file = "src/Casts/DteBlock.php"
+code = "incompatible-parameter-type"
+message = 'Parameter `$method` of `Laragear\Dte\Casts\DteBlock::__call()` expects type `string` but parent `Illuminate\Support\Fluent::__call()` expects type `array-key`'
+count = 1
+
+[[issues]]
+file = "src/Casts/DteBlock.php"
+code = "missing-template-parameter"
+message = 'Too few template arguments for `Illuminate\Support\Fluent`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Casts/DteBlockCast.php"
+code = "falsable-return-statement"
+message = '''Function `Laragear\Dte\Casts\DteBlockCast::set` is declared to return `null|string` but possibly returns 'false' (inferred as `false|string`).'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteBlockCast.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Casts\DteBlockCast::set`: expected `null|string`, but found `false|string`.'
+count = 1
+
+[[issues]]
+file = "src/Casts/DteBlockCast.php"
+code = "less-specific-argument"
+message = 'Argument type mismatch for argument #1 of `Laragear\Dte\Casts\DteBlock::make`: expected `iterable<string, mixed>`, but provided type `array<array-key, mixed>` is less specific.'
+count = 2
+
+[[issues]]
+file = "src/Casts/DteBlockCast.php"
 code = "missing-template-parameter"
 message = 'Too few template arguments for `Illuminate\Contracts\Database\Eloquent\CastsAttributes`: expected at least 2, but found 0.'
+count = 1
+
+[[issues]]
+file = "src/Casts/DteCommissions.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('items')` used for array access on `$this(Laragear\Dte\Casts\DteCommissions)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteCommissions.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/Casts/DteDetailItems.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('items')` used for array access on `$this(Laragear\Dte\Casts\DteDetailItems)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteDetailItems.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
+count = 2
+
+[[issues]]
+file = "src/Casts/DteDetailItems.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Casts\DteDetailItems::itemTotal`: expected `int`, but found `float`.'
+count = 1
+
+[[issues]]
+file = "src/Casts/DteDetailItems.php"
+code = "invalid-type-cast"
+message = "Casting `mixed` to `float`."
+count = 7
+
+[[issues]]
+file = "src/Casts/DteEmissionGeoref.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('latitude')` used for array access on `$this(Laragear\Dte\Casts\DteEmissionGeoref)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteEmissionGeoref.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('longitude')` used for array access on `$this(Laragear\Dte\Casts\DteEmissionGeoref)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteEmissionGeoref.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('reference_system')` used for array access on `$this(Laragear\Dte\Casts\DteEmissionGeoref)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteGlobalModifiers.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('items')` used for array access on `$this(Laragear\Dte\Casts\DteGlobalModifiers)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteGlobalModifiers.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/Casts/DteGlobalModifiers.php"
+code = "invalid-type-cast"
+message = "Casting `mixed` to `float`."
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIdDoc.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('document_type')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderIdDoc)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIdDoc.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('ind_mnt_neto')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderIdDoc)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIdDoc.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('ind_traslado')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderIdDoc)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIdDoc.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('issued_on')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderIdDoc)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIdDoc.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('non_rebillable')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderIdDoc)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIdDoc.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('payment')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderIdDoc)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIdDoc.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('payments')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderIdDoc)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIdDoc.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('tipo_despacho')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderIdDoc)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIdDoc.php"
+code = "possibly-invalid-iterator"
+message = '''The expression provided to `foreach` (type `('TValue.illuminate\support\fluent extends nonnull)|array{}`) might not be iterable at runtime.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIssuer.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('activity')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderIssuer)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIssuer.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('activity_code')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderIssuer)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIssuer.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('name')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderIssuer)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIssuer.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('rut')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderIssuer)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIssuer.php"
+code = "invalid-type-cast"
+message = '''Cannot reliably cast type `'TValue.illuminate\support\fluent extends mixed` to `array`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIssuer.php"
+code = "less-specific-argument"
+message = 'Argument type mismatch for argument #2 of `Laragear\Dte\Casts\DteBlock::optionalElements`: expected `array<string, mixed>`, but provided type `array<array-key, mixed>` is less specific.'
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderIssuer.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Laragear\Rut\Rut::parse`: expected `Laragear\Rut\Rut|int|null|string`, but provided type `('TValue.illuminate\support\fluent extends mixed)` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderOtherCurrency.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('commercial_margin')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderOtherCurrency)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderOtherCurrency.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('currency')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderOtherCurrency)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderOtherCurrency.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('exchange_rate')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderOtherCurrency)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderOtherCurrency.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('exempt')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderOtherCurrency)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderOtherCurrency.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('livestock_base')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderOtherCurrency)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderOtherCurrency.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('net')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderOtherCurrency)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderOtherCurrency.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('tax')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderOtherCurrency)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderOtherCurrency.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('total')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderOtherCurrency)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderOtherCurrency.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('unretained_tax')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderOtherCurrency)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderOtherCurrency.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('withheld_taxes')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderOtherCurrency)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderOtherCurrency.php"
+code = "possibly-invalid-iterator"
+message = '''The expression provided to `foreach` (type `('TValue.illuminate\support\fluent extends nonnull)|array{}`) might not be iterable at runtime.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderReceiver.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('name')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderReceiver)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderReceiver.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('rut')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderReceiver)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderReceiver.php"
+code = "less-specific-argument"
+message = 'Argument type mismatch for argument #2 of `Laragear\Dte\Casts\DteBlock::optionalElements`: expected `array<string, mixed>`, but provided type `array<array-key, mixed>` is less specific.'
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderReceiver.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Laragear\Rut\Rut::parse`: expected `Laragear\Rut\Rut|int|null|string`, but provided type `('TValue.illuminate\support\fluent extends mixed)` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTotals.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('exempt')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTotals)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTotals.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('net')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTotals)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTotals.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('non_billable')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTotals)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTotals.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('tax')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTotals)`.'''
+count = 2
+
+[[issues]]
+file = "src/Casts/DteHeaderTotals.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('taxes')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTotals)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTotals.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('total')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTotals)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTotals.php"
+code = "possibly-invalid-iterator"
+message = '''The expression provided to `foreach` (type `('TValue.illuminate\support\fluent extends nonnull)|array{}`) might not be iterable at runtime.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTransport.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('carrier_rut')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTransport)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTransport.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('destination_address')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTransport)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTransport.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('destination_city')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTransport)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTransport.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('destination_commune')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTransport)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTransport.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('driver_name')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTransport)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTransport.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('driver_rut')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTransport)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTransport.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('trailer_plate')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTransport)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteHeaderTransport.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('vehicle_plate')` used for array access on `$this(Laragear\Dte\Casts\DteHeaderTransport)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteReferences.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('items')` used for array access on `$this(Laragear\Dte\Casts\DteReferences)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteReferences.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/Casts/DteSubtotals.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('items')` used for array access on `$this(Laragear\Dte\Casts\DteSubtotals)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteSubtotals.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/Casts/DteSubtotals.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `nonnull`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('conaf_plan_code')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('destination_block')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('destination_commune')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('destination_latitude')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('destination_longitude')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('destination_property')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('logging_notice')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('origin_block')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('origin_commune')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('origin_latitude')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('origin_longitude')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('origin_property')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
+count = 1
+
+[[issues]]
+file = "src/Casts/DteTimberHandling.php"
+code = "invalid-array-index"
+message = '''Invalid index type `string('reference_system')` used for array access on `$this(Laragear\Dte\Casts\DteTimberHandling)`.'''
 count = 1
 
 [[issues]]
@@ -1096,24 +1690,6 @@ count = 2
 file = "src/Console/Commands/RejectExpiringPhantomInvoicesCommand.php"
 code = "less-specific-return-statement"
 message = 'Returned type `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiInboundDocument|Laragear\Dte\Models\SiiInboundDocument&static>|Illuminate\Support\Collection<int, stdClass>` is less specific than the declared return type `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiInboundDocument>` for function `Laragear\Dte\Console\Commands\RejectExpiringPhantomInvoicesCommand::queryExpiringPhantomInvoices`.'
-count = 1
-
-[[issues]]
-file = "src/Console/Commands/SendIecvCommand.php"
-code = "invalid-return-statement"
-message = 'Invalid return type for function `Laragear\Dte\Console\Commands\SendIecvCommand::documents`: expected `Illuminate\Support\Collection<int, Laragear\Dte\Models\SiiDte>`, but found `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiDte|Laragear\Dte\Models\SiiDte&static>|Illuminate\Support\Collection<int, stdClass>`.'
-count = 1
-
-[[issues]]
-file = "src/Data/DocumentPayload.php"
-code = "missing-template-parameter"
-message = 'Too few template arguments for `Illuminate\Support\Fluent`: expected at least 2, but found 0.'
-count = 1
-
-[[issues]]
-file = "src/Data/DocumentTotalsData.php"
-code = "missing-template-parameter"
-message = 'Too few template arguments for `Illuminate\Contracts\Support\Arrayable`: expected at least 2, but found 0.'
 count = 1
 
 [[issues]]
@@ -1501,30 +2077,6 @@ message = "Reference created from a previously undefined variable `$matches`."
 count = 1
 
 [[issues]]
-file = "src/Mailbox/Drivers/AwsSesDriver.php"
-code = "less-specific-nested-argument-type"
-message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::copyObject`: expected `array{'ACL'?: string('authenticated-read')|string('aws-exec-read')|string('bucket-owner-full-control')|string('bucket-owner-read')|string('private')|string('public-read')|string('public-read-write'), 'AnnotationDirective'?: string('COPY')|string('EXCLUDE'), 'Bucket'?: string, 'BucketKeyEnabled'?: bool, 'CacheControl'?: string, 'ChecksumAlgorithm'?: string('CRC32')|string('CRC32C')|string('CRC64NVME')|string('MD5')|string('SHA1')|string('SHA256')|string('SHA512')|string('XXHASH128')|string('XXHASH3')|string('XXHASH64'), 'ContentDisposition'?: string, 'ContentEncoding'?: string, 'ContentLanguage'?: string, 'ContentType'?: string, 'CopySource'?: string, 'CopySourceIfMatch'?: string, 'CopySourceIfModifiedSince'?: DateTimeInterface|int|string, 'CopySourceIfNoneMatch'?: string, 'CopySourceIfUnmodifiedSince'?: DateTimeInterface|int|string, 'CopySourceSSECustomerAlgorithm'?: string, 'CopySourceSSECustomerKey'?: string, 'CopySourceSSECustomerKeyMD5'?: string, 'ExpectedBucketOwner'?: string, 'ExpectedSourceBucketOwner'?: string, 'Expires'?: string, 'GrantFullControl'?: string, 'GrantRead'?: string, 'GrantReadACP'?: string, 'GrantWriteACP'?: string, 'IfMatch'?: string, 'IfNoneMatch'?: string, 'Key'?: string, 'Metadata'?: array<string, string>, 'MetadataDirective'?: string('COPY')|string('REPLACE'), 'ObjectLockEventHold'?: string('OFF')|string('ON'), 'ObjectLockEventHoldDurationDays'?: int, 'ObjectLockEventHoldDurationYears'?: int, 'ObjectLockLegalHoldStatus'?: string('OFF')|string('ON'), 'ObjectLockMode'?: string('COMPLIANCE')|string('GOVERNANCE'), 'ObjectLockRetainUntilDate'?: DateTimeInterface|int|string, 'RequestPayer'?: string('requester'), 'SSECustomerAlgorithm'?: string, 'SSECustomerKey'?: string, 'SSECustomerKeyMD5'?: string, 'SSEKMSEncryptionContext'?: string, 'SSEKMSKeyId'?: string, 'ServerSideEncryption'?: string('AES256')|string('aws:backup')|string('aws:fsx')|string('aws:kms')|string('aws:kms:dsse'), 'StorageClass'?: string('AWS_BACKUP_LOW_COST_WARM')|string('AWS_BACKUP_WARM')|string('DEEP_ARCHIVE')|string('EXPRESS_ONEZONE')|string('FSX_ONTAP')|string('FSX_OPENZFS')|string('GLACIER')|string('GLACIER_IR')|string('INTELLIGENT_TIERING')|string('ONEZONE_IA')|string('OUTPOSTS')|string('REDUCED_REDUNDANCY')|string('SNOW')|string('STANDARD')|string('STANDARD_IA'), 'Tagging'?: string, 'TaggingDirective'?: string('COPY')|string('REPLACE'), 'WebsiteRedirectLocation'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'CopySource': truthy-string, 'Key': string}` is less specific.'''
-count = 1
-
-[[issues]]
-file = "src/Mailbox/Drivers/AwsSesDriver.php"
-code = "less-specific-nested-argument-type"
-message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::deleteObject`: expected `array{'Bucket'?: string, 'BypassGovernanceRetention'?: bool, 'ExpectedBucketOwner'?: string, 'IfMatch'?: string, 'IfMatchLastModifiedTime'?: DateTimeInterface|int|string, 'IfMatchSize'?: int, 'Key'?: string, 'MFA'?: string, 'RequestPayer'?: string('requester'), 'VersionId'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'Key': string}` is less specific.'''
-count = 1
-
-[[issues]]
-file = "src/Mailbox/Drivers/AwsSesDriver.php"
-code = "less-specific-nested-argument-type"
-message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::getObject`: expected `array{'Bucket'?: string, 'ChecksumMode'?: string('ENABLED'), 'ExpectedBucketOwner'?: string, 'IfMatch'?: string, 'IfModifiedSince'?: DateTimeInterface|int|string, 'IfNoneMatch'?: string, 'IfUnmodifiedSince'?: DateTimeInterface|int|string, 'Key'?: string, 'PartNumber'?: int, 'Range'?: string, 'RequestPayer'?: string('requester'), 'ResponseCacheControl'?: string, 'ResponseContentDisposition'?: string, 'ResponseContentEncoding'?: string, 'ResponseContentLanguage'?: string, 'ResponseContentType'?: string, 'ResponseExpires'?: DateTimeInterface|int|string, 'SSECustomerAlgorithm'?: string, 'SSECustomerKey'?: string, 'SSECustomerKeyMD5'?: string, 'VersionId'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'Key': mixed}` is less specific.'''
-count = 1
-
-[[issues]]
-file = "src/Mailbox/Drivers/AwsSesDriver.php"
-code = "less-specific-nested-argument-type"
-message = '''Argument type mismatch for argument #1 of `Aws\S3\S3Client::listObjectsV2`: expected `array{'Bucket'?: string, 'ContinuationToken'?: string, 'Delimiter'?: string, 'EncodingType'?: string('url'), 'ExpectedBucketOwner'?: string, 'FetchOwner'?: bool, 'MaxKeys'?: int, 'OptionalObjectAttributes'?: list<string('RestoreStatus')>, 'Prefix'?: string, 'RequestPayer'?: string('requester'), 'StartAfter'?: string, ...}`, but provided type `array{'Bucket': nonnull, 'MaxKeys': mixed, 'Prefix': nonnull}` is less specific.'''
-count = 1
-
-[[issues]]
 file = "src/Mailbox/Drivers/GoogleWorkspaceDriver.php"
 code = "invalid-iterator"
 message = "The expression provided to `foreach` is not iterable. It resolved to type `nonnull`, which is not iterable."
@@ -1547,42 +2099,6 @@ file = "src/Mailbox/Drivers/GoogleWorkspaceDriver.php"
 code = "redundant-null-coalesce"
 message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
 count = 2
-
-[[issues]]
-file = "src/Mailbox/Drivers/ImapDriver.php"
-code = "invalid-argument"
-message = 'Invalid argument type for argument #1 of `Laragear\Dte\Proxies\ImapProxy::body`: expected `unknown-ref(IMAP\Connection)`, but found `resource`.'
-count = 1
-
-[[issues]]
-file = "src/Mailbox/Drivers/ImapDriver.php"
-code = "invalid-argument"
-message = 'Invalid argument type for argument #1 of `Laragear\Dte\Proxies\ImapProxy::close`: expected `unknown-ref(IMAP\Connection)`, but found `resource`.'
-count = 2
-
-[[issues]]
-file = "src/Mailbox/Drivers/ImapDriver.php"
-code = "invalid-argument"
-message = 'Invalid argument type for argument #1 of `Laragear\Dte\Proxies\ImapProxy::headerinfo`: expected `unknown-ref(IMAP\Connection)`, but found `resource`.'
-count = 1
-
-[[issues]]
-file = "src/Mailbox/Drivers/ImapDriver.php"
-code = "invalid-argument"
-message = 'Invalid argument type for argument #1 of `Laragear\Dte\Proxies\ImapProxy::search`: expected `unknown-ref(IMAP\Connection)`, but found `resource`.'
-count = 2
-
-[[issues]]
-file = "src/Mailbox/Drivers/ImapDriver.php"
-code = "invalid-argument"
-message = 'Invalid argument type for argument #1 of `Laragear\Dte\Proxies\ImapProxy::setflag_full`: expected `unknown-ref(IMAP\Connection)`, but found `resource`.'
-count = 1
-
-[[issues]]
-file = "src/Mailbox/Drivers/ImapDriver.php"
-code = "invalid-return-statement"
-message = 'Invalid return type for function `Laragear\Dte\Mailbox\Drivers\ImapDriver::connect`: expected `resource`, but found `unknown-ref(IMAP\Connection)`.'
-count = 1
 
 [[issues]]
 file = "src/Mailbox/Drivers/ImapDriver.php"
@@ -1655,12 +2171,6 @@ file = "src/Mailbox/Drivers/Microsoft365Driver.php"
 code = "possibly-null-property-access"
 message = "Attempting to access a property on a possibly `null` value."
 count = 5
-
-[[issues]]
-file = "src/Models/Concerns/HasCorrections.php"
-code = "invalid-iterator"
-message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
-count = 1
 
 [[issues]]
 file = "src/Models/Concerns/HasCorrections.php"
@@ -1814,6 +2324,12 @@ count = 1
 
 [[issues]]
 file = "src/Models/SiiDte.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `collect`: expected `Illuminate\Contracts\Support\Arrayable<('TKey.collect() extends array-key), ('TValue.collect() extends mixed)>|iterable<('TKey.collect() extends array-key), ('TValue.collect() extends mixed)>|null`, but provided type `('TValue.illuminate\support\fluent extends nonnull)|array{}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDte.php"
 code = "possible-method-access-on-null"
 message = "Attempting to call a method on `null`."
 count = 1
@@ -1846,6 +2362,18 @@ count = 1
 file = "src/Models/SiiDtePayload.php"
 code = "incompatible-property-type"
 message = 'Property `Laragear\Dte\Models\SiiDtePayload::$casts` has an incompatible type declaration from docblock.'
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDtePayload.php"
+code = "less-specific-nested-return-statement"
+message = '''Returned type `array<string, mixed>` is less specific than the declared return type `array<string, array<string, mixed>>` for function `Laragear\Dte\Models\SiiDtePayload::blocksToArray` due to nested 'mixed'.'''
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDtePayload.php"
+code = "string-member-selector"
+message = "This member selector uses a non-literal string type (`string`); its specific value cannot be statically determined."
 count = 1
 
 [[issues]]
@@ -2012,12 +2540,6 @@ count = 1
 
 [[issues]]
 file = "src/Proxies/ImapProxy.php"
-code = "non-existent-class-like"
-message = 'Cannot find class, interface, enum, or type alias `IMAP\Connection`.'
-count = 6
-
-[[issues]]
-file = "src/Proxies/ImapProxy.php"
 code = "non-existent-function"
 message = 'Could not find definition for function `Laragear\Dte\Proxies\imap_body` (also tried as `imap_body` in a broader scope).'
 count = 1
@@ -2144,8 +2666,32 @@ count = 1
 
 [[issues]]
 file = "src/Services/IecvService.php"
+code = "invalid-argument"
+message = 'Invalid argument type for argument #1 of `Illuminate\Support\Collection::map`: expected `(callable(Laragear\Rut\Rut|string, int): int)`, but found `(closure(Laragear\Rut\Rut): int)`.'
+count = 1
+
+[[issues]]
+file = "src/Services/IecvService.php"
+code = "invalid-property-access"
+message = "Attempting to access a property on a non-object type (`string`)."
+count = 4
+
+[[issues]]
+file = "src/Services/IecvService.php"
 code = "invalid-return-statement"
-message = 'Invalid return type for function `Laragear\Dte\Services\IecvService::documentsFor`: expected `array<int, Laragear\Dte\Models\SiiDte>`, but found `list<Laragear\Dte\Models\SiiDte|Laragear\Dte\Models\SiiDte&static|stdClass>`.'
+message = 'Invalid return type for function `Laragear\Dte\Services\IecvService::issuerNums`: expected `list<int>`, but found `array<int, int>`.'
+count = 1
+
+[[issues]]
+file = "src/Services/IecvService.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `{closure:src/Services/IecvService.php:268:19}`: expected `Laragear\Rut\Rut`, but found `Laragear\Rut\Rut|string`.'
+count = 1
+
+[[issues]]
+file = "src/Services/IecvService.php"
+code = "less-specific-nested-return-statement"
+message = '''Returned type `list<mixed>` is less specific than the declared return type `array<int, Laragear\Dte\Models\SiiDte>` for function `Laragear\Dte\Services\IecvService::documentsFor` due to nested 'mixed'.'''
 count = 1
 
 [[issues]]
@@ -2156,9 +2702,33 @@ count = 1
 
 [[issues]]
 file = "src/Services/IecvService.php"
-code = "non-existent-method"
-message = "Method `getkey` does not exist on type `stdClass`."
+code = "possible-method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 2
+
+[[issues]]
+file = "src/Services/IecvService.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #1 of `Illuminate\Support\Collection::groupBy`: expected `(callable(Laragear\Dte\Models\SiiDte|Laragear\Dte\Models\SiiDte&static|stdClass, int): string)|array<array-key, mixed>|string`, but possibly received `(closure(Laragear\Dte\Models\SiiDte): string)`.'
 count = 1
+
+[[issues]]
+file = "src/Services/IecvService.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #1 of `Illuminate\Support\Collection::groupBy`: expected `(callable(stdClass, int): string)|array<array-key, mixed>|string`, but possibly received `(closure(Laragear\Dte\Models\SiiDte): string)`.'
+count = 1
+
+[[issues]]
+file = "src/Services/IecvService.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laragear\Dte\Services\IecvService::documentKey` is possibly `null`, but parameter type `int` does not accept it.'
+count = 2
+
+[[issues]]
+file = "src/Services/IecvService.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `Laragear\Dte\Services\IecvService::documentKey` is possibly `null`, but parameter type `string` does not accept it.'
+count = 2
 
 [[issues]]
 file = "src/Services/PackDtesService.php"
@@ -2180,12 +2750,6 @@ count = 1
 
 [[issues]]
 file = "src/Services/PackDtesService.php"
-code = "less-specific-nested-argument-type"
-message = '''Argument type mismatch for argument #3 of `Laragear\Dte\Services\PackDtesService::createEnvelopeInDatabase`: expected `array<array-key, mixed>`, but provided type `('TValue.illuminate\support\fluent extends nonnull)|array{}` is less specific.'''
-count = 1
-
-[[issues]]
-file = "src/Services/PackDtesService.php"
 code = "less-specific-return-statement"
 message = '''Returned type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)` is less specific than the declared return type `Laragear\Dte\Models\SiiDteEnvelope` for function `Laragear\Dte\Services\PackDtesService::createEnvelopeInDatabase`.'''
 count = 1
@@ -2194,6 +2758,12 @@ count = 1
 file = "src/Services/PackDtesService.php"
 code = "less-specific-return-statement"
 message = 'Returned type `Illuminate\Database\Eloquent\Collection<array-key, Illuminate\Database\Eloquent\Collection<int, mixed>&static>&static` is less specific than the declared return type `Illuminate\Support\Collection<string, Illuminate\Support\Collection<int, Laragear\Dte\Models\SiiDte>>` for function `Laragear\Dte\Services\PackDtesService::groupByIssuerAndReceiver`.'
+count = 1
+
+[[issues]]
+file = "src/Services/PackDtesService.php"
+code = "less-specific-return-statement"
+message = 'Returned type `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiDte|Laragear\Dte\Models\SiiDte&static>|Illuminate\Support\Collection<int, stdClass>` is less specific than the declared return type `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiDte>` for function `Laragear\Dte\Services\PackDtesService::fetchReadyDtes`.'
 count = 1
 
 [[issues]]
@@ -2270,8 +2840,8 @@ count = 2
 
 [[issues]]
 file = "src/Testing/Fakes/FakeDocumentBuilder.php"
-code = "invalid-property-assignment-value"
-message = 'Invalid type for property `$data`: expected `Laragear\Dte\Data\DocumentPayload`, but got `array<array-key, mixed>`.'
+code = "less-specific-argument"
+message = 'Argument type mismatch for argument #1 of `Illuminate\Database\Eloquent\Model::fill`: expected `array<string, mixed>`, but provided type `array<array-key, mixed>` is less specific.'
 count = 1
 
 [[issues]]
@@ -2301,7 +2871,7 @@ count = 2
 [[issues]]
 file = "src/Testing/Fakes/FakeDocumentBuilder.php"
 code = "possibly-non-existent-method"
-message = "Call to documented magic method `payloadData()` on a class that may not handle it."
+message = "Call to documented magic method `payloadBlocks()` on a class that may not handle it."
 count = 4
 
 [[issues]]
@@ -2326,12 +2896,6 @@ count = 1
 file = "src/Testing/Fakes/FakeInvoiceLiquidationBuilder.php"
 code = "incompatible-return-type"
 message = 'Return type `array<array-key, Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Testing\Fakes\FakeInvoiceLiquidationBuilder::references()` is incompatible with parent return type `list<Laragear\Dte\Data\ReferenceData>` of `Laragear\Dte\Builders\DocumentBuilder::references()`'
-count = 1
-
-[[issues]]
-file = "src/Testing/Fakes/FakePersistDte.php"
-code = "invalid-property-assignment-value"
-message = 'Invalid type for property `$data`: expected `Laragear\Dte\Data\DocumentPayload`, but got `array<string, mixed>`.'
 count = 1
 
 [[issues]]
@@ -2536,7 +3100,7 @@ count = 4
 file = "src/Testing/InteractsWithSiiDte.php"
 code = "possibly-null-property-access"
 message = "Attempting to access a property on a possibly `null` value."
-count = 2
+count = 1
 
 [[issues]]
 file = "src/Testing/InteractsWithSiiDte.php"

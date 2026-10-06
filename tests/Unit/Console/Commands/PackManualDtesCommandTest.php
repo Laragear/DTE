@@ -25,7 +25,7 @@ class PackManualDtesCommandTest extends DatabaseTestCase
     {
         parent::setUp();
 
-        ConfigurationManager::setCompany(fn() => CompanyData::make(
+        ConfigurationManager::setCompany(fn () => CompanyData::make(
             IssuerData::make(
                 '76.123.456-0',
                 'Test Company',
@@ -71,7 +71,7 @@ class PackManualDtesCommandTest extends DatabaseTestCase
             ->assertSuccessful();
     }
 
-    public function test_passes_sync_and_retry_failed_options(): void
+    public function test_passes_sync_option(): void
     {
         Event::fake();
 
@@ -97,7 +97,6 @@ class PackManualDtesCommandTest extends DatabaseTestCase
             ->artisan('dte:pack-manual', [
                 'ids' => [$dte->getKey()],
                 '--sync' => true,
-                '--retry-failed' => true,
             ])
             ->assertSuccessful();
 

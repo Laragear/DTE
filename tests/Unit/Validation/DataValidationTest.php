@@ -3,7 +3,7 @@
 namespace Tests\Unit\Validation;
 
 use Illuminate\Validation\ValidationException;
-use Laragear\Dte\Data\DocumentTotalsData;
+use Laragear\Dte\Casts\DteHeaderTotals;
 use Laragear\Dte\Data\GlobalModifierData;
 use Laragear\Dte\Data\IssuerData;
 use Laragear\Dte\Data\Item;
@@ -27,7 +27,7 @@ class DataValidationTest extends TestCase
         static::assertSame(DteRules::GLOBAL_MODIFIER, GlobalModifierData::rules());
         static::assertSame(DteRules::PAYMENT_TERM, PaymentTermData::rules());
         static::assertSame(DteRules::TRANSPORT, TransportData::rules());
-        static::assertSame(DteRules::TOTALS, DocumentTotalsData::rules());
+        static::assertSame(DteRules::TOTALS, DteHeaderTotals::RULES);
 
         static::assertSame(DteRules::ISSUER['rut'], IssuerData::rules()['rut']);
         static::assertIsCallable(IssuerData::rules()['activity_code']);
@@ -85,7 +85,7 @@ class DataValidationTest extends TestCase
 
     public function test_valid_totals_pass(): void
     {
-        DocumentTotalsData::make(1000, 0, 190, 1190)->validate();
+        DteHeaderTotals::make(['net' => 1000, 'exempt' => 0, 'tax' => 190, 'total' => 1190])->validate();
 
         static::assertTrue(true);
     }
@@ -147,8 +147,8 @@ class DataValidationTest extends TestCase
 
     public function test_totals_failures(): void
     {
-        $this->expectErrorKey('total', fn () => DocumentTotalsData::make(1000, 0, 190, -1)->validate());
-        $this->expectErrorKey('net', fn () => DocumentTotalsData::make(-5, 0, 190, 1190)->validate());
+        $this->expectErrorKey('total', fn () => DteHeaderTotals::make(['net' => 1000, 'exempt' => 0, 'tax' => 190, 'total' => -1])->validate());
+        $this->expectErrorKey('net', fn () => DteHeaderTotals::make(['net' => -5, 'exempt' => 0, 'tax' => 190, 'total' => 1190])->validate());
     }
 
     public function test_receiver_failure(): void

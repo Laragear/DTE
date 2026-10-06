@@ -22,11 +22,11 @@ return new class extends Migration
             $table->unsignedInteger('sii_dte_envelope_id')->nullable()->index();
             $table->json('metadata')->nullable();
             $table->unsignedTinyInteger('pack_retries')->default(0);
-            $table->rut('issuer');
-            $table->rut('receiver');
+            $table->rut('issuer')->index();
+            $table->rut('receiver')->index();
             $table->unsignedTinyInteger('document_type');
             $table->unsignedInteger('folio')->nullable();
-            $table->date('issued_on')->nullable();
+            $table->date('issued_on')->index()->nullable();
             $table->unsignedInteger('amount_net')->default(0);
             $table->unsignedInteger('amount_exempt')->default(0);
             $table->unsignedInteger('amount_taxes')->default(0);

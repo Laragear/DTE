@@ -36,9 +36,6 @@ enum DteStatus: string
     /** The SII rejected the document. */
     case Rejected = 'rejected';
 
-    /** Processing stopped because of an unrecoverable error, without consuming the folio. */
-    case Failed = 'failed';
-
     /** The document was legally annulled by a credt/debit note */
     case Annulled = 'annulled';
 
@@ -47,8 +44,6 @@ enum DteStatus: string
      */
     public function isTerminalState(): bool
     {
-        // Failed stays out: the SII never consumed its folio, so the
-        // developer may still retry it locally with the same folio.
         return match ($this) {
             self::Accepted,
             self::Rejected,
@@ -62,7 +57,7 @@ enum DteStatus: string
      */
     public function isNotTerminalState(): bool
     {
-        return !$this->isTerminalState();
+        return ! $this->isTerminalState();
     }
 
     /**
@@ -71,9 +66,9 @@ enum DteStatus: string
     public function isManuallyPackable(): bool
     {
         // Document-side packability: only compiled, envelope-free states (plus
-        // Draft, Pending and Failed, which compile on pack) qualify.
+        // Draft and Pending, which compile on pack) qualify.
         return match ($this) {
-            self::Draft, self::Pending, self::Failed, self::Outbox => true,
+            self::Draft, self::Pending, self::Outbox => true,
             default => false,
         };
     }
@@ -83,7 +78,7 @@ enum DteStatus: string
      */
     public function isNotManuallyPackable(): bool
     {
-        return !$this->isManuallyPackable();
+        return ! $this->isManuallyPackable();
     }
 
     /**
@@ -102,7 +97,6 @@ enum DteStatus: string
             self::Sent => 'Enviado (sobre en SII)',
             self::Accepted => 'Aceptado',
             self::Rejected => 'Rechazado',
-            self::Failed => 'Fallido',
             self::Annulled => 'Anulado',
         };
     }
@@ -123,7 +117,6 @@ enum DteStatus: string
             self::Sent => 'El sobre que contiene este DTE fue recibido por el SII (Track ID asignado al sobre). Respuesta pendiente.',
             self::Accepted => 'El SII ha validado y aceptado el documento sin reparos.',
             self::Rejected => 'El SII ha rechazado el documento debido a errores en su contenido o estructura.',
-            self::Failed => 'El procesamiento se detuvo debido a un error crítico o irrecuperable.',
             self::Annulled => 'El documento ha sido anulado legalmente ante el SII.',
         };
     }
@@ -141,7 +134,6 @@ enum DteStatus: string
             self::Signing => 'El DTE se está firmando. Espere a que termine o reintente después.',
             self::Outbox => 'El DTE está compilado y listo, a la espera de ser recogido por un sobre.',
             self::Packed => 'El DTE forma parte de un sobre que aún no ha sido enviado.',
-            self::Failed => 'El DTE falló durante el procesamiento. Reintente con el mismo folio.',
             self::Sent => 'El sobre del DTE fue enviado al SII pero la respuesta está pendiente.',
             self::Rejected => 'El DTE fue rechazado por el SII. Clone con un nuevo folio para reintentar.',
             self::Accepted => 'El DTE fue aceptado por el SII. El folio ha sido consumido y no puede reutilizarse.',
@@ -169,7 +161,7 @@ enum DteStatus: string
      */
     public function isNotXmlPayloadPresent(): bool
     {
-        return !$this->isXmlPayloadPresent();
+        return ! $this->isXmlPayloadPresent();
     }
 
     /**
@@ -186,7 +178,7 @@ enum DteStatus: string
      */
     public function isNotRetryable(): bool
     {
-        return !$this->isRetryable();
+        return ! $this->isRetryable();
     }
 
     /**
@@ -200,7 +192,7 @@ enum DteStatus: string
     {
         return match ($this) {
             self::Draft, self::Pending, self::Building, self::RequiresCaf, self::Signing,
-            self::Outbox, self::Packed, self::Failed, self::Sent => true,
+            self::Outbox, self::Packed, self::Sent => true,
             default => false,
         };
     }
@@ -210,7 +202,7 @@ enum DteStatus: string
      */
     public function isNotRetryableWithSameFolio(): bool
     {
-        return !$this->isRetryableWithSameFolio();
+        return ! $this->isRetryableWithSameFolio();
     }
 
     /**
@@ -229,7 +221,7 @@ enum DteStatus: string
      */
     public function isNotCompiled(): bool
     {
-        return !$this->isCompiled();
+        return ! $this->isCompiled();
     }
 
     /**
@@ -248,7 +240,7 @@ enum DteStatus: string
      */
     public function isNotAwaitingEnvelope(): bool
     {
-        return !$this->isAwaitingEnvelope();
+        return ! $this->isAwaitingEnvelope();
     }
 
     /**
@@ -267,7 +259,7 @@ enum DteStatus: string
      */
     public function isNotCompilable(): bool
     {
-        return !$this->isCompilable();
+        return ! $this->isCompilable();
     }
 
     /**
@@ -276,7 +268,7 @@ enum DteStatus: string
     public function isCompilableForPack(): bool
     {
         return match ($this) {
-            self::Pending, self::Failed => true,
+            self::Pending => true,
             default => false,
         };
     }
@@ -286,7 +278,7 @@ enum DteStatus: string
      */
     public function isNotCompilableForPack(): bool
     {
-        return !$this->isCompilableForPack();
+        return ! $this->isCompilableForPack();
     }
 
     /**
@@ -305,7 +297,7 @@ enum DteStatus: string
      */
     public function isNotAnnulmentConflicting(): bool
     {
-        return !$this->isAnnulmentConflicting();
+        return ! $this->isAnnulmentConflicting();
     }
 
     /**
@@ -324,7 +316,7 @@ enum DteStatus: string
      */
     public function isNotOrphanDowngradable(): bool
     {
-        return !$this->isOrphanDowngradable();
+        return ! $this->isOrphanDowngradable();
     }
 
     /**
@@ -364,7 +356,7 @@ enum DteStatus: string
      */
     public static function compilableForPackValues(): array
     {
-        return [self::Pending->value, self::Failed->value];
+        return [self::Pending->value];
     }
 
     /**
@@ -403,7 +395,6 @@ enum DteStatus: string
             self::Outbox->value,
             self::Packed->value,
             self::Sent->value,
-            self::Failed->value,
         ];
     }
 }

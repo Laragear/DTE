@@ -21,80 +21,97 @@ class DocumentValidatorTest extends TestCase
     public function test_zero_quantity_item_passes(): void
     {
         $payload = $this->payload();
-        $payload['items'][0]['quantity'] = 0.0;
+        $payload['detail_items']['items'][0]['quantity'] = 0.0;
 
         (new DocumentValidator)->validate($payload);
 
         static::assertTrue(true);
     }
 
-    public function test_optional_section_rules_only_apply_when_present(): void
+    public function test_block_rules_only_apply_when_present(): void
     {
         $payload = $this->payload();
 
-        unset($payload['payment'], $payload['transport']);
+        unset($payload['header_id_doc']['payment'], $payload['header_transport']);
 
         (new DocumentValidator)->validate($payload);
 
-        static::assertArrayNotHasKey('payment.condition', (new DocumentValidator)->rules($payload));
-        static::assertArrayNotHasKey('transport.vehicle_plate', (new DocumentValidator)->rules($payload));
+        $rules = (new DocumentValidator)->rules($payload);
+
+        static::assertArrayNotHasKey('header_transport.vehicle_plate', $rules);
+        static::assertArrayNotHasKey('header_other_currency.currency', $rules);
     }
 
     public function test_document_failures(): void
     {
-        $this->expectErrorKey('issuer', ['unset' => ['issuer']]);
-        $this->expectErrorKey('document_type', ['set' => ['document_type' => 1]]);
-        $this->expectErrorKey('issued_on', ['set' => ['issued_on' => '1999-12-31']]);
-        $this->expectErrorKey('totals.net', ['set' => ['totals.net' => -1]]);
-        $this->expectErrorKey('ind_traslado', ['set' => ['ind_traslado' => 99]]);
+        $this->expectErrorKey('header_issuer', ['unset' => ['header_issuer']]);
+        $this->expectErrorKey('header_id_doc.document_type', ['set' => ['header_id_doc.document_type' => 1]]);
+        $this->expectErrorKey('header_id_doc.issued_on', ['set' => ['header_id_doc.issued_on' => '1999-12-31']]);
+        $this->expectErrorKey('header_totals.net', ['set' => ['header_totals.net' => -1]]);
+        $this->expectErrorKey('header_id_doc.ind_traslado', ['set' => ['header_id_doc.ind_traslado' => 99]]);
     }
 
     public function test_issuer_failures(): void
     {
-        $this->expectErrorKey('issuer.rut', ['set' => ['issuer.rut' => '76.123.456-7']]);
-        $this->expectErrorKey('issuer.name', ['set' => ['issuer.name' => str_repeat('A', 101)]]);
-        $this->expectErrorKey('issuer.commune', ['set' => ['issuer.commune' => str_repeat('A', 21)]]);
-        $this->expectErrorKey('issuer.resolution_number', ['set' => ['issuer.resolution_number' => 1234567]]);
+        $this->expectErrorKey('header_issuer.rut', ['set' => ['header_issuer.rut' => '76.123.456-7']]);
+        $this->expectErrorKey('header_issuer.name', ['set' => ['header_issuer.name' => str_repeat('A', 101)]]);
+        $this->expectErrorKey('header_issuer.commune', ['set' => ['header_issuer.commune' => str_repeat('A', 21)]]);
+        $this->expectErrorKey(
+            'header_issuer.resolution_number',
+            ['set' => ['header_issuer.resolution_number' => 1234567]],
+        );
     }
 
     public function test_receiver_failures(): void
     {
-        $this->expectErrorKey('receiver.rut', ['set' => ['receiver.rut' => '76.987.654-3']]);
+        $this->expectErrorKey('header_receiver.rut', ['set' => ['header_receiver.rut' => '76.987.654-3']]);
     }
 
     public function test_item_failures(): void
     {
-        $this->expectErrorKey('items.0.name', ['unset' => ['items.0.name']]);
-        $this->expectErrorKey('items.0.quantity', ['set' => ['items.0.quantity' => -1.0]]);
+        $this->expectErrorKey('detail_items.items.0.name', ['unset' => ['detail_items.items.0.name']]);
+        $this->expectErrorKey('detail_items.items.0.quantity', ['set' => ['detail_items.items.0.quantity' => -1.0]]);
     }
 
     public function test_reference_and_modifier_failures(): void
     {
-        $this->expectErrorKey('references.0.folio', ['set' => ['references' => [['document_type' => 33]]]]);
-        $this->expectErrorKey('global_modifiers.0.type', [
-            'set' => ['global_modifiers' => [['type' => 'X', 'value_type' => '%', 'value' => 10]]],
+        $this->expectErrorKey(
+            'references.items.0.folio',
+            ['set' => ['references' => ['items' => [['document_type' => 33]]]]],
+        );
+        $this->expectErrorKey('global_modifiers.items.0.type', [
+            'set' => ['global_modifiers' => ['items' => [['type' => 'X', 'value_type' => '%', 'value' => 10]]]],
         ]);
     }
 
-    public function test_optional_section_failures(): void
+    public function test_optional_block_failures(): void
     {
-        $this->expectErrorKey('payment.condition', ['set' => ['payment.condition' => 'Credit']]);
-        $this->expectErrorKey('transport.vehicle_plate', ['set' => ['transport.vehicle_plate' => 'TOOLONGPL']]);
-        $this->expectErrorKey('transport.carrier_rut', ['set' => ['transport.carrier_rut' => '76.123.456-7']]);
+        $this->expectErrorKey(
+            'header_id_doc.payment.condition',
+            ['set' => ['header_id_doc.payment.condition' => 'Credit']],
+        );
+        $this->expectErrorKey(
+            'header_transport.vehicle_plate',
+            ['set' => ['header_transport.vehicle_plate' => 'TOOLONGPL']],
+        );
+        $this->expectErrorKey(
+            'header_transport.carrier_rut',
+            ['set' => ['header_transport.carrier_rut' => '76.123.456-7']],
+        );
     }
 
-    public function test_rules_prefix_every_section_with_its_payload_path(): void
+    public function test_rules_prefix_every_block_with_its_column(): void
     {
         $rules = (new DocumentValidator)->rules($this->payload());
 
-        static::assertArrayHasKey('issuer.rut', $rules);
-        static::assertArrayHasKey('receiver.name', $rules);
-        static::assertArrayHasKey('items.*.name', $rules);
-        static::assertArrayHasKey('references.*.folio', $rules);
-        static::assertArrayHasKey('global_modifiers.*.value', $rules);
-        static::assertArrayHasKey('totals.total', $rules);
-        static::assertArrayHasKey('payment.condition', $rules);
-        static::assertArrayHasKey('transport.vehicle_plate', $rules);
+        static::assertArrayHasKey('header_issuer.rut', $rules);
+        static::assertArrayHasKey('header_receiver.name', $rules);
+        static::assertArrayHasKey('detail_items.items.*.name', $rules);
+        static::assertArrayHasKey('references.items.*.folio', $rules);
+        static::assertArrayHasKey('global_modifiers.items.*.value', $rules);
+        static::assertArrayHasKey('header_totals.total', $rules);
+        static::assertArrayHasKey('header_id_doc.payment.condition', $rules);
+        static::assertArrayHasKey('header_transport.vehicle_plate', $rules);
     }
 
     /**
@@ -121,14 +138,17 @@ class DocumentValidatorTest extends TestCase
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, array<string, mixed>|null>
      */
     protected function payload(): array
     {
         return [
-            'document_type' => 33,
-            'issued_on' => '2026-08-15',
-            'issuer' => [
+            'header_id_doc' => [
+                'document_type' => 33,
+                'issued_on' => '2026-08-15',
+                'payment' => ['condition' => '2', 'expiration_date' => '2026-09-13'],
+            ],
+            'header_issuer' => [
                 'rut' => '761234560',
                 'name' => 'Test Company',
                 'activity' => 'Software',
@@ -138,18 +158,19 @@ class DocumentValidatorTest extends TestCase
                 'resolution_date' => '2025-01-01',
                 'resolution_number' => 1,
             ],
-            'receiver' => [
+            'header_receiver' => [
                 'rut' => '769876545',
                 'name' => 'Receiver Corp',
             ],
-            'items' => [
-                ['name' => 'Item', 'unit_price' => 1000.0, 'quantity' => 1.0, 'exempt' => false],
+            'header_transport' => ['vehicle_plate' => 'AB1234'],
+            'header_totals' => ['taxes' => [], 'net' => 1000, 'exempt' => 0, 'tax' => 190, 'total' => 1190],
+            'detail_items' => [
+                'items' => [
+                    ['name' => 'Item', 'unit_price' => 1000.0, 'quantity' => 1.0, 'exempt' => false],
+                ],
             ],
-            'references' => [],
-            'global_modifiers' => [],
-            'totals' => ['net' => 1000, 'exempt' => 0, 'tax' => 190, 'total' => 1190],
-            'payment' => ['condition' => '2', 'expiration_date' => '2026-09-13'],
-            'transport' => ['vehicle_plate' => 'AB1234'],
+            'references' => ['items' => []],
+            'global_modifiers' => ['items' => []],
         ];
     }
 }

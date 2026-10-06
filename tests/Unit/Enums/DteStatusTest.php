@@ -5,6 +5,7 @@ namespace Tests\Unit\Enums;
 use Laragear\Dte\Enums\DteStatus;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+
 use function array_column;
 
 class DteStatusTest extends TestCase
@@ -23,7 +24,6 @@ class DteStatusTest extends TestCase
 
             DteStatus::Accepted->value => [DteStatus::Accepted, true],
             DteStatus::Rejected->value => [DteStatus::Rejected, true],
-            DteStatus::Failed->value => [DteStatus::Failed, false],
             DteStatus::Annulled->value => [DteStatus::Annulled, true],
         ];
     }
@@ -42,7 +42,6 @@ class DteStatusTest extends TestCase
                 'Sent' => 'sent',
                 'Accepted' => 'accepted',
                 'Rejected' => 'rejected',
-                'Failed' => 'failed',
                 'Annulled' => 'annulled',
             ],
             array_column(DteStatus::cases(), 'value', 'name'),
@@ -54,7 +53,7 @@ class DteStatusTest extends TestCase
     public function test_identifies_terminal_states(DteStatus $status, bool $isTerminal): void
     {
         static::assertSame($status->isTerminalState(), $isTerminal);
-        static::assertSame($status->isNotTerminalState(), !$isTerminal);
+        static::assertSame($status->isNotTerminalState(), ! $isTerminal);
     }
 
     public static function providesRetryableWithSameFolio(): array
@@ -67,7 +66,6 @@ class DteStatusTest extends TestCase
             DteStatus::Signing->value => [DteStatus::Signing, true],
             DteStatus::Outbox->value => [DteStatus::Outbox, true],
             DteStatus::Packed->value => [DteStatus::Packed, true],
-            DteStatus::Failed->value => [DteStatus::Failed, true],
             DteStatus::Sent->value => [DteStatus::Sent, true],
             DteStatus::Accepted->value => [DteStatus::Accepted, false],
             DteStatus::Rejected->value => [DteStatus::Rejected, false],
@@ -79,7 +77,7 @@ class DteStatusTest extends TestCase
     public function test_identifies_retryable_with_same_folio(DteStatus $status, bool $expected): void
     {
         static::assertSame($expected, $status->isRetryableWithSameFolio());
-        static::assertSame(!$expected, $status->isNotRetryableWithSameFolio());
+        static::assertSame(! $expected, $status->isNotRetryableWithSameFolio());
     }
 
     public static function providesManuallyPackable(): array
@@ -92,7 +90,6 @@ class DteStatusTest extends TestCase
             DteStatus::Signing->value => [DteStatus::Signing, false],
             DteStatus::Outbox->value => [DteStatus::Outbox, true],
             DteStatus::Packed->value => [DteStatus::Packed, false],
-            DteStatus::Failed->value => [DteStatus::Failed, true],
             DteStatus::Sent->value => [DteStatus::Sent, false],
             DteStatus::Accepted->value => [DteStatus::Accepted, false],
             DteStatus::Rejected->value => [DteStatus::Rejected, false],
@@ -104,7 +101,7 @@ class DteStatusTest extends TestCase
     public function test_identifies_manually_packable(DteStatus $status, bool $expected): void
     {
         static::assertSame($expected, $status->isManuallyPackable());
-        static::assertSame(!$expected, $status->isNotManuallyPackable());
+        static::assertSame(! $expected, $status->isNotManuallyPackable());
     }
 
     public static function providesLabels(): array
@@ -120,7 +117,6 @@ class DteStatusTest extends TestCase
             DteStatus::Sent->value => [DteStatus::Sent, 'Enviado (sobre en SII)'],
             DteStatus::Accepted->value => [DteStatus::Accepted, 'Aceptado'],
             DteStatus::Rejected->value => [DteStatus::Rejected, 'Rechazado'],
-            DteStatus::Failed->value => [DteStatus::Failed, 'Fallido'],
             DteStatus::Annulled->value => [DteStatus::Annulled, 'Anulado'],
         ];
     }
@@ -135,36 +131,33 @@ class DteStatusTest extends TestCase
     {
         return [
             DteStatus::Draft->value => [
-                DteStatus::Draft, 'El documento es un borrador y aún puede ser modificado o eliminado.'
+                DteStatus::Draft, 'El documento es un borrador y aún puede ser modificado o eliminado.',
             ],
             DteStatus::Pending->value => [
-                DteStatus::Pending, 'El documento se encuentra en la cola a la espera de ser procesado.'
+                DteStatus::Pending, 'El documento se encuentra en la cola a la espera de ser procesado.',
             ],
             DteStatus::Building->value => [
-                DteStatus::Building, 'Los datos del documento se están convirtiendo al formato XML requerido.'
+                DteStatus::Building, 'Los datos del documento se están convirtiendo al formato XML requerido.',
             ],
             DteStatus::RequiresCaf->value => [
-                DteStatus::RequiresCaf, 'El proceso se detuvo porque no hay folios autorizados (CAF) disponibles.'
+                DteStatus::RequiresCaf, 'El proceso se detuvo porque no hay folios autorizados (CAF) disponibles.',
             ],
             DteStatus::Signing->value => [DteStatus::Signing, 'El documento XML está siendo firmado digitalmente.'],
             DteStatus::Outbox->value => [
-                DteStatus::Outbox, 'El documento está compilado y listo, a la espera de ser recogido por un sobre.'
+                DteStatus::Outbox, 'El documento está compilado y listo, a la espera de ser recogido por un sobre.',
             ],
             DteStatus::Packed->value => [
-                DteStatus::Packed, 'El documento forma parte de un sobre que aún no ha sido enviado.'
+                DteStatus::Packed, 'El documento forma parte de un sobre que aún no ha sido enviado.',
             ],
             DteStatus::Sent->value => [
                 DteStatus::Sent,
                 'El sobre que contiene este DTE fue recibido por el SII (Track ID asignado al sobre). Respuesta pendiente.',
             ],
             DteStatus::Accepted->value => [
-                DteStatus::Accepted, 'El SII ha validado y aceptado el documento sin reparos.'
+                DteStatus::Accepted, 'El SII ha validado y aceptado el documento sin reparos.',
             ],
             DteStatus::Rejected->value => [
-                DteStatus::Rejected, 'El SII ha rechazado el documento debido a errores en su contenido o estructura.'
-            ],
-            DteStatus::Failed->value => [
-                DteStatus::Failed, 'El procesamiento se detuvo debido a un error crítico o irrecuperable.'
+                DteStatus::Rejected, 'El SII ha rechazado el documento debido a errores en su contenido o estructura.',
             ],
             DteStatus::Annulled->value => [DteStatus::Annulled, 'El documento ha sido anulado legalmente ante el SII.'],
         ];
@@ -180,41 +173,38 @@ class DteStatusTest extends TestCase
     {
         return [
             DteStatus::Draft->value => [
-                DteStatus::Draft, 'El DTE es un borrador. Constrúyalo para compilarlo y enviarlo.'
+                DteStatus::Draft, 'El DTE es un borrador. Constrúyalo para compilarlo y enviarlo.',
             ],
             DteStatus::Pending->value => [
-                DteStatus::Pending, 'El DTE no ha sido compilado. Compílelo y envíelo para reintentar.'
+                DteStatus::Pending, 'El DTE no ha sido compilado. Compílelo y envíelo para reintentar.',
             ],
             DteStatus::Building->value => [
-                DteStatus::Building, 'El DTE se está compilando. Espere a que termine o reintente después.'
+                DteStatus::Building, 'El DTE se está compilando. Espere a que termine o reintente después.',
             ],
             DteStatus::RequiresCaf->value => [
-                DteStatus::RequiresCaf, 'El DTE requiere un folio autorizado (CAF) antes de compilar.'
+                DteStatus::RequiresCaf, 'El DTE requiere un folio autorizado (CAF) antes de compilar.',
             ],
             DteStatus::Signing->value => [
-                DteStatus::Signing, 'El DTE se está firmando. Espere a que termine o reintente después.'
+                DteStatus::Signing, 'El DTE se está firmando. Espere a que termine o reintente después.',
             ],
             DteStatus::Outbox->value => [
-                DteStatus::Outbox, 'El DTE está compilado y listo, a la espera de ser recogido por un sobre.'
+                DteStatus::Outbox, 'El DTE está compilado y listo, a la espera de ser recogido por un sobre.',
             ],
             DteStatus::Packed->value => [
-                DteStatus::Packed, 'El DTE forma parte de un sobre que aún no ha sido enviado.'
-            ],
-            DteStatus::Failed->value => [
-                DteStatus::Failed, 'El DTE falló durante el procesamiento. Reintente con el mismo folio.'
+                DteStatus::Packed, 'El DTE forma parte de un sobre que aún no ha sido enviado.',
             ],
             DteStatus::Sent->value => [
-                DteStatus::Sent, 'El sobre del DTE fue enviado al SII pero la respuesta está pendiente.'
+                DteStatus::Sent, 'El sobre del DTE fue enviado al SII pero la respuesta está pendiente.',
             ],
             DteStatus::Rejected->value => [
-                DteStatus::Rejected, 'El DTE fue rechazado por el SII. Clone con un nuevo folio para reintentar.'
+                DteStatus::Rejected, 'El DTE fue rechazado por el SII. Clone con un nuevo folio para reintentar.',
             ],
             DteStatus::Accepted->value => [
                 DteStatus::Accepted,
-                'El DTE fue aceptado por el SII. El folio ha sido consumido y no puede reutilizarse.'
+                'El DTE fue aceptado por el SII. El folio ha sido consumido y no puede reutilizarse.',
             ],
             DteStatus::Annulled->value => [
-                DteStatus::Annulled, 'El DTE fue anulado legalmente. No se puede reintentar ni clonar.'
+                DteStatus::Annulled, 'El DTE fue anulado legalmente. No se puede reintentar ni clonar.',
             ],
         ];
     }
@@ -238,7 +228,6 @@ class DteStatusTest extends TestCase
             DteStatus::Sent->value => [DteStatus::Sent, true],
             DteStatus::Accepted->value => [DteStatus::Accepted, true],
             DteStatus::Rejected->value => [DteStatus::Rejected, true],
-            DteStatus::Failed->value => [DteStatus::Failed, true],
             DteStatus::Annulled->value => [DteStatus::Annulled, true],
         ];
     }
@@ -252,7 +241,7 @@ class DteStatusTest extends TestCase
     #[DataProvider('providesXmlPayloadPresence')]
     public function test_is_not_xml_payload_present(DteStatus $status, bool $expected): void
     {
-        static::assertSame(!$expected, $status->isNotXmlPayloadPresent());
+        static::assertSame(! $expected, $status->isNotXmlPayloadPresent());
     }
 
     public static function providesCompiled(): array
@@ -265,7 +254,6 @@ class DteStatusTest extends TestCase
             DteStatus::Signing->value => [DteStatus::Signing, false],
             DteStatus::Outbox->value => [DteStatus::Outbox, true],
             DteStatus::Packed->value => [DteStatus::Packed, true],
-            DteStatus::Failed->value => [DteStatus::Failed, false],
             DteStatus::Sent->value => [DteStatus::Sent, false],
             DteStatus::Accepted->value => [DteStatus::Accepted, false],
             DteStatus::Rejected->value => [DteStatus::Rejected, false],
@@ -277,9 +265,9 @@ class DteStatusTest extends TestCase
     public function test_identifies_compiled(DteStatus $status, bool $expected): void
     {
         static::assertSame($expected, $status->isCompiled());
-        static::assertSame(!$expected, $status->isNotCompiled());
+        static::assertSame(! $expected, $status->isNotCompiled());
         static::assertSame($expected, $status->isRetryable());
-        static::assertSame(!$expected, $status->isNotRetryable());
+        static::assertSame(! $expected, $status->isNotRetryable());
         static::assertSame(DteStatus::compiledValues(),
             [DteStatus::Outbox->value, DteStatus::Packed->value]);
     }
@@ -294,7 +282,6 @@ class DteStatusTest extends TestCase
             DteStatus::Signing->value => [DteStatus::Signing, false],
             DteStatus::Outbox->value => [DteStatus::Outbox, true],
             DteStatus::Packed->value => [DteStatus::Packed, false],
-            DteStatus::Failed->value => [DteStatus::Failed, false],
             DteStatus::Sent->value => [DteStatus::Sent, false],
             DteStatus::Accepted->value => [DteStatus::Accepted, false],
             DteStatus::Rejected->value => [DteStatus::Rejected, false],
@@ -306,7 +293,7 @@ class DteStatusTest extends TestCase
     public function test_identifies_awaiting_envelope(DteStatus $status, bool $expected): void
     {
         static::assertSame($expected, $status->isAwaitingEnvelope());
-        static::assertSame(!$expected, $status->isNotAwaitingEnvelope());
+        static::assertSame(! $expected, $status->isNotAwaitingEnvelope());
         static::assertSame(DteStatus::awaitingEnvelopeValues(), [DteStatus::Outbox->value]);
     }
 
@@ -320,7 +307,6 @@ class DteStatusTest extends TestCase
             DteStatus::Signing->value => [DteStatus::Signing, false],
             DteStatus::Outbox->value => [DteStatus::Outbox, false],
             DteStatus::Packed->value => [DteStatus::Packed, false],
-            DteStatus::Failed->value => [DteStatus::Failed, false],
             DteStatus::Sent->value => [DteStatus::Sent, false],
             DteStatus::Accepted->value => [DteStatus::Accepted, false],
             DteStatus::Rejected->value => [DteStatus::Rejected, false],
@@ -332,7 +318,7 @@ class DteStatusTest extends TestCase
     public function test_identifies_compilable(DteStatus $status, bool $expected): void
     {
         static::assertSame($expected, $status->isCompilable());
-        static::assertSame(!$expected, $status->isNotCompilable());
+        static::assertSame(! $expected, $status->isNotCompilable());
         static::assertSame(DteStatus::compilableValues(), [DteStatus::Pending->value, DteStatus::Building->value]);
     }
 
@@ -346,7 +332,6 @@ class DteStatusTest extends TestCase
             DteStatus::Signing->value => [DteStatus::Signing, false],
             DteStatus::Outbox->value => [DteStatus::Outbox, false],
             DteStatus::Packed->value => [DteStatus::Packed, false],
-            DteStatus::Failed->value => [DteStatus::Failed, true],
             DteStatus::Sent->value => [DteStatus::Sent, false],
             DteStatus::Accepted->value => [DteStatus::Accepted, false],
             DteStatus::Rejected->value => [DteStatus::Rejected, false],
@@ -358,8 +343,7 @@ class DteStatusTest extends TestCase
     public function test_identifies_compilable_for_pack(DteStatus $status, bool $expected): void
     {
         static::assertSame($expected, $status->isCompilableForPack());
-        static::assertSame(!$expected, $status->isNotCompilableForPack());
-        static::assertSame(DteStatus::compilableForPackValues(), [DteStatus::Pending->value, DteStatus::Failed->value]);
+        static::assertSame(! $expected, $status->isNotCompilableForPack());
     }
 
     public static function providesAnnulmentConflicting(): array
@@ -372,7 +356,6 @@ class DteStatusTest extends TestCase
             DteStatus::Signing->value => [DteStatus::Signing, false],
             DteStatus::Outbox->value => [DteStatus::Outbox, false],
             DteStatus::Packed->value => [DteStatus::Packed, false],
-            DteStatus::Failed->value => [DteStatus::Failed, false],
             DteStatus::Sent->value => [DteStatus::Sent, false],
             DteStatus::Accepted->value => [DteStatus::Accepted, true],
             DteStatus::Rejected->value => [DteStatus::Rejected, false],
@@ -384,7 +367,7 @@ class DteStatusTest extends TestCase
     public function test_identifies_annulment_conflicting(DteStatus $status, bool $expected): void
     {
         static::assertSame($expected, $status->isAnnulmentConflicting());
-        static::assertSame(!$expected, $status->isNotAnnulmentConflicting());
+        static::assertSame(! $expected, $status->isNotAnnulmentConflicting());
         static::assertSame(DteStatus::annulmentConflictingValues(),
             [DteStatus::Pending->value, DteStatus::Accepted->value]);
     }
@@ -399,7 +382,6 @@ class DteStatusTest extends TestCase
             DteStatus::Signing->value => [DteStatus::Signing, false],
             DteStatus::Outbox->value => [DteStatus::Outbox, false],
             DteStatus::Packed->value => [DteStatus::Packed, false],
-            DteStatus::Failed->value => [DteStatus::Failed, false],
             DteStatus::Sent->value => [DteStatus::Sent, true],
             DteStatus::Accepted->value => [DteStatus::Accepted, false],
             DteStatus::Rejected->value => [DteStatus::Rejected, false],
@@ -411,7 +393,7 @@ class DteStatusTest extends TestCase
     public function test_identifies_orphan_downgradable(DteStatus $status, bool $expected): void
     {
         static::assertSame($expected, $status->isOrphanDowngradable());
-        static::assertSame(!$expected, $status->isNotOrphanDowngradable());
+        static::assertSame(! $expected, $status->isNotOrphanDowngradable());
         static::assertSame(DteStatus::orphanDowngradableValues(), [DteStatus::Pending->value, DteStatus::Sent->value]);
     }
 
@@ -427,7 +409,6 @@ class DteStatusTest extends TestCase
                 DteStatus::Outbox->value,
                 DteStatus::Packed->value,
                 DteStatus::Sent->value,
-                DteStatus::Failed->value,
             ],
             DteStatus::nonTerminalValues(),
         );

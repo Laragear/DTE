@@ -6,7 +6,9 @@ use Closure;
 use Laragear\Dte\Builders\CreditNoteBuilder;
 use Laragear\Dte\Builders\DebitNoteBuilder;
 use Laragear\Dte\Builders\NoteBuilder;
+use Laragear\Dte\Data\IssuerData;
 use Laragear\Dte\Data\Item;
+use Laragear\Dte\Data\ReceiverData;
 use Laragear\Dte\Enums\DteType;
 use Laragear\Dte\Models\SiiDte;
 use LogicException;
@@ -64,12 +66,12 @@ trait HasCorrections
     protected function hydrateIssuerAndReceiver(NoteBuilder $builder): void
     {
         // Issuer comes from the stored payload since config may have changed.
-        if ($this->payload->data->issuer !== null) {
-            $builder->issuedBy($this->payload->data->issuer);
+        if (! $this->payload->header_issuer->isEmpty()) {
+            $builder->issuedBy(IssuerData::fromArray($this->payload->header_issuer->toArray()));
         }
 
-        if ($this->payload->data->receiver !== null) {
-            $builder->receivedBy($this->payload->data->receiver);
+        if (! $this->payload->header_receiver->isEmpty()) {
+            $builder->receivedBy(ReceiverData::fromArray($this->payload->header_receiver->toArray()));
         }
     }
 
@@ -80,7 +82,9 @@ trait HasCorrections
      */
     protected function hydrateItems(NoteBuilder $builder, ?array $items): void
     {
-        foreach ($items ?? $this->payload->data->items->all() as $item) {
+        $fallback = array_map(Item::fromArray(...), $this->payload->detail_items['items'] ?? []);
+
+        foreach ($items ?? $fallback as $item) {
             $builder->addItem($item instanceof Item ? $item : Item::fromArray($item));
         }
     }

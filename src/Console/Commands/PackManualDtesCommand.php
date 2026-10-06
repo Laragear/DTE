@@ -12,7 +12,9 @@ class PackManualDtesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'dte:pack-manual {ids* : DTE IDs to pack} {--sync : Process the envelopes immediately instead of queueing} {--retry-failed : Re-send failed DTEs whose folio may have been consumed}';
+    protected $signature = 'dte:pack-manual
+                            {ids* : DTE IDs to pack}
+                            {--sync : Process the envelopes immediately instead of queueing}';
 
     /**
      * The console command description.
@@ -27,9 +29,8 @@ class PackManualDtesCommand extends Command
     public function handle(PackDtesService $service): int
     {
         $envelopes = $service->packManual(
-            collect($this->argument('ids'))->map(static fn($id): int => (int) $id)->all(),
+            collect($this->argument('ids'))->map(static fn ($id): int => (int) $id)->all(),
             $this->option('sync'),
-            $this->option('retry-failed'),
         );
 
         if ($envelopes->isEmpty()) {

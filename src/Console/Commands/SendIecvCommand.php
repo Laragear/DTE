@@ -3,6 +3,7 @@
 namespace Laragear\Dte\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\DateFactory;
 use Laragear\Dte\Builders\Iecv\IecvPurchaseData;
@@ -109,11 +110,14 @@ class SendIecvCommand extends Command
     /**
      * Retrieve the documents of the period awaiting a book.
      *
-     * @return Collection<int, SiiDte>
+     * @return EloquentCollection<int, SiiDte>
      */
-    protected function documents(string $period): Collection
+    protected function documents(string $period): EloquentCollection
     {
+        // The books are eager-loaded so the service can assert no document was
+        // already filed without querying each document relation separately.
         return SiiDte::query()
+            ->with('iecv')
             ->whereNotNull('folio')
             ->whereIn('status', [DteStatus::Accepted, DteStatus::Sent])
             ->whereBetween('issued_on', ["{$period}-01", "{$period}-31"])

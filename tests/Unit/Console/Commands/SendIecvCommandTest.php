@@ -3,6 +3,7 @@
 namespace Tests\Unit\Console\Commands;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Collection;
 use Laragear\Dte\Configuration\ConfigurationManager;
 use Laragear\Dte\Data\CompanyData;
 use Laragear\Dte\Data\IssuerData;
@@ -85,6 +86,27 @@ class SendIecvCommandTest extends DatabaseTestCase
         $this->document('2026-07');
 
         $this->mockService(IecvType::Sales);
+
+        $this->artisan('dte:send-iecv', [
+            '--period' => '2026-07',
+            '--issuer' => '76123456-0',
+        ])->assertSuccessful();
+    }
+
+    public function test_the_period_documents_carry_their_books_preloaded(): void
+    {
+        $this->document('2026-07');
+
+        $service = $this->mock(IecvService::class);
+        $service->expects('sendSales')->once()->andReturnUsing(
+            static function (mixed $issuer, Collection $dtes): SiiIecv {
+                static::assertTrue($dtes->first()->relationLoaded('iecv'));
+
+                return SiiIecv::factory()->uploaded()->create(['type' => IecvType::Sales]);
+            }
+        );
+
+        $this->app->instance(IecvService::class, $service);
 
         $this->artisan('dte:send-iecv', [
             '--period' => '2026-07',

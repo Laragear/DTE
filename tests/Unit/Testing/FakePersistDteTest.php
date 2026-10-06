@@ -23,7 +23,7 @@ class FakePersistDteTest extends TestCase
     {
         $stub = $this->createStub(DocumentBuilder::class);
         $stub->method('attributes')->willReturn(['document_type' => DteType::Invoice, 'rut' => '11111111-1']);
-        $stub->method('payloadData')->willReturn(['xml' => '<test/>']);
+        $stub->method('payloadBlocks')->willReturn(['detail_items' => ['items' => []]]);
 
         return $stub;
     }
@@ -46,7 +46,7 @@ class FakePersistDteTest extends TestCase
         $dte = $pipeline->handle($this->createBuilderStub());
 
         static::assertInstanceOf(SiiDtePayload::class, $dte->payload);
-        static::assertSame(['xml' => '<test/>'], $dte->payload->data->toArray());
+        static::assertSame(['items' => []], $dte->payload->detail_items->toArray());
     }
 
     public function test_handle_records_is_update(): void

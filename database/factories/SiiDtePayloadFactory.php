@@ -19,11 +19,7 @@ class SiiDtePayloadFactory extends DteFactory
     {
         return [
             'sii_dte_id' => SiiDte::factory(),
-            'data' => [
-                'resolution_date' => $this->faker->dateTimeBetween('-3 years')->format('Y-m'),
-                'resolution_number' => $this->faker->numberBetween(9999, 999999),
-                'items' => [],
-            ],
+            'detail_items' => ['items' => []],
             'xml' => '<DTE/>',
         ];
     }

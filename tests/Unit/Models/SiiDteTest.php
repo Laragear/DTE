@@ -90,7 +90,6 @@ class SiiDteTest extends DatabaseTestCase
             DteStatus::Sent->value => [DteStatus::Sent],
             DteStatus::Accepted->value => [DteStatus::Accepted],
             DteStatus::Rejected->value => [DteStatus::Rejected],
-            DteStatus::Failed->value => [DteStatus::Failed],
             DteStatus::Annulled->value => [DteStatus::Annulled],
         ];
     }
@@ -121,7 +120,6 @@ class SiiDteTest extends DatabaseTestCase
             DteStatus::Signing->value => [DteStatus::Signing],
             DteStatus::Outbox->value => [DteStatus::Outbox],
             DteStatus::Packed->value => [DteStatus::Packed],
-            DteStatus::Failed->value => [DteStatus::Failed],
             DteStatus::Sent->value => [DteStatus::Sent],
         ];
     }
@@ -558,7 +556,7 @@ class SiiDteTest extends DatabaseTestCase
     {
         $issuerRut = Rut::parse('76.123.456-0');
 
-        ConfigurationManager::setCompany(fn() => CompanyData::make(
+        ConfigurationManager::setCompany(fn () => CompanyData::make(
             issuer: IssuerData::make($issuerRut, 'Test Company', 'Software', '620200', 'Main St', 'Santiago',
                 '2025-01-01', 80),
             senderRut: $issuerRut,
@@ -584,49 +582,48 @@ class SiiDteTest extends DatabaseTestCase
         ]);
 
         $dte->payload()->create([
-            'data' => [
+            'header_id_doc' => [
                 'document_type' => DteType::Invoice->value,
                 'issued_on' => '2026-08-15',
-                'issuer' => [
-                    'rut' => $issuerRut->formatRaw(),
-                    'name' => 'Test Company',
-                    'activity' => 'Software',
-                    'activity_code' => ['620200'],
-                    'address' => 'Main St',
-                    'commune' => 'Santiago',
-                    'city' => 'Santiago',
-                    'resolution_date' => '2025-01-01',
-                    'resolution_number' => 80,
-                ],
-                'receiver' => [
-                    'rut' => $receiverRut->formatRaw(),
-                    'name' => 'Receiver Company',
-                    'activity' => 'Retail',
-                    'email' => 'receiver@example.com',
-                    'address' => 'Receiver St 456',
-                    'commune' => 'Providencia',
-                    'city' => 'Santiago',
-                ],
-                'items' => [
-                    [
-                        'name' => 'Product A',
-                        'unit_price' => 1000,
-                        'quantity' => 1,
-                        'description' => null,
-                        'unit' => null,
-                        'code' => null,
-                        'code_type' => null,
-                        'discount_percentage' => 0,
-                        'exempt' => false,
-                        'taxes' => [],
-                        'discount_amount' => null,
-                    ],
-                ],
-                'references' => [],
-                'global_modifiers' => [],
-                'taxes' => [],
-                'totals' => ['net' => 1000, 'exempt' => 0, 'tax' => 190, 'total' => 1190],
             ],
+            'header_issuer' => [
+                'rut' => $issuerRut->formatRaw(),
+                'name' => 'Test Company',
+                'activity' => 'Software',
+                'activity_code' => ['620200'],
+                'address' => 'Main St',
+                'commune' => 'Santiago',
+                'city' => 'Santiago',
+                'resolution_date' => '2025-01-01',
+                'resolution_number' => 80,
+            ],
+            'header_receiver' => [
+                'rut' => $receiverRut->formatRaw(),
+                'name' => 'Receiver Company',
+                'activity' => 'Retail',
+                'email' => 'receiver@example.com',
+                'address' => 'Receiver St 456',
+                'commune' => 'Providencia',
+                'city' => 'Santiago',
+            ],
+            'header_totals' => ['taxes' => []] + ['net' => 1000, 'exempt' => 0, 'tax' => 190, 'total' => 1190],
+            'detail_items' => ['items' => [
+                [
+                    'name' => 'Product A',
+                    'unit_price' => 1000,
+                    'quantity' => 1,
+                    'description' => null,
+                    'unit' => null,
+                    'code' => null,
+                    'code_type' => null,
+                    'discount_percentage' => 0,
+                    'exempt' => false,
+                    'taxes' => [],
+                    'discount_amount' => null,
+                ],
+            ]],
+            'references' => ['items' => []],
+            'global_modifiers' => ['items' => []],
         ]);
 
         return $dte;
@@ -645,49 +642,48 @@ class SiiDteTest extends DatabaseTestCase
         ]);
 
         $dte->payload()->create([
-            'data' => [
+            'header_id_doc' => [
                 'document_type' => DteType::CreditNote->value,
                 'issued_on' => '2026-08-15',
-                'issuer' => [
-                    'rut' => $issuerRut->formatRaw(),
-                    'name' => 'Test Company',
-                    'activity' => 'Software',
-                    'activity_code' => ['620200'],
-                    'address' => 'Main St',
-                    'commune' => 'Santiago',
-                    'city' => 'Santiago',
-                    'resolution_date' => '2025-01-01',
-                    'resolution_number' => 80,
-                ],
-                'receiver' => [
-                    'rut' => $receiverRut->formatRaw(),
-                    'name' => 'Receiver Company',
-                    'activity' => 'Retail',
-                    'email' => 'receiver@example.com',
-                    'address' => 'Receiver St 456',
-                    'commune' => 'Providencia',
-                    'city' => 'Santiago',
-                ],
-                'items' => [
-                    [
-                        'name' => 'Credit Adjustment',
-                        'unit_price' => 500,
-                        'quantity' => 1,
-                        'description' => null,
-                        'unit' => null,
-                        'code' => null,
-                        'code_type' => null,
-                        'discount_percentage' => 0,
-                        'exempt' => false,
-                        'taxes' => [],
-                        'discount_amount' => null,
-                    ],
-                ],
-                'references' => [],
-                'global_modifiers' => [],
-                'taxes' => [],
-                'totals' => ['net' => 500, 'exempt' => 0, 'tax' => 95, 'total' => 595],
             ],
+            'header_issuer' => [
+                'rut' => $issuerRut->formatRaw(),
+                'name' => 'Test Company',
+                'activity' => 'Software',
+                'activity_code' => ['620200'],
+                'address' => 'Main St',
+                'commune' => 'Santiago',
+                'city' => 'Santiago',
+                'resolution_date' => '2025-01-01',
+                'resolution_number' => 80,
+            ],
+            'header_receiver' => [
+                'rut' => $receiverRut->formatRaw(),
+                'name' => 'Receiver Company',
+                'activity' => 'Retail',
+                'email' => 'receiver@example.com',
+                'address' => 'Receiver St 456',
+                'commune' => 'Providencia',
+                'city' => 'Santiago',
+            ],
+            'header_totals' => ['taxes' => []] + ['net' => 500, 'exempt' => 0, 'tax' => 95, 'total' => 595],
+            'detail_items' => ['items' => [
+                [
+                    'name' => 'Credit Adjustment',
+                    'unit_price' => 500,
+                    'quantity' => 1,
+                    'description' => null,
+                    'unit' => null,
+                    'code' => null,
+                    'code_type' => null,
+                    'discount_percentage' => 0,
+                    'exempt' => false,
+                    'taxes' => [],
+                    'discount_amount' => null,
+                ],
+            ]],
+            'references' => ['items' => []],
+            'global_modifiers' => ['items' => []],
         ]);
 
         return $dte;
@@ -706,49 +702,48 @@ class SiiDteTest extends DatabaseTestCase
         ]);
 
         $dte->payload()->create([
-            'data' => [
+            'header_id_doc' => [
                 'document_type' => DteType::DebitNote->value,
                 'issued_on' => '2026-08-15',
-                'issuer' => [
-                    'rut' => $issuerRut->formatRaw(),
-                    'name' => 'Test Company',
-                    'activity' => 'Software',
-                    'activity_code' => ['620200'],
-                    'address' => 'Main St',
-                    'commune' => 'Santiago',
-                    'city' => 'Santiago',
-                    'resolution_date' => '2025-01-01',
-                    'resolution_number' => 80,
-                ],
-                'receiver' => [
-                    'rut' => $receiverRut->formatRaw(),
-                    'name' => 'Receiver Company',
-                    'activity' => 'Retail',
-                    'email' => 'receiver@example.com',
-                    'address' => 'Receiver St 456',
-                    'commune' => 'Providencia',
-                    'city' => 'Santiago',
-                ],
-                'items' => [
-                    [
-                        'name' => 'Debit Adjustment',
-                        'unit_price' => 500,
-                        'quantity' => 1,
-                        'description' => null,
-                        'unit' => null,
-                        'code' => null,
-                        'code_type' => null,
-                        'discount_percentage' => 0,
-                        'exempt' => false,
-                        'taxes' => [],
-                        'discount_amount' => null,
-                    ],
-                ],
-                'references' => [],
-                'global_modifiers' => [],
-                'taxes' => [],
-                'totals' => ['net' => 500, 'exempt' => 0, 'tax' => 95, 'total' => 595],
             ],
+            'header_issuer' => [
+                'rut' => $issuerRut->formatRaw(),
+                'name' => 'Test Company',
+                'activity' => 'Software',
+                'activity_code' => ['620200'],
+                'address' => 'Main St',
+                'commune' => 'Santiago',
+                'city' => 'Santiago',
+                'resolution_date' => '2025-01-01',
+                'resolution_number' => 80,
+            ],
+            'header_receiver' => [
+                'rut' => $receiverRut->formatRaw(),
+                'name' => 'Receiver Company',
+                'activity' => 'Retail',
+                'email' => 'receiver@example.com',
+                'address' => 'Receiver St 456',
+                'commune' => 'Providencia',
+                'city' => 'Santiago',
+            ],
+            'header_totals' => ['taxes' => []] + ['net' => 500, 'exempt' => 0, 'tax' => 95, 'total' => 595],
+            'detail_items' => ['items' => [
+                [
+                    'name' => 'Debit Adjustment',
+                    'unit_price' => 500,
+                    'quantity' => 1,
+                    'description' => null,
+                    'unit' => null,
+                    'code' => null,
+                    'code_type' => null,
+                    'discount_percentage' => 0,
+                    'exempt' => false,
+                    'taxes' => [],
+                    'discount_amount' => null,
+                ],
+            ]],
+            'references' => ['items' => []],
+            'global_modifiers' => ['items' => []],
         ]);
 
         return $dte;
@@ -765,41 +760,40 @@ class SiiDteTest extends DatabaseTestCase
         ]);
 
         $dte->payload()->create([
-            'data' => [
+            'header_id_doc' => [
                 'document_type' => DteType::Receipt->value,
                 'issued_on' => '2026-08-15',
-                'issuer' => [
-                    'rut' => $issuerRut->formatRaw(),
-                    'name' => 'Test Company',
-                    'activity' => 'Software',
-                    'activity_code' => ['620200'],
-                    'address' => 'Main St',
-                    'commune' => 'Santiago',
-                    'city' => 'Santiago',
-                    'resolution_date' => '2025-01-01',
-                    'resolution_number' => 80,
-                ],
-                'receiver' => null,
-                'items' => [
-                    [
-                        'name' => 'Receipt Item',
-                        'unit_price' => 5000,
-                        'quantity' => 1,
-                        'description' => null,
-                        'unit' => null,
-                        'code' => null,
-                        'code_type' => null,
-                        'discount_percentage' => 0,
-                        'exempt' => false,
-                        'taxes' => [],
-                        'discount_amount' => null,
-                    ],
-                ],
-                'references' => [],
-                'global_modifiers' => [],
-                'taxes' => [],
-                'totals' => ['net' => 4202, 'exempt' => 0, 'tax' => 798, 'total' => 5000],
             ],
+            'header_issuer' => [
+                'rut' => $issuerRut->formatRaw(),
+                'name' => 'Test Company',
+                'activity' => 'Software',
+                'activity_code' => ['620200'],
+                'address' => 'Main St',
+                'commune' => 'Santiago',
+                'city' => 'Santiago',
+                'resolution_date' => '2025-01-01',
+                'resolution_number' => 80,
+            ],
+            'header_receiver' => null,
+            'header_totals' => ['taxes' => []] + ['net' => 4202, 'exempt' => 0, 'tax' => 798, 'total' => 5000],
+            'detail_items' => ['items' => [
+                [
+                    'name' => 'Receipt Item',
+                    'unit_price' => 5000,
+                    'quantity' => 1,
+                    'description' => null,
+                    'unit' => null,
+                    'code' => null,
+                    'code_type' => null,
+                    'discount_percentage' => 0,
+                    'exempt' => false,
+                    'taxes' => [],
+                    'discount_amount' => null,
+                ],
+            ]],
+            'references' => ['items' => []],
+            'global_modifiers' => ['items' => []],
         ]);
 
         return $dte;
@@ -818,49 +812,48 @@ class SiiDteTest extends DatabaseTestCase
         ]);
 
         $dte->payload()->create([
-            'data' => [
+            'header_id_doc' => [
                 'document_type' => DteType::DispatchGuide->value,
                 'issued_on' => '2026-08-15',
-                'issuer' => [
-                    'rut' => $issuerRut->formatRaw(),
-                    'name' => 'Test Company',
-                    'activity' => 'Software',
-                    'activity_code' => ['620200'],
-                    'address' => 'Main St',
-                    'commune' => 'Santiago',
-                    'city' => 'Santiago',
-                    'resolution_date' => '2025-01-01',
-                    'resolution_number' => 80,
-                ],
-                'receiver' => [
-                    'rut' => $receiverRut->formatRaw(),
-                    'name' => 'Receiver Company',
-                    'activity' => 'Retail',
-                    'email' => 'receiver@example.com',
-                    'address' => 'Receiver St 456',
-                    'commune' => 'Providencia',
-                    'city' => 'Santiago',
-                ],
-                'items' => [
-                    [
-                        'name' => 'Guide Item',
-                        'unit_price' => 1000,
-                        'quantity' => 5,
-                        'description' => null,
-                        'unit' => null,
-                        'code' => null,
-                        'code_type' => null,
-                        'discount_percentage' => 0,
-                        'exempt' => false,
-                        'taxes' => [],
-                        'discount_amount' => null,
-                    ],
-                ],
-                'references' => [],
-                'global_modifiers' => [],
-                'taxes' => [],
-                'totals' => ['net' => 5000, 'exempt' => 0, 'tax' => 950, 'total' => 5950],
             ],
+            'header_issuer' => [
+                'rut' => $issuerRut->formatRaw(),
+                'name' => 'Test Company',
+                'activity' => 'Software',
+                'activity_code' => ['620200'],
+                'address' => 'Main St',
+                'commune' => 'Santiago',
+                'city' => 'Santiago',
+                'resolution_date' => '2025-01-01',
+                'resolution_number' => 80,
+            ],
+            'header_receiver' => [
+                'rut' => $receiverRut->formatRaw(),
+                'name' => 'Receiver Company',
+                'activity' => 'Retail',
+                'email' => 'receiver@example.com',
+                'address' => 'Receiver St 456',
+                'commune' => 'Providencia',
+                'city' => 'Santiago',
+            ],
+            'header_totals' => ['taxes' => []] + ['net' => 5000, 'exempt' => 0, 'tax' => 950, 'total' => 5950],
+            'detail_items' => ['items' => [
+                [
+                    'name' => 'Guide Item',
+                    'unit_price' => 1000,
+                    'quantity' => 5,
+                    'description' => null,
+                    'unit' => null,
+                    'code' => null,
+                    'code_type' => null,
+                    'discount_percentage' => 0,
+                    'exempt' => false,
+                    'taxes' => [],
+                    'discount_amount' => null,
+                ],
+            ]],
+            'references' => ['items' => []],
+            'global_modifiers' => ['items' => []],
         ]);
 
         return $dte;

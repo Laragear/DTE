@@ -4,6 +4,8 @@ namespace Laragear\Dte\Services;
 
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\DateFactory;
 use Laragear\Dte\Builders\Iecv\IecvPropertyData;
@@ -123,7 +125,7 @@ class IecvService
 
         // Purchase entries carry their own RUTs, so the documents to link are
         // resolved from the entries rather than from a collection of models.
-        return $this->dispatch($book, $xml, $this->documentsFor($entries));
+        return $this->dispatch($book, $xml, $this->documentsFor($entries, $period));
     }
 
     /**
@@ -213,30 +215,82 @@ class IecvService
      * @param  array<int, IecvPurchaseData>  $entries
      * @return array<int, SiiDte>
      */
-    protected function documentsFor(array $entries): array
+    protected function documentsFor(array $entries, string $period): array
     {
-        $documents = SiiDte::query()->get();
+        // A book files a single tax period, so the month bounds the query. Purchase
+        // entries carry their own RUTs and no local DTE key, and folios only repeat
+        // across issuers and periods, so the date is required to disambiguate.
+        [$start, $end] = $this->periodBounds($period);
 
-        // Matched on issuer RUT and issued date: a purchase entry carries no local
-        // DTE key, and folios only repeat across issuers and periods, so the date
-        // is required to disambiguate.
+        /** @var EloquentCollection<int, SiiDte> $documents */
+        $documents = SiiDte::query()
+            ->whereIn('issuer_num', $this->issuerNums($entries))
+            ->whereBetween('issued_on', [$start, $end])
+            ->get(['id', 'issuer_num', 'issuer_vd', 'issued_on']);
+
+        /** @var Collection<string, EloquentCollection<int, SiiDte>> $groups */
+        $groups = $documents->groupBy(static fn (SiiDte $document): string => static::documentKey(
+            $document->issuer_rut,
+            // A document without an issue date cannot match a dated entry, and
+            // the empty date segment never collides with a real entry date.
+            $document->issued_on?->toDateString() ?? '',
+        ));
+
         $matched = [];
 
         foreach ($entries as $entry) {
-            $rut = $entry->issuerRut instanceof Rut ? $entry->issuerRut : Rut::parse($entry->issuerRut);
+            $rut = static::entryRut($entry);
 
-            foreach ($documents as $document) {
-                if (! $document->issuer_rut->isEqual($rut)) {
-                    continue;
-                }
-
-                if ($document->issued_on->format('Y-m-d') === $entry->issuedOn) {
-                    $matched[$document->getKey()] = $document;
-                }
+            foreach ($groups->get(static::documentKey($rut, $entry->issuedOn)) ?? [] as $document) {
+                $matched[$document->getKey()] = $document;
             }
         }
 
         return array_values($matched);
+    }
+
+    /**
+     * First and last day of the tax period the book files.
+     *
+     * @return array{0: string, 1: string}
+     */
+    protected function periodBounds(string $period): array
+    {
+        $start = Carbon::parse("{$period}-01")->startOfDay();
+
+        return [$start->toDateString(), $start->endOfMonth()->toDateString()];
+    }
+
+    /**
+     * Distinct issuer numbers referenced by the purchase entries.
+     *
+     * @param  array<int, IecvPurchaseData>  $entries
+     * @return list<int>
+     */
+    protected function issuerNums(array $entries): array
+    {
+        return array_values(collect($entries)
+            ->map(static fn (IecvPurchaseData $entry): int => static::entryRut($entry)->num)
+            ->unique()
+            ->all());
+    }
+
+    /**
+     * Parse the entry issuer, which may come as a raw RUT string.
+     */
+    protected static function entryRut(IecvPurchaseData $entry): Rut
+    {
+        $rut = $entry->issuerRut;
+
+        return $rut instanceof Rut ? $rut : Rut::parse($rut);
+    }
+
+    /**
+     * Key to match a stored document against a purchase entry by issuer and date.
+     */
+    protected static function documentKey(Rut $issuer, string $date): string
+    {
+        return "{$issuer->num}|{$issuer->vd}|{$date}";
     }
 
     /**

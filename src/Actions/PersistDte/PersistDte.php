@@ -27,7 +27,7 @@ class PersistDte extends Pipeline
         $data = new DteData(
             builder: $builder,
             attributes: $builder->attributes(),
-            payloadData: $builder->payloadData(),
+            payloadBlocks: $builder->payloadBlocks(),
             isUpdate: $isUpdate,
         );
 

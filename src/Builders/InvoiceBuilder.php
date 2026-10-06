@@ -9,6 +9,7 @@ use Laragear\Dte\Builders\Concerns\HasPaymentTerms;
 use Laragear\Dte\Builders\Concerns\HasReferences;
 use Laragear\Dte\Data\PaymentTermData;
 use Laragear\Dte\Enums\DteType;
+use Laragear\Dte\Models\SiiDtePayload;
 use LogicException;
 
 class InvoiceBuilder extends DocumentBuilder
@@ -84,15 +85,15 @@ class InvoiceBuilder extends DocumentBuilder
 
     /**
      * Restore the exemption and payment state from the persisted payload.
-     *
-     * @param  array<string, mixed>  $data
      */
-    protected function hydrateAdditional(array $data): void
+    protected function hydrateAdditional(SiiDtePayload $payload): void
     {
-        $this->taxExempt = $data['tax_exempt'] ?? false;
-        $this->exemptAmountOverride = $data['exempt_amount_override'] ?? null;
+        $idDoc = $payload->header_id_doc;
 
-        if ($payment = $data['payment'] ?? null) {
+        $this->taxExempt = (bool) $idDoc->tax_exempt;
+        $this->exemptAmountOverride = $idDoc->exempt_amount_override;
+
+        if ($payment = $idDoc['payment']) {
             $this->paymentTerm = PaymentTermData::make(
                 $payment['condition'],
                 new DateTimeImmutable($payment['expiration_date']),

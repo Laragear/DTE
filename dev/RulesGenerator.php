@@ -88,6 +88,49 @@ class RulesGenerator
             'departure_at' => 'nullable|date|date_format:Y-m-d H:i:s|after_or_equal:2003-04-01 00:00:00|before_or_equal:2050-12-31 23:59:59',
             'arrival_at' => 'nullable|date|date_format:Y-m-d H:i:s|after_or_equal:2003-04-01 00:00:00|before_or_equal:2050-12-31 23:59:59',
         ],
+        'TOTALS' => [
+            'taxes' => 'nullable|array|max:20',
+            'taxes.*' => 'integer|min:0|max_digits:18',
+        ],
+        'HEADER_ID_DOC' => [
+            'document_type' => 'required|integer|in:30,32,33,34,39,41,43,46,52,56,61',
+            'ind_mnt_neto' => 'nullable|integer|in:0,1,2',
+            'tax_exempt' => 'nullable|boolean',
+            'exempt_amount_override' => 'nullable|integer|min:0|max_digits:18',
+            'payments' => 'nullable|array|max:30',
+        ],
+        'HEADER_OTHER_CURRENCY' => [
+            'withheld_taxes' => 'nullable|array|max:20',
+        ],
+        'DETAIL_ITEMS' => [
+            'items' => 'present|array|max:60',
+            'items.*.code' => 'nullable|string|max:35',
+            'items.*.code_type' => 'nullable|string|max:10',
+            'items.*.quantity' => 'nullable|numeric|min:0|max:999999999999.999999|regex:/^\d+(\.\d{1,6})?$/',
+            'items.*.unit_price' => 'nullable|numeric|min:0|max:999999999999.999999|regex:/^\d+(\.\d{1,6})?$/',
+            'items.*.discount_percentage' => 'nullable|numeric|min:0|max:999.99|regex:/^\d+(\.\d{1,2})?$/',
+            'items.*.discount_amount' => 'nullable|numeric|min:0',
+            'items.*.exempt' => 'required|boolean',
+            'items.*.taxes' => 'nullable|array|max:2',
+            'items.*.taxes.*' => 'required|integer|min:0|max_digits:18',
+        ],
+        'SUBTOTALS' => [
+            'items' => 'present|array|max:20',
+            'items.*.detail_lines' => 'nullable|array|max:60',
+            'items.*.detail_lines.*' => 'integer|min:1',
+        ],
+        'GLOBAL_MODIFIERS' => [
+            'items' => 'present|array|max:20',
+            'items.*.target' => 'nullable|integer|in:0,1,2',
+        ],
+        'REFERENCES' => [
+            'items' => 'present|array|max:40',
+            'items.*.document_type' => 'required',
+            'items.*.date' => 'nullable|date|date_format:Y-m-d|after_or_equal:2000-01-01|before_or_equal:2050-12-31',
+        ],
+        'COMMISSIONS' => [
+            'items' => 'present|array|max:20',
+        ],
     ];
 
     /**

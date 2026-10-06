@@ -2,6 +2,8 @@
 
 namespace Laragear\Dte\Actions\CompileDte\Pipes;
 
+use const LIBXML_NONET;
+
 use Closure;
 use DOMDocument;
 use DOMElement;
@@ -13,8 +15,8 @@ use Laragear\Dte\Support\XmlDomFactory;
 use Laragear\Dte\Xml\TimbreSigner;
 use RuntimeException;
 use Throwable;
+
 use function mb_substr;
-use const LIBXML_NONET;
 
 class GenerateTed
 {
@@ -65,19 +67,20 @@ class GenerateTed
     protected function appendDetails(Compilation $compilation, DOMElement $details): void
     {
         $dte = $compilation->dte;
-        $data = $compilation->payload()->data->toArray();
-        $receiver = $data['receiver'];
+        $payload = $compilation->payload();
 
         $this->element($details, 'RE', $dte->issuer_rut->formatBasic());
         $this->element($details, 'TD', $dte->document_type->value);
         $this->element($details, 'F', $dte->folio);
-        $this->element($details, 'FE', $data['issued_on']);
+        $this->element($details, 'FE', $payload->header_id_doc->issued_on);
         $this->element($details, 'RR', $dte->receiver_rut->formatBasic());
-        $this->element($details, 'RSR', mb_substr($receiver['name'], 0, 40));
+        $this->element($details, 'RSR', mb_substr($payload->header_receiver->name, 0, 40));
         $this->element($details, 'MNT', $dte->amount_total);
 
-        if (isset($data['items'][0]['name'])) {
-            $this->element($details, 'IT1', mb_substr($data['items'][0]['name'], 0, 40));
+        $itemName = (string) $payload->detail_items->string('items.0.name');
+
+        if ($itemName !== '') {
+            $this->element($details, 'IT1', mb_substr($itemName, 0, 40));
         }
 
         $details->appendChild($details->ownerDocument->importNode($this->cafNode($compilation), true));

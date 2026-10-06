@@ -145,10 +145,8 @@ class CompileAecTest extends TestCase
             'amount_total' => 1190,
         ]);
         $dte->setRelation('payload', new SiiDtePayload([
-            'data' => [
-                'issuer' => ['name' => 'Invoice Company LLC', 'address' => 'Main Street 123'],
-                'receiver' => ['email' => 'debtor@example.com'],
-            ],
+            'header_issuer' => ['name' => 'Invoice Company LLC', 'address' => 'Main Street 123'],
+            'header_receiver' => ['email' => 'debtor@example.com'],
             'xml' => '<DTE xmlns="http://www.sii.cl/SiiDte" version="1.0"><Documento ID="F123"/></DTE>',
         ]));
 

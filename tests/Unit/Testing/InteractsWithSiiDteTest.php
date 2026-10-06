@@ -229,7 +229,7 @@ class InteractsWithSiiDteTest extends DatabaseTestCase
     public function test_with_pdf_stubs_injects_xml_and_mocks_generator(): void
     {
         $dte = SiiDte::factory()->create();
-        $dte->payload()->create(['data' => []]);
+        $dte->payload()->create([]);
 
         $this->withPdfStubs($dte);
 
@@ -239,7 +239,7 @@ class InteractsWithSiiDteTest extends DatabaseTestCase
     public function test_with_pdf_stubs_skips_when_xml_already_set(): void
     {
         $dte = SiiDte::factory()->create();
-        $dte->payload()->create(['data' => [], 'xml' => '<custom/>']);
+        $dte->payload()->create(['xml' => '<custom/>']);
 
         $this->withPdfStubs($dte);
 
@@ -299,7 +299,7 @@ class InteractsWithSiiDteTest extends DatabaseTestCase
         )->build();
 
         $this->assertDtePayload($dte, [
-            'items.0.name' => 'Service',
+            'detail_items.items.0.name' => 'Service',
         ]);
     }
 

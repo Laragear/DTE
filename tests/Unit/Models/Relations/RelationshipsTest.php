@@ -49,9 +49,8 @@ class RelationshipsTest extends DatabaseTestCase
         static::assertTrue($cession->dte->is($dte));
         static::assertTrue($dte->aecCessions->contains($cession));
         static::assertInstanceOf(AecStatus::class, $cession->status);
-        static::assertSame([], $payload->data['items']);
-        static::assertIsInt($payload->data['resolution_number']);
-        static::assertMatchesRegularExpression('/^\d{4}-(?:0[1-9]|1[0-2])$/', $payload->data['resolution_date']);
+        static::assertSame([], $payload->detail_items['items']);
+        static::assertTrue($payload->header_issuer->isEmpty());
     }
 
     public function test_envelope_has_payload_dtes_and_interchange_logs(): void

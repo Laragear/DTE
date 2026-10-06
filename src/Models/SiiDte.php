@@ -19,9 +19,11 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
 use Laragear\Dte\Builders\AecCessionBuilder;
 use Laragear\Dte\Caf\Exceptions\CafNotFoundException;
+use Laragear\Dte\Data\Item;
 use Laragear\Dte\Database\Factories\SiiDteFactory;
 use Laragear\Dte\Enums\DteStatus;
 use Laragear\Dte\Enums\DteType;
+use Laragear\Dte\Events\DteFailed;
 use Laragear\Dte\Models\Concerns\HasDocumentType;
 use Laragear\Dte\Models\Concerns\HasSiiStatus;
 use Laragear\Dte\Pdf\PdfBuilder;
@@ -29,6 +31,9 @@ use Laragear\Dte\Services\DteLifecycleService;
 use Laragear\Rut\Eloquent\RutAttribute;
 use Laragear\Rut\Rut;
 use LogicException;
+use Psr\Log\LoggerInterface;
+use Throwable;
+
 use function app;
 use function config;
 use function filled;
@@ -50,7 +55,10 @@ use function filled;
  *                                               ---
  *
  * @property-read int $id
- * ---
+ *
+ * @method int getKey()
+ *                      ---
+ *
  * @property Rut $issuer_rut
  * @property Rut $receiver_rut
  * @property DteType $document_type
@@ -63,6 +71,7 @@ use function filled;
  * @property int $amount_taxes
  * @property int $amount_total
  * @property DteStatus $status
+ * @property array<string, string>|null $failure
  * @property array<string, int>|null $taxes
  * @property bool $iva_common_use
  * @property Carbon|null $acknowledged_at
@@ -76,6 +85,7 @@ use function filled;
  * @method Builder<static>|Builder whereHasRepairs()
  * @method Builder<static>|Builder whereDoesntHaveRepairs()
  * @method static static annulFolio(string $reason = '')
+ * @method static static failToDraft(string $stage, Throwable|string $reason = '')
  */
 #[UseFactory(SiiDteFactory::class)]
 #[Fillable(
@@ -94,6 +104,7 @@ use function filled;
     'amount_total',
     'status',
     'repairs',
+    'failure',
     'sii_iecv_id',
 )]
 class SiiDte extends Model
@@ -120,6 +131,7 @@ class SiiDte extends Model
         'issued_on' => 'date',
         'status' => DteStatus::class,
         'repairs' => 'array',
+        'failure' => 'array',
         'taxes' => 'array',
         'iva_common_use' => 'boolean',
         'acknowledged_at' => 'datetime',
@@ -294,7 +306,7 @@ class SiiDte extends Model
         return Attribute::get(function (): Collection {
             $this->loadMissing('payload');
 
-            return $this->payload?->data->items ?? collect();
+            return collect($this->payload?->detail_items->array('items'))->map(Item::fromArray(...));
         });
     }
 
@@ -319,7 +331,7 @@ class SiiDte extends Model
      */
     public function isNotReadOnly(): bool
     {
-        return !$this->isReadOnly();
+        return ! $this->isReadOnly();
     }
 
     /**
@@ -336,7 +348,7 @@ class SiiDte extends Model
      */
     public function isNotAcceptedWithRepairs(): bool
     {
-        return !$this->isAcceptedWithRepairs();
+        return ! $this->isAcceptedWithRepairs();
     }
 
     /*
@@ -358,7 +370,7 @@ class SiiDte extends Model
      */
     public function isNotRetryable(): bool
     {
-        return !$this->isRetryable();
+        return ! $this->isRetryable();
     }
 
     /**
@@ -374,7 +386,7 @@ class SiiDte extends Model
      */
     public function isNotRetryableWithSameFolio(): bool
     {
-        return !$this->isRetryableWithSameFolio();
+        return ! $this->isRetryableWithSameFolio();
     }
 
     /**
@@ -390,7 +402,7 @@ class SiiDte extends Model
      */
     public function isNotReplicable(): bool
     {
-        return !$this->isReplicable();
+        return ! $this->isReplicable();
     }
 
     /**
@@ -410,6 +422,77 @@ class SiiDte extends Model
      | Lifecycle
      |--------------------------------------------------------------------------
      */
+
+    /**
+     * Reset this document back to an editable draft, storing why it failed.
+     *
+     * @param  Throwable|string  $reason
+     */
+    public function failToDraft(string $stage, $reason = ''): static
+    {
+        // Single transaction of the failure-recovery flow. The row is locked
+        // and re-checked: a DTE that concurrently reached a terminal state
+        // (or vanished) loses politely instead of being clobbered.
+        try {
+            return $this->getConnection()->transaction(function () use ($stage, $reason): static {
+                $fresh = static::query()->whereKey($this->getKey())->lockForUpdate()->first();
+
+                if ($fresh === null || $fresh->status->isTerminalState()) {
+                    return $this;
+                }
+
+                $fresh->forceFill([
+                    'status' => DteStatus::Draft,
+                    'sii_dte_envelope_id' => null,
+                    'failure' => [
+                        'stage' => $stage,
+                        'exception' => $reason instanceof Throwable ? $reason::class : null,
+                        'error' => $reason instanceof Throwable ? $reason->getMessage() : (string) $reason,
+                    ],
+                ]);
+
+                // The folio may already be consumed by the SII: a fresh one is
+                // allocated on the next compile. It is never returned to the CAF
+                // pool, since it may have been handed to another document.
+                if ($fresh->getAttribute('acknowledged_at') !== null || $fresh->getAttribute('pack_retries') > 0) {
+                    $fresh->forceFill(['folio' => null, 'sii_caf_id' => null]);
+                }
+
+                $fresh->save();
+
+                $fresh->payload?->update(['xml' => null]);
+
+                event(new DteFailed($fresh));
+
+                return $fresh;
+            });
+        } catch (Throwable $e) {
+            app(LoggerInterface::class)->error('DTE failure recovery failed, rolling back to the pre-failure state.', [
+                'flow' => 'dte-failure-recovery',
+                'dte_id' => $this->getKey(),
+                'exception' => $e::class,
+                'message' => $e->getMessage(),
+            ]);
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Whether this DTE carries a stored failure reason.
+     */
+    public function hasFailure(): bool
+    {
+        return filled($this->getAttribute('failure'));
+    }
+
+    /**
+     * Whether this DTE carries no stored failure reason.
+     */
+    public function hasNoFailure(): bool
+    {
+        return ! $this->hasFailure();
+    }
 
     /**
      * Pack this document into an exclusive envelope for SII submission.

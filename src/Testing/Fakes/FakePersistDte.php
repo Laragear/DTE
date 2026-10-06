@@ -30,7 +30,7 @@ class FakePersistDte extends PersistDte
         $dte->wasRecentlyCreated = true;
 
         $payload = new SiiDtePayload;
-        $payload->data = $builder->payloadData();
+        $payload->fill($builder->payloadBlocks());
         $dte->setRelation('payload', $payload);
 
         return $dte;

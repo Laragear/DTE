@@ -44,17 +44,15 @@ class GenerateTedTest extends DatabaseTestCase
         $dte = $caf->dtes->first();
 
         $dte->payload()->create([
-            'data' => [
-                'issued_on' => '2024-01-15',
-                'receiver' => [
-                    'name' => 'Receiver Company Name',
-                ],
-                'items' => [
-                    [
-                        'name' => 'Test Item 1',
-                    ],
-                ],
+            'header_id_doc' => ['issued_on' => '2024-01-15'],
+            'header_receiver' => [
+                'name' => 'Receiver Company Name',
             ],
+            'detail_items' => ['items' => [
+                [
+                    'name' => 'Test Item 1',
+                ],
+            ]],
         ]);
 
         $compilation = new Compilation($dte);

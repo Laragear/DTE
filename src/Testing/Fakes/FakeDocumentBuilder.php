@@ -17,7 +17,7 @@ use function app;
  *
  * @method DteType documentType()
  * @method array attributes()
- * @method array payloadData()
+ * @method array payloadBlocks()
  * @method void validate()
  */
 trait FakeDocumentBuilder
@@ -86,7 +86,7 @@ trait FakeDocumentBuilder
         $dte = $this->dte();
 
         $dte->forceFill($this->attributes())->saveQuietly();
-        $dte->payload->forceFill(['data' => $this->payloadData()])->saveQuietly();
+        $dte->payload->forceFill($this->payloadBlocks())->saveQuietly();
 
         if ($sync) {
             app(Compile::class)->forDte($dte);
@@ -115,13 +115,13 @@ trait FakeDocumentBuilder
 
         if (static::$storeDte) {
             $dte->saveOrFail();
-            $dte->payload()->create(['data' => $this->payloadData()]);
+            $dte->payload()->create($this->payloadBlocks());
         } else {
             $dte->exists = true;
             $dte->wasRecentlyCreated = true;
 
             $payload = new SiiDtePayload;
-            $payload->data = $this->payloadData();
+            $payload->fill($this->payloadBlocks());
             $dte->setRelation('payload', $payload);
         }
 
@@ -138,7 +138,7 @@ trait FakeDocumentBuilder
         if (!static::$storeDte) {
             $dte->exists = false;
             $dte->saveOrFail();
-            $dte->payload()->create(['data' => $this->payloadData()]);
+            $dte->payload()->create($this->payloadBlocks());
         }
 
         app(Compile::class)->forDte($dte);

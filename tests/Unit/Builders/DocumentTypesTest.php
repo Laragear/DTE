@@ -66,13 +66,13 @@ class DocumentTypesTest extends DatabaseTestCase
 
         static::assertSame($documentType, $dte->document_type);
         static::assertSame(DteStatus::Pending, $dte->status);
-        static::assertSame($documentType->value, $dte->payload->data['document_type']);
+        static::assertSame($documentType->value, $dte->payload->header_id_doc['document_type']);
 
         if (method_exists($builder, 'addReference')) {
-            static::assertCount(1, $dte->payload->data['references']);
-            static::assertSame(DteType::Invoice->value, $dte->payload->data['references'][0]['document_type']);
-            static::assertSame('100', $dte->payload->data['references'][0]['folio']);
-            static::assertSame('2026-08-01', $dte->payload->data['references'][0]['date']);
+            static::assertCount(1, $dte->payload->references['items']);
+            static::assertSame(DteType::Invoice->value, $dte->payload->references['items'][0]['document_type']);
+            static::assertSame('100', $dte->payload->references['items'][0]['folio']);
+            static::assertSame('2026-08-01', $dte->payload->references['items'][0]['date']);
         }
     }
 
@@ -84,8 +84,8 @@ class DocumentTypesTest extends DatabaseTestCase
         static::assertSame(287, $dte->amount_taxes);
         static::assertSame(1800, $dte->amount_total);
         static::assertSame(SiiRut::Consumer->formatRaw(), $dte->receiver_rut->formatRaw());
-        static::assertSame(SiiRut::Consumer->formatRaw(), $dte->payload->data['receiver']['rut']);
-        static::assertSame('Sin nombre', $dte->payload->data['receiver']['name']);
+        static::assertSame(SiiRut::Consumer->formatRaw(), $dte->payload->header_receiver['rut']);
+        static::assertSame('Sin nombre', $dte->payload->header_receiver['name']);
     }
 
     public function test_dispatch_guide_persists_transport_input(): void
@@ -105,7 +105,7 @@ class DocumentTypesTest extends DatabaseTestCase
             ->toDestination('Main Street 123', 'Santiago')
             ->withTransportSchedule(new DateTimeImmutable('2026-08-13 09:30:00'));
 
-        $transport = $builder->build()->payload->data['transport'];
+        $transport = $builder->build()->payload->header_transport->toArray();
 
         static::assertSame('ABCD12', $transport['vehicle_plate']);
         static::assertSame($carrier->formatRaw(), $transport['carrier_rut']);
@@ -123,7 +123,7 @@ class DocumentTypesTest extends DatabaseTestCase
 
         $builder->withVehicle('ABCD12', 'WXYZ34');
 
-        $transport = $builder->build()->payload->data['transport'];
+        $transport = $builder->build()->payload->header_transport->toArray();
 
         static::assertSame('ABCD12', $transport['vehicle_plate']);
         static::assertNull($transport['departure_at']);

@@ -21,7 +21,7 @@ class SiiDteReplicateForRetryTest extends DatabaseTestCase
             'folio' => 123,
         ]);
 
-        $payload = new SiiDtePayload(['data' => ['some' => 'data']]);
+        $payload = new SiiDtePayload(['header_issuer' => ['some' => 'data']]);
         $original->payload()->save($payload);
 
         $clone = $original->replicateForRetry();
@@ -34,7 +34,7 @@ class SiiDteReplicateForRetryTest extends DatabaseTestCase
         static::assertNull($clone->sii_dte_envelope_id);
         static::assertNull($clone->rejected_at);
         static::assertEquals(0, $clone->pack_retries);
-        static::assertEquals(['some' => 'data'], $clone->payload->data->toArray());
+        static::assertEquals(['some' => 'data'], $clone->payload->header_issuer->toArray());
     }
 
     public function test_replication_failure_logs_and_rolls_back(): void

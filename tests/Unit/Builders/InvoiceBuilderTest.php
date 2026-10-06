@@ -68,8 +68,8 @@ class InvoiceBuilderTest extends DatabaseTestCase
         static::assertSame(2000, $dte->amount_exempt);
         static::assertSame(0, $dte->amount_taxes);
         static::assertSame(2000, $dte->amount_total);
-        static::assertTrue($dte->payload->data['tax_exempt']);
-        static::assertSame(2000, $dte->payload->data['exempt_amount_override']);
+        static::assertTrue($dte->payload->header_id_doc['tax_exempt']);
+        static::assertSame(2000, $dte->payload->header_id_doc['exempt_amount_override']);
     }
 
     public function test_creates_an_exempt_invoice_calculating_amounts_from_items(): void
@@ -88,8 +88,8 @@ class InvoiceBuilderTest extends DatabaseTestCase
         static::assertSame(1000, $dte->amount_exempt);
         static::assertSame(0, $dte->amount_taxes);
         static::assertSame(1000, $dte->amount_total);
-        static::assertTrue($dte->payload->data['tax_exempt']);
-        static::assertNull($dte->payload->data['exempt_amount_override']);
+        static::assertTrue($dte->payload->header_id_doc['tax_exempt']);
+        static::assertNull($dte->payload->header_id_doc['exempt_amount_override']);
     }
 
     /*
@@ -170,8 +170,8 @@ class InvoiceBuilderTest extends DatabaseTestCase
         $restored->hydrate($dte);
 
         // Verify hydration succeeded by checking the payload contains payment data
-        static::assertSame('2', $dte->payload->data['payment']['condition']);
-        static::assertSame('2026-09-13', $dte->payload->data['payment']['expiration_date']);
+        static::assertSame('2', $dte->payload->header_id_doc['payment']['condition']);
+        static::assertSame('2026-09-13', $dte->payload->header_id_doc['payment']['expiration_date']);
     }
 
     public function test_with_metadata_from_array(): void

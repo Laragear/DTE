@@ -362,8 +362,86 @@ class ProcessAndSendEnvelopeCommandTest extends DatabaseTestCase
 
         $dte = SiiDte::query()->findOrFail($dteId);
 
-        // The failure path detaches the DTEs so they can repack into a new envelope.
+        // The failure path detaches the DTEs so they can repack into a new
+        // envelope, recording why it failed and bounding the retries.
         static::assertNull($dte->sii_dte_envelope_id);
         static::assertSame(DteStatus::Outbox, $dte->status);
+        static::assertSame(1, $dte->pack_retries);
+        static::assertSame('upload', $dte->failure['stage']);
+        static::assertSame('LogicException', $dte->failure['exception']);
+        static::assertSame('SII unreachable.', $dte->failure['error']);
+    }
+
+    public function test_fails_exhausted_dtes_to_draft_when_upload_fails(): void
+    {
+        $envelope = SiiDteEnvelope::factory()
+            ->has(SiiDte::factory()->state([
+                'status' => DteStatus::Packed,
+                'pack_retries' => 2,
+                'folio' => 123,
+            ]), 'dtes')
+            ->create();
+
+        $dteId = $envelope->dtes()->value('id');
+
+        $this->mock(CreateEnvelope::class, function (MockInterface $mock) use ($envelope): void {
+            $mock->expects('forEnvelope')->andReturnUsing(function () use ($envelope) {
+                $payload = SiiDteEnvelopePayload::factory()->make(['xml' => 'signed-xml']);
+                $envelope->setRelation('payload', $payload);
+
+                return $envelope;
+            });
+        });
+
+        $this->mock(UploadGateway::class, function (MockInterface $mock): void {
+            $mock->expects('upload')->andThrow(new LogicException('SII unreachable.'));
+        });
+
+        try {
+            $this->artisan('dte:process-envelope', ['envelope_id' => $envelope->getKey()]);
+            static::fail('The upload exception was not thrown.');
+        } catch (LogicException) {
+            //
+        }
+
+        $dte = SiiDte::query()->findOrFail($dteId);
+
+        static::assertSame(DteStatus::Draft, $dte->status);
+        static::assertNull($dte->sii_dte_envelope_id);
+        static::assertNull($dte->folio);
+        static::assertSame('upload', $dte->failure['stage']);
+    }
+
+    public function test_reclaims_stale_building_dtes(): void
+    {
+        $date = $this->app->make(DateFactory::class);
+
+        $stale = SiiDte::factory()->create(['status' => DteStatus::Building, 'folio' => 123]);
+        SiiDte::query()->whereKey($stale->getKey())->update(['updated_at' => now()->subHour()]);
+
+        $fresh = SiiDte::factory()->create(['status' => DteStatus::Building]);
+
+        $reclaimed = $this->app->make(ProcessAndSendEnvelopeCommand::class)->reclaimStaleDtes($date);
+
+        static::assertSame(1, $reclaimed);
+
+        $reclaimedDte = $stale->fresh();
+
+        static::assertSame(DteStatus::Draft, $reclaimedDte->status);
+        static::assertSame('stale', $reclaimedDte->failure['stage']);
+        static::assertSame(DteStatus::Building, $fresh->refresh()->status);
+    }
+
+    public function test_reclaims_stale_signing_dtes(): void
+    {
+        $date = $this->app->make(DateFactory::class);
+
+        $stale = SiiDte::factory()->create(['status' => DteStatus::Signing]);
+        SiiDte::query()->whereKey($stale->getKey())->update(['updated_at' => now()->subHour()]);
+
+        $reclaimed = $this->app->make(ProcessAndSendEnvelopeCommand::class)->reclaimStaleDtes($date);
+
+        static::assertSame(1, $reclaimed);
+        static::assertSame(DteStatus::Draft, $stale->fresh()->status);
     }
 }

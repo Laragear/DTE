@@ -19,6 +19,7 @@ use Laragear\Dte\Enums\DteStatus;
 use Laragear\Dte\Enums\DteType;
 use Laragear\Dte\Models\SiiDte;
 use Laragear\Dte\Models\SiiDteEnvelope;
+use Laragear\Dte\Models\SiiDtePayload;
 use Laragear\Dte\Services\DteLifecycleService;
 use Laragear\Dte\Validation\DocumentValidator;
 use Laragear\Rut\Rut;
@@ -109,6 +110,7 @@ abstract class DocumentBuilder
         protected DateFactory $date,
         protected ConfigurationManager $configurationManager,
         protected DteLifecycleService $dteLifecycle,
+        protected DocumentValidator $validator,
     ) {
         $this->issueDate = $date->today('America/Santiago')->toDateTimeImmutable();
     }
@@ -290,44 +292,45 @@ abstract class DocumentBuilder
         $this->dte = $dte;
         $dte->loadMissing('payload');
 
-        $data = $dte->payload->data->toArray();
+        $payload = $dte->payload;
+        $idDoc = $payload->header_id_doc;
 
-        if (isset($data['issued_on'])) {
-            $this->issueDate = DateTimeImmutable::createFromFormat('Y-m-d', $data['issued_on']) ?: $this->issueDate;
+        $issuedOn = $idDoc['issued_on'];
+
+        if ($issuedOn !== null) {
+            $this->issueDate = DateTimeImmutable::createFromFormat('Y-m-d', $issuedOn) ?: $this->issueDate;
         }
 
-        if (isset($data['issuer'])) {
-            $this->issuedBy(IssuerData::fromArray($data['issuer']));
+        if (! $payload->header_issuer->isEmpty()) {
+            $this->issuedBy(IssuerData::fromArray($payload->header_issuer->toArray()));
         }
 
-        if (isset($data['receiver'])) {
-            $this->receivedBy(ReceiverData::fromArray($data['receiver']));
+        if (! $payload->header_receiver->isEmpty()) {
+            $this->receivedBy(ReceiverData::fromArray($payload->header_receiver->toArray()));
         }
 
-        $this->items = array_map(Item::fromArray(...), $data['items'] ?? []);
+        $this->items = array_map(Item::fromArray(...), $payload->detail_items['items'] ?? []);
 
-        $this->references = array_map(ReferenceData::fromArray(...), $data['references'] ?? []);
+        $this->references = array_map(ReferenceData::fromArray(...), $payload->references['items'] ?? []);
 
-        $this->globalModifiers = $data['global_modifiers'] ?? [];
+        $this->globalModifiers = $payload->global_modifiers['items'] ?? [];
 
-        $this->nonBillableAmount = $data['totals']['non_billable'] ?? 0;
+        $this->nonBillableAmount = $payload->header_totals['non_billable'] ?? 0;
 
         // The flag lives on the model column rather than the payload, so it is
         // restored from the document itself to survive a rehydrate-and-rebuild.
         // Coerced because an unhydrated or partial model may expose no value.
         $this->commonUseIva = (bool) $dte->iva_common_use;
 
-        $this->hydrateAdditional($data);
+        $this->hydrateAdditional($payload);
 
         return $this;
     }
 
     /**
-     * Restore subclass-specific input from the persisted payload.
-     *
-     * @param  array<string, mixed>  $data
+     * Restore subclass-specific input from the persisted payload blocks.
      */
-    protected function hydrateAdditional(array $data): void
+    protected function hydrateAdditional(SiiDtePayload $payload): void
     {
         //
     }
@@ -413,7 +416,7 @@ abstract class DocumentBuilder
         $this->validateSpecific();
 
         // The XSD rules catch SII rejections before the folio is burned.
-        (new DocumentValidator)->validate($this->payloadData());
+        $this->validator->validate($this->payloadBlocks());
     }
 
     /**

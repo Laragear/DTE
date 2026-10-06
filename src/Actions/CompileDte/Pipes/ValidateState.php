@@ -47,10 +47,11 @@ class ValidateState
         // We will do a clever check. Since the truth is on the database, we will run a
         // direct UPDATE query into the row. If the query returns 1 row affected, then
         // the model data is updated, and we can sync the changes for the next pipes.
+        // A previous failure reason is consumed when a new compile starts.
         $updated = $dte->newModelQuery()
             ->whereKey($dte->getKey())
             ->where('status', DteStatus::Pending)
-            ->update(['status' => DteStatus::Building, 'updated_at' => $now]);
+            ->update(['status' => DteStatus::Building, 'failure' => null, 'updated_at' => $now]);
 
         if ($updated < 1) {
             throw new LogicException('The DTE document is already being processed.');
@@ -58,6 +59,7 @@ class ValidateState
 
         $dte->forceFill([
             'status' => DteStatus::Building,
+            'failure' => null,
             'updated_at' => $now,
         ]);
 

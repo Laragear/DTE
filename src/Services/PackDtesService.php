@@ -20,6 +20,7 @@ use Laragear\Rut\Rut;
 use LogicException;
 use Psr\Log\LoggerInterface;
 use Throwable;
+
 use function value;
 
 class PackDtesService
@@ -47,7 +48,6 @@ class PackDtesService
     public function packManual(
         array|Collection|EloquentBuilder|SiiDte $dtes,
         mixed $sync = false,
-        bool $retryFailed = false
     ): Collection {
         // Accepts DTE IDs, a Collection of IDs or models, or an Eloquent builder. Documents
         // are fresh-loaded, compiled inline when needed, validated, auto-split by issuer
@@ -62,7 +62,7 @@ class PackDtesService
         $models = $this->fetchManualDtes($ids);
 
         $this->ensureManualDtesExist($ids, $models);
-        $this->prepareManualDtesForPack($models, $retryFailed);
+        $this->prepareManualDtesForPack($models);
         $this->ensureManualDtesPackable($models);
 
         $envelopes = collect();
@@ -91,9 +91,9 @@ class PackDtesService
      * @param  array<int>|Collection<int>|EloquentBuilder<SiiDte>  $dtes
      * @return Collection<int, SiiDteEnvelope>
      */
-    public function packManualSync(array|Collection|EloquentBuilder $dtes, bool $retryFailed = false): Collection
+    public function packManualSync(array|Collection|EloquentBuilder $dtes): Collection
     {
-        return $this->packManual($dtes, true, $retryFailed);
+        return $this->packManual($dtes, true);
     }
 
     /**
@@ -109,7 +109,7 @@ class PackDtesService
         }
 
         return EloquentCollection::wrap($dtes)
-            ->map(static fn($item): int => (int) ($item instanceof SiiDte ? $item->getKey() : $item))
+            ->map(static fn ($item): int => (int) ($item instanceof SiiDte ? $item->getKey() : $item))
             ->unique()
             ->values()
             ->all();
@@ -165,12 +165,12 @@ class PackDtesService
      *
      * @param  EloquentCollection<int, SiiDte>  $models
      */
-    protected function prepareManualDtesForPack(EloquentCollection $models, bool $retryFailed): void
+    protected function prepareManualDtesForPack(EloquentCollection $models): void
     {
         // Transforms run inline and outside any transaction: Drafts compile
-        // synchronously, Pending and retryable Failed recompile, so
-        // the later claim only ever sees compiled documents.
-        $this->rejectUnpackableDtes($models, $retryFailed);
+        // synchronously and Pending recompiles, so the later claim only ever
+        // sees compiled documents.
+        $this->rejectUnpackableDtes($models);
 
         foreach ($models as $dte) {
             $this->compileDraftForPack($dte);
@@ -186,17 +186,17 @@ class PackDtesService
      *
      * @param  EloquentCollection<int, SiiDte>  $models
      */
-    protected function rejectUnpackableDtes(EloquentCollection $models, bool $retryFailed): void
+    protected function rejectUnpackableDtes(EloquentCollection $models): void
     {
         $invalid = $models
-            ->filter(fn(SiiDte $dte): bool => $this->isUnpackable($dte, $retryFailed))
-            ->map(fn(SiiDte $dte): string => $this->describeUnpackable($dte, $retryFailed))
+            ->filter($this->isUnpackable(...))
+            ->map($this->describeUnpackable(...))
             ->values()
             ->all();
 
         if ($invalid !== []) {
             throw new LogicException(
-                'Only draft, pending, failed, signed or outbox DTEs without an envelope can be packed manually. Invalid: '.implode(', ',
+                'Only draft, pending, signed or outbox DTEs without an envelope can be packed manually. Invalid: '.implode(', ',
                     $invalid).'.'
             );
         }
@@ -205,46 +205,24 @@ class PackDtesService
     /**
      * Whether the DTE is linked, uncompilable, sent or terminal.
      */
-    protected function isUnpackable(SiiDte $dte, bool $retryFailed): bool
+    protected function isUnpackable(SiiDte $dte): bool
     {
         if ($dte->getAttribute('sii_dte_envelope_id') !== null) {
             return true;
         }
 
-        if ($dte->status->isNotManuallyPackable()) {
-            return true;
-        }
-
-        return $dte->status === DteStatus::Failed && $this->requiresFailedOptIn($dte, $retryFailed);
-    }
-
-    /**
-     * Whether a failed DTE needs the explicit retry opt-in.
-     */
-    protected function requiresFailedOptIn(SiiDte $dte, bool $retryFailed): bool
-    {
-        if ($retryFailed) {
-            return false;
-        }
-
-        // The SII may have consumed the folio when it acknowledged the
-        // document or a prior envelope released it for retry.
-        return $dte->getAttribute('acknowledged_at') !== null || $dte->getAttribute('pack_retries') > 0;
+        return $dte->status->isNotManuallyPackable();
     }
 
     /**
      * Describe why a DTE cannot be packed manually.
      */
-    protected function describeUnpackable(SiiDte $dte, bool $retryFailed): string
+    protected function describeUnpackable(SiiDte $dte): string
     {
         $label = "[{$dte->getKey()}] is [{$dte->status->value}]";
 
         if ($dte->getAttribute('sii_dte_envelope_id') !== null) {
             return $label." in envelope [{$dte->getAttribute('sii_dte_envelope_id')}]";
-        }
-
-        if ($dte->status === DteStatus::Failed && $this->requiresFailedOptIn($dte, $retryFailed)) {
-            return $label.' (folio may be consumed, retry with $retryFailed = true)';
         }
 
         if ($dte->status === DteStatus::Rejected) {
@@ -302,10 +280,10 @@ class PackDtesService
     protected function ensureManualDtesPackable(EloquentCollection $models): void
     {
         $invalid = $models
-            ->map(fn(SiiDte $dte): SiiDte => $dte->refresh())
-            ->filter(static fn(SiiDte $dte): bool => $dte->getAttribute('sii_dte_envelope_id') !== null
+            ->map(fn (SiiDte $dte): SiiDte => $dte->refresh())
+            ->filter(static fn (SiiDte $dte): bool => $dte->getAttribute('sii_dte_envelope_id') !== null
                 || $dte->status->isNotAwaitingEnvelope())
-            ->map(static fn(SiiDte $dte): string => "[{$dte->getKey()}] is [{$dte->status->value}]"
+            ->map(static fn (SiiDte $dte): string => "[{$dte->getKey()}] is [{$dte->status->value}]"
                 .($dte->getAttribute('sii_dte_envelope_id') !== null
                     ? " in envelope [{$dte->getAttribute('sii_dte_envelope_id')}]"
                     : ''))
@@ -393,8 +371,9 @@ class PackDtesService
      */
     protected function fetchReadyDtes(): EloquentCollection
     {
+        // The payloads are not eager-loaded here: each row would drag its signed
+        // XML from disk, and the envelope creation loads the one it needs itself.
         return SiiDte::query()
-            ->with('payload')
             ->whereIn('status', DteStatus::awaitingEnvelopeValues())
             ->whereNull('sii_dte_envelope_id')
             ->oldest('updated_at')
@@ -438,12 +417,12 @@ class PackDtesService
         // conditional claim: only still-unlinked, still-compiled DTEs are
         // linked, so a concurrent exclusive send racing this batch is never
         // overwritten.
-        $first = $dtes->first()->load('payload:id,sii_dte_id,data');
+        $first = $dtes->first()->load('payload:id,sii_dte_id,header_issuer');
 
         try {
             return SiiDte::query()->getConnection()->transaction(function () use ($dtes, $first): SiiDteEnvelope {
                 $envelope = $this->createEnvelopeInDatabase(
-                    $first->issuer_rut, $first->document_type->isReceipt(), $first->payload->data['issuer'] ?? []
+                    $first->issuer_rut, $first->document_type->isReceipt(), $first->payload->header_issuer->toArray()
                 );
 
                 // We will update the envelope of each DTE on one query instead of saving each.
@@ -483,10 +462,10 @@ class PackDtesService
     {
         // The DTE is not attached here so the caller can attach it atomically
         // within its own transaction.
-        $dte->loadMissing('payload:id,sii_dte_id,data');
+        $dte->loadMissing('payload:id,sii_dte_id,header_issuer');
 
         return $this->createEnvelopeInDatabase(
-            $dte->issuer_rut, $dte->document_type->isReceipt(), $dte->payload?->data['issuer'] ?? []
+            $dte->issuer_rut, $dte->document_type->isReceipt(), $dte->payload?->header_issuer->toArray() ?? []
         );
     }
 
@@ -498,7 +477,7 @@ class PackDtesService
         // If the issuer data doesn't have resolution date or number, we resort to use
         // the issuer itself. If that fails, when creating the envelope, the database
         // will scream because there will be no resolution to save into that DB row.
-        if (!isset($issuerData['resolution_date']) || !isset($issuerData['resolution_number'])) {
+        if (! isset($issuerData['resolution_date']) || ! isset($issuerData['resolution_number'])) {
             $dynamicIssuer = $this->configManager->getIssuer($issuer);
 
             $issuerData = [

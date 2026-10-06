@@ -4,15 +4,19 @@ namespace Laragear\Dte\Actions\PersistDte\Pipes;
 
 use BackedEnum;
 use Closure;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Arr;
 use Laragear\Dte\Actions\PersistDte\DteData;
 use Laragear\Dte\Enums\DteStatus;
 use Laragear\Dte\Enums\DteType;
 use Laragear\Dte\Enums\ReferenceType;
 use Laragear\Dte\Models\SiiDte;
-use Laragear\Dte\Models\SiiDteReference;
+use Laragear\Rut\Rut;
 use LogicException;
 use Psr\Log\LoggerInterface;
 use Throwable;
+
+use function array_unique;
 
 class PersistDocument
 {
@@ -67,11 +71,11 @@ class PersistDocument
     {
         $dte = SiiDte::create($data->attributes);
 
-        $payload = $dte->payload()->create(['data' => $data->payloadData]);
+        $payload = $dte->payload()->create($data->payloadBlocks);
 
         $dte->setRelation('payload', $payload);
 
-        $this->persistReferences($dte, $data->payloadData['references'] ?? []);
+        $this->persistReferences($dte, $data->payloadBlocks['references']['items'] ?? []);
 
         return $dte;
     }
@@ -90,13 +94,13 @@ class PersistDocument
         $dte->forceFill(array_merge($data->attributes, [
             'status' => $dte->status === DteStatus::Draft ? DteStatus::Draft : DteStatus::Pending,
             'repairs' => null,
+            'failure' => null,
             'acknowledged_at' => null,
             'accepted_at' => null,
             'rejected_at' => null,
         ]))->save();
 
-        $payload = $dte->payload()->updateOrCreate([], [
-            'data' => $data->payloadData,
+        $payload = $dte->payload()->updateOrCreate([], $data->payloadBlocks + [
             'xml' => null,
             'sii_response' => null,
         ]);
@@ -105,7 +109,7 @@ class PersistDocument
 
         $dte->references()->delete();
 
-        $this->persistReferences($dte, $data->payloadData['references'] ?? []);
+        $this->persistReferences($dte, Arr::get($data->payloadBlocks, 'references.items', []));
 
         return $dte;
     }
@@ -117,25 +121,18 @@ class PersistDocument
      */
     protected function persistReferences(SiiDte $dte, array $references): void
     {
-        $issuerRut = $dte->issuer_rut;
+        // The target documents are resolved in one query instead of one per
+        // reference, so the persist transaction doesn't grow with each item.
+        $targets = $this->targetDteIds($dte->issuer_rut, $references);
+
+        $rows = [];
 
         foreach ($references as $reference) {
             $documentType = DteType::tryFrom((int) $reference['document_type'])
                 ?? ReferenceType::tryFrom((string) $reference['document_type']);
 
-            $targetDteId = null;
-
-            if ($documentType instanceof DteType && $reference['folio'] !== null) {
-                $targetDteId = SiiDte::where('issuer_num', $issuerRut->num)
-                    ->where('issuer_vd', $issuerRut->vd)
-                    ->where('document_type', $documentType)
-                    ->where('folio', $reference['folio'])
-                    ->value('id');
-            }
-
-            SiiDteReference::create([
-                'sii_dte_id' => $dte->getKey(),
-                'target_dte_id' => $targetDteId,
+            $rows[] = [
+                'target_dte_id' => $this->targetDteId($documentType, $reference, $targets),
                 'document_type' => $documentType instanceof BackedEnum
                     ? (string) $documentType->value
                     : $reference['document_type'],
@@ -143,7 +140,76 @@ class PersistDocument
                 'date' => $reference['date'],
                 'reason' => $reference['reason'],
                 'reference_code' => $reference['reference_code'],
-            ]);
+            ];
         }
+
+        $dte->references()->createMany($rows);
+    }
+
+    /**
+     * Resolve the local documents the references point to, keyed by type and folio.
+     *
+     * @param  list<array<string, mixed>>  $references
+     * @return array<string, int>
+     */
+    protected function targetDteIds(Rut $issuerRut, array $references): array
+    {
+        $folios = [];
+
+        foreach ($references as $reference) {
+            if (DteType::tryFrom((int) $reference['document_type']) === null || $reference['folio'] === null) {
+                continue;
+            }
+
+            $folios[] = (int) $reference['folio'];
+        }
+
+        if ($folios === []) {
+            return [];
+        }
+
+        $targets = [];
+
+        foreach ($this->retrieveDtes($issuerRut, $folios) as $document) {
+            $targets[static::targetKey($document->document_type->value, $document->folio)] = $document->getKey();
+        }
+
+        return $targets;
+    }
+
+    /**
+     * Retrieve the documents based on the issuer and folios.
+     *
+     * @return EloquentCollection<int, SiiDte>
+     */
+    protected function retrieveDtes(Rut $issuer, array $folios): EloquentCollection
+    {
+        return SiiDte::query()
+            ->where('issuer_num', $issuer->num)
+            ->whereIn('folio', array_unique($folios))
+            ->get(['id', 'document_type', 'folio']);
+    }
+
+    /**
+     * Target document id for the reference, or null when unresolvable.
+     *
+     * @param  array<string, mixed>  $reference
+     * @param  array<string, int>  $targets
+     */
+    protected function targetDteId(DteType|ReferenceType|null $documentType, array $reference, array $targets): ?int
+    {
+        if (! $documentType instanceof DteType || $reference['folio'] === null) {
+            return null;
+        }
+
+        return $targets[static::targetKey((int) $documentType->value, (int) $reference['folio'])] ?? null;
+    }
+
+    /**
+     * Map key joining the target document type and folio.
+     */
+    protected static function targetKey(int $documentType, int $folio): string
+    {
+        return "{$documentType}|{$folio}";
     }
 }

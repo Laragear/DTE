@@ -3,13 +3,10 @@
 namespace Laragear\Dte\Builders\Concerns;
 
 use BackedEnum;
-use Laragear\Dte\Configuration\ConfigurationManager;
 use Laragear\Dte\Data\Item;
 use Laragear\Dte\Data\ReferenceData;
 use LogicException;
-use function app;
 use function array_map;
-use function array_merge;
 use function count;
 use function is_string;
 
@@ -39,24 +36,33 @@ trait PayloadSerializer
     abstract protected function calculatedTotals(): array;
 
     /**
-     * Return the JSON-safe raw builder input.
+     * Return the JSON-safe builder input, keyed by payload block column.
      *
-     * @return array<string, mixed>
+     * @return array<string, array<string, mixed>|null>
      */
-    public function payloadData(): array
+    public function payloadBlocks(): array
     {
-        return array_merge([
-            'document_type' => $this->documentType()->value,
-            'issued_on' => $this->issueDate->format('Y-m-d'),
-            'issuer' => $this->issuerData(),
-            'receiver' => $this->receiverData(),
-            'items' => array_map($this->itemData(...), $this->items()),
-            'references' => array_map($this->referenceData(...), $this->references()),
-            'global_modifiers' => $this->globalModifiers(),
-            'taxes' => $this->aggregateTaxes(),
-            'totals' => $this->calculatedTotals(),
-            'ind_mnt_neto' => $this->indMntNeto ?? null,
-        ], $this->additionalData());
+        $additional = $this->additionalData();
+
+        return [
+            'header_id_doc' => [
+                'document_type' => $this->documentType()->value,
+                'issued_on' => $this->issueDate->format('Y-m-d'),
+                'ind_mnt_neto' => $this->indMntNeto ?? null,
+                'ind_traslado' => $additional['ind_traslado'] ?? null,
+                'tipo_despacho' => $additional['tipo_despacho'] ?? null,
+                'tax_exempt' => $additional['tax_exempt'] ?? null,
+                'exempt_amount_override' => $additional['exempt_amount_override'] ?? null,
+                'payment' => $additional['payment'] ?? null,
+            ],
+            'header_issuer' => $this->issuerData(),
+            'header_receiver' => $this->receiverData(),
+            'header_transport' => $additional['transport'] ?? null,
+            'header_totals' => ['taxes' => $this->aggregateTaxes()] + $this->calculatedTotals(),
+            'detail_items' => ['items' => array_map($this->itemData(...), $this->items())],
+            'references' => ['items' => array_map($this->referenceData(...), $this->references())],
+            'global_modifiers' => ['items' => $this->globalModifiers()],
+        ];
     }
 
     /**

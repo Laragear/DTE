@@ -151,9 +151,9 @@ class SiiDteRetryTest extends DatabaseTestCase
         static::assertNull($dte->payload->xml);
         static::assertNull($dte->payload->sii_response);
 
-        static::assertCount(2, $dte->payload->data['items']);
-        static::assertSame('Extra line', $dte->payload->data['items'][1]['name']);
-        static::assertSame(2300, $dte->payload->data['totals']['net']);
+        static::assertCount(2, $dte->payload->detail_items['items']);
+        static::assertSame('Extra line', $dte->payload->detail_items['items'][1]['name']);
+        static::assertSame(2300, $dte->payload->header_totals['net']);
         static::assertSame(2737, $dte->amount_total);
 
         $queue->assertPushed(

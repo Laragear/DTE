@@ -30,13 +30,13 @@ Your support allows me to keep this package free, up-to-date, and maintainable. 
 ## Requirements
 
 * PHP 8.5 or later
-* PHP Extensions: `openssl`, `dom`, `libxml` and `mbstring`
+* PHP Extensions: `openssl`, `dom`, `libxml`, `mbstring`, `simplexml`, `bcmath`, `gd`, `soap` and `xmlwriter`
 * Laravel 13.x or later
 * Laravel Scheduler and Queue enabled
 
 > [!NOTE]
 >
-> The Scheduler is used to queue DTE Envelopes, check CAF depletion, and check DTE receives at `dte@my-company.cl`
+> The Scheduler is used to queue DTE Envelopes, check CAF depletion, and check DTE receives at `dte@my-app.cl`
 > The Queue is used to build XML, PDF, and send DTE Envelopes to SII API.
 
 ## Why does this library exist?
@@ -60,7 +60,7 @@ composer require laragear/dte
 
 ## Set up
 
-First, publish the configuration file and database migrations. The latter is required for storing legal documents in your application.
+First, publish the configuration file, database migrations and XSD schemas. The latter two are required for storing legal documents in your application and validating them against the SII.
 
 ```shell
 php artisan vendor:publish --provider="Laragear\Dte\DteServiceProvider"
@@ -100,13 +100,13 @@ Odds are you already know some document types before implementing this library, 
 
 ## 3-minute quickstart
 
-You can start to use this library in less than three minutes in your library, or _the pizza is free_.
+You can start to use this library in less than three minutes in your application, or _the pizza is free_.
 
-### 1. Set your company (optional)
+### 1. Set your company
 
-By default, this library creates a fake business with all the data required, so there is no need to set your own for development. You can safely skip this step.
+The library needs your company data (RUT, legal name, business activity, SII resolution) to build any DTE. There is no default: building a document without a registered company fails loudly, before any folio is burned.
 
-On the other hand, if your app retrieves this data dynamically (e.g., from the database), like when the end-user is onboarded into the application, you can use the convenient `ConfigurationManager::setCompany()` helper to fill the required company data.
+Use the `ConfigurationManager::setCompany()` helper to register the company data. This is also the place to resolve it dynamically (e.g., from the database), like when the end-user is onboarded into the application.
 
 ```php
 use Laragear\Dte\Configuration\ConfigurationManager;
@@ -130,8 +130,8 @@ public function boot()
             issuer: IssuerData::make(
                 rut: $settings->rut,
                 name: $settings->name,
-                businessActivity: $settings->business_activity,
-                economicActivity: $settings->economic_activity,
+                activity: $settings->business_activity,
+                activityCode: $settings->economic_activity_code,
                 address: $settings->address,
                 commune: $settings->commune,
                 city: $settings->city,
@@ -149,14 +149,18 @@ public function boot()
             return;
         }
         
-        return DigitalCertificate($cert->p12, $cert->password);
+        return new DigitalCertificate($cert->p12, $cert->password);
     });
 }
 ```
 
+> [!WARNING]
+>
+> Returning nothing from the company resolver is only safe while no document is built. The next `build()` call throws `RuntimeException` when the resolver returns no company — make sure the data exists before issuing documents.
+
 > [!NOTE]
 > 
-> If you plan to use this library on multi-tenant environments (multiple business), don't skip the quickstart. Once you understand how the library works, proceed to the [Multi-Tenancy Configuration](#multi-tenancy-configuration) section.
+> If you plan to use this library on multi-tenant environments (multiple business), the resolver callback is where each tenant's data is resolved. Proceed to the [Multi-Tenancy Configuration](#multi-tenancy-configuration) section once you understand how the library works.
 
 ### 2. Create a fake certificate and CAF
 
@@ -165,16 +169,20 @@ For local development, generate a fake certificate and a default CAF for invoice
 ```shell
 php artisan dte:make-fake-cert
 
-php artisan dte:make-fake-caf
+php artisan dte:make-fake-caf --db
 ```
+
+> [!NOTE]
+>
+> Without `--db` (or `--file`), `dte:make-fake-caf` only prints the CAF XML to stdout without persisting it, and no folios become available.
 
 If you plan to create more than simple Invoices from the start, run the `dte:make-fake-caf` again with the DTE Type code.
 
 ```shell
-php artisan dte:make-fake-caf --type=39
+php artisan dte:make-fake-caf --db --type=39
 ```
 
-In [certification/production](#certification--production), you will be required to download the real CAF from SII and [upload it](#uploading-caf) instead.
+Both `dte:make-fake-*` commands are only available outside production environments. In [certification/production](#certification--production), you will be required to download the real CAF from SII and [upload it](#uploading-caf) instead.
 
 > [!NOTE]
 >
@@ -191,7 +199,7 @@ use Illuminate\Support\Facades\Schedule;
 Schedule::command('dte:check-cafs')->everyTwoHours();
 
 // Packs signed DTE into envelopes so these can be sent later.
-Schedule::command('dte:process-envelope')->everyTenMinutes();
+Schedule::command('dte:pack-ready')->everyTenMinutes();
 
 // Poll the email for unanswered DTE.
 Schedule::command('dte:fetch-mailbox')->hourly();
@@ -213,7 +221,7 @@ Schedule::command('dte:reject-phantom-invoices')->twiceDaily();
 
 ### You're all set!
 
-You can now create your own documents using any document builder facade, like the `SiiReceipt`.
+You can now create your own documents using any document builder facade, like the `SiiInvoice`.
 
 ```php
 use Laragear\Dte\Facades\SiiInvoice;
@@ -692,6 +700,26 @@ $envelope = SiiInvoice::receivedBy($receiver)
     ->addItem($item)
     ->send();
 ```
+
+### Failures
+
+When the local processing of a document fails — the XML compilation, the digital signature, or the envelope upload — the document is not stuck: it goes back to `Draft` so you can edit it and try again from scratch. The reason is stored in the `failure` column of the `sii_dtes` table, with the stage that failed and the error message.
+
+```php
+$dte = SiiDte::find(1);
+
+// Did the document fail at some point?
+$dte->hasFailure();
+
+// What happened and where?
+dump($dte->failure); // ['stage' => 'compile', 'exception' => '...', 'error' => '...']
+```
+
+The folio is only released when it may have been consumed by the SII (the document was acknowledged, or a previous envelope already released it). In that case, the next compilation allocates a fresh folio automatically; otherwise the same folio is reused, since the SII never saw it.
+
+Failing DTEs trigger the `Laragear\Dte\Events\DteFailed` event, which you can use to alert someone or feed a monitoring dashboard. A `DteStatus` of `Rejected` (the SII refused the document) is different: the folio was consumed, so the document can only be cloned with `replicateForRetry()` into a new draft with a new folio.
+
+Documents stuck in `Building` or `Signing` because of a crashed worker are also recovered: add the `dte:process-envelope` command with the `--reclaim-stale` option to your scheduler, and any document older than 30 minutes mid-compilation is reset to `Draft` with the failure recorded.
 
 ## SII Certificates
 
@@ -1735,8 +1763,8 @@ public function boot()
         return $settings ? IssuerData::make(
             rut: $settings->rut,
             name: $settings->name,
-            businessActivity: $settings->business_activity,
-            economicActivity: $settings->economic_activity,
+            activity: $settings->business_activity,
+            activityCode: $settings->economic_activity,
             address: $settings->address,
             commune: $settings->commune,
             city: $settings->city,
@@ -1763,7 +1791,7 @@ class IssuerData implements Arrayable, ArrayAccess, Jsonable, JsonSerializable
 {
     public const array VALIDATION = [
         // Validation rules
-    ];   
+    ];
     
     public function validate(): void
     {

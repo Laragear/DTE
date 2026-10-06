@@ -58,7 +58,7 @@ use Laragear\Rut\Rut;
  * @method static bool hasCommonUseIva()
  * @method static array globalModifiers()
  * @method static array attributes()
- * @method static array payloadData()
+ * @method static array payloadBlocks()
  * @method static SiiDte draft()
  * @method static SiiDte build(bool $sync = false)
  * @method static SiiDte buildSync()

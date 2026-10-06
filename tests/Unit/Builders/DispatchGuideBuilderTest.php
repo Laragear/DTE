@@ -94,19 +94,19 @@ class DispatchGuideBuilderTest extends DatabaseTestCase
             );
 
         $dte = $builder->build();
-        $data = $dte->payload->data;
+        $transport = $dte->payload->header_transport;
 
-        static::assertArrayHasKey('transport', $data);
-        static::assertEquals('ABCD12', $data['transport']['vehicle_plate']);
-        static::assertEquals('EFGH34', $data['transport']['trailer_plate']);
-        static::assertEquals('333333333', $data['transport']['carrier_rut']);
-        static::assertEquals('444444444', $data['transport']['driver_rut']);
-        static::assertEquals('Juan Driver', $data['transport']['driver_name']);
-        static::assertEquals('Av. Siempre Viva 123', $data['transport']['destination_address']);
-        static::assertEquals('Santiago', $data['transport']['destination_commune']);
-        static::assertEquals('Santiago', $data['transport']['destination_city']);
-        static::assertEquals('2024-01-15 08:00:00', $data['transport']['departure_at']);
-        static::assertEquals('2024-01-15 10:00:00', $data['transport']['arrival_at']);
+        static::assertFalse($transport->isEmpty());
+        static::assertEquals('ABCD12', $transport['vehicle_plate']);
+        static::assertEquals('EFGH34', $transport['trailer_plate']);
+        static::assertEquals('333333333', $transport['carrier_rut']);
+        static::assertEquals('444444444', $transport['driver_rut']);
+        static::assertEquals('Juan Driver', $transport['driver_name']);
+        static::assertEquals('Av. Siempre Viva 123', $transport['destination_address']);
+        static::assertEquals('Santiago', $transport['destination_commune']);
+        static::assertEquals('Santiago', $transport['destination_city']);
+        static::assertEquals('2024-01-15 08:00:00', $transport['departure_at']);
+        static::assertEquals('2024-01-15 10:00:00', $transport['arrival_at']);
     }
 
     public function test_additional_data_with_partial_transport(): void
@@ -142,19 +142,19 @@ class DispatchGuideBuilderTest extends DatabaseTestCase
         $builder->toDestination('Av. Siempre Viva 123', '');
 
         $dte = $builder->build();
-        $data = $dte->payload->data;
+        $transport = $dte->payload->header_transport;
 
-        static::assertArrayHasKey('transport', $data);
-        static::assertEquals('ABCD12', $data['transport']['vehicle_plate']);
-        static::assertNull($data['transport']['trailer_plate']);
-        static::assertNull($data['transport']['carrier_rut']);
-        static::assertNull($data['transport']['driver_rut']);
-        static::assertNull($data['transport']['driver_name']);
-        static::assertEquals('Av. Siempre Viva 123', $data['transport']['destination_address']);
-        static::assertEquals('', $data['transport']['destination_commune']);
-        static::assertNull($data['transport']['destination_city']);
-        static::assertNull($data['transport']['departure_at']);
-        static::assertNull($data['transport']['arrival_at']);
+        static::assertFalse($transport->isEmpty());
+        static::assertEquals('ABCD12', $transport['vehicle_plate']);
+        static::assertNull($transport['trailer_plate']);
+        static::assertNull($transport['carrier_rut']);
+        static::assertNull($transport['driver_rut']);
+        static::assertNull($transport['driver_name']);
+        static::assertEquals('Av. Siempre Viva 123', $transport['destination_address']);
+        static::assertEquals('', $transport['destination_commune']);
+        static::assertNull($transport['destination_city']);
+        static::assertNull($transport['departure_at']);
+        static::assertNull($transport['arrival_at']);
     }
 
     public function test_document_type_is_dispatch_guide(): void
@@ -175,7 +175,7 @@ class DispatchGuideBuilderTest extends DatabaseTestCase
         $builder->dispatchType(2);
 
         $dte = $builder->build();
-        static::assertSame(1, $dte->payload->data['ind_traslado']);
-        static::assertSame(2, $dte->payload->data['tipo_despacho']);
+        static::assertSame(1, $dte->payload->header_id_doc['ind_traslado']);
+        static::assertSame(2, $dte->payload->header_id_doc['tipo_despacho']);
     }
 }

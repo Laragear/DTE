@@ -2,68 +2,58 @@
 
 namespace Laragear\Dte\Validation;
 
-use Laragear\Dte\Data\DocumentTotalsData;
-use Laragear\Dte\Data\GlobalModifierData;
-use Laragear\Dte\Data\IssuerData;
-use Laragear\Dte\Data\Item;
-use Laragear\Dte\Data\PaymentTermData;
-use Laragear\Dte\Data\ReceiverData;
-use Laragear\Dte\Data\ReferenceData;
-use Laragear\Dte\Data\TransportData;
+use Laragear\Dte\Models\SiiDtePayload;
 
 use function array_merge;
 
 /**
- * Validate a DTE payload against the XSD-derived section rules.
+ * Validate a DTE payload against the XSD-derived block rules.
  */
 final class DocumentValidator
 {
     /**
-     * Sections that only carry rules when present in the payload.
+     * Blocks a document payload cannot omit.
      *
-     * @var array<string, class-string>
+     * @var list<string>
      */
-    public const array OPTIONAL_SECTIONS = [
-        'payment' => PaymentTermData::class,
-        'transport' => TransportData::class,
+    protected const array REQUIRED_BLOCKS = [
+        'header_id_doc',
+        'header_issuer',
+        'header_receiver',
+        'header_totals',
+        'detail_items',
     ];
 
     /**
-     * Validate the document payload.
+     * Validate the document payload blocks.
      *
-     * @param  array<string, mixed>  $payload
+     * @param  array<string, array<string, mixed>|null>  $blocks
      */
-    public function validate(array $payload): void
+    public function validate(array $blocks): void
     {
-        validator($payload, $this->rules($payload))->validate();
+        validator($blocks, $this->rules($blocks))->validate();
     }
 
     /**
-     * Return the rules for the given payload.
+     * Return the combined rules for the given payload blocks.
      *
-     * @param  array<string, mixed>  $payload
-     * @return array<string, mixed>
+     * Blocks that carry no data are skipped, so their rules only
+     * apply when the block is present in the payload.
+     *
+     * @param  array<string, array<string, mixed>|null>  $blocks
+     * @return array<string, string>
      */
-    public function rules(array $payload): array
+    public function rules(array $blocks): array
     {
-        $rules = array_merge([
-            'document_type' => DteRules::DOCUMENT['document_type'],
-            'issued_on' => DteRules::DOCUMENT['issued_on'],
-            'ind_traslado' => DteRules::DOCUMENT['ind_traslado'],
-            'tipo_despacho' => DteRules::DOCUMENT['tipo_despacho'],
-            'ind_mnt_neto' => DteRules::DOCUMENT['ind_mnt_neto'],
-            'issuer' => 'required|array',
-        ], $this->prefix('issuer.', IssuerData::rules()));
+        $rules = [];
 
-        $rules = array_merge($rules, $this->prefix('receiver.', ReceiverData::rules()));
-        $rules = array_merge($rules, $this->prefix('items.*.', Item::rules()));
-        $rules = array_merge($rules, $this->prefix('references.*.', ReferenceData::rules()));
-        $rules = array_merge($rules, $this->prefix('global_modifiers.*.', GlobalModifierData::rules()));
-        $rules = array_merge($rules, $this->prefix('totals.', DocumentTotalsData::rules()));
+        foreach (static::REQUIRED_BLOCKS as $column) {
+            $rules[$column] = 'required|array';
+        }
 
-        foreach (self::OPTIONAL_SECTIONS as $section => $dataClass) {
-            if (isset($payload[$section])) {
-                $rules = array_merge($rules, $this->prefix($section.'.', $dataClass::rules()));
+        foreach (SiiDtePayload::BLOCKS as $column => $block) {
+            if (isset($blocks[$column])) {
+                $rules = array_merge($rules, $this->prefix($column.'.', $block::RULES));
             }
         }
 
@@ -71,10 +61,10 @@ final class DocumentValidator
     }
 
     /**
-     * Prefix every section rule with its payload path.
+     * Prefix every block rule with its payload path.
      *
-     * @param  array<string, mixed>  $rules
-     * @return array<string, mixed>
+     * @param  array<string, string>  $rules
+     * @return array<string, string>
      */
     private function prefix(string $path, array $rules): array
     {

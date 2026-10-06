@@ -7,6 +7,7 @@ use Laragear\Dte\Builders\Concerns\HasItems;
 use Laragear\Dte\Builders\Concerns\HasReferences;
 use Laragear\Dte\Builders\Concerns\HasTransport;
 use Laragear\Dte\Enums\DteType;
+use Laragear\Dte\Models\SiiDtePayload;
 use Laragear\Rut\Rut;
 
 class DispatchGuideBuilder extends DocumentBuilder
@@ -52,38 +53,39 @@ class DispatchGuideBuilder extends DocumentBuilder
 
     /**
      * Restore the transport state from the persisted payload.
-     *
-     * @param  array<string, mixed>  $data
      */
-    protected function hydrateAdditional(array $data): void
+    protected function hydrateAdditional(SiiDtePayload $payload): void
     {
         $this->transport = [];
 
-        if ($data['transport'] ?? null) {
+        $idDoc = $payload->header_id_doc;
+        $transport = $payload->header_transport;
+
+        if (! $transport->isEmpty()) {
             $this->transport = [
-                'vehicle_plate' => $data['transport']['vehicle_plate'] ?? null,
-                'trailer_plate' => $data['transport']['trailer_plate'] ?? null,
-                'carrier' => isset($data['transport']['carrier_rut'])
-                    ? Rut::parse($data['transport']['carrier_rut'])
+                'vehicle_plate' => $transport->vehicle_plate,
+                'trailer_plate' => $transport->trailer_plate,
+                'carrier' => isset($transport->carrier_rut)
+                    ? Rut::parse($transport->carrier_rut)
                     : null,
-                'driver' => isset($data['transport']['driver_rut'])
-                    ? Rut::parse($data['transport']['driver_rut'])
+                'driver' => isset($transport->driver_rut)
+                    ? Rut::parse($transport->driver_rut)
                     : null,
-                'driver_name' => $data['transport']['driver_name'] ?? null,
-                'destination_address' => $data['transport']['destination_address'] ?? null,
-                'destination_commune' => $data['transport']['destination_commune'] ?? null,
-                'destination_city' => $data['transport']['destination_city'] ?? null,
-                'departure_at' => isset($data['transport']['departure_at'])
-                    ? new DateTimeImmutable($data['transport']['departure_at'])
+                'driver_name' => $transport->driver_name,
+                'destination_address' => $transport->destination_address,
+                'destination_commune' => $transport->destination_commune,
+                'destination_city' => $transport->destination_city,
+                'departure_at' => isset($transport->departure_at)
+                    ? new DateTimeImmutable($transport->departure_at)
                     : null,
-                'arrival_at' => isset($data['transport']['arrival_at'])
-                    ? new DateTimeImmutable($data['transport']['arrival_at'])
+                'arrival_at' => isset($transport['arrival_at'])
+                    ? new DateTimeImmutable($transport['arrival_at'])
                     : null,
             ];
         }
 
-        $this->transport['ind_traslado'] = $data['ind_traslado'] ?? null;
-        $this->transport['tipo_despacho'] = $data['tipo_despacho'] ?? null;
+        $this->transport['ind_traslado'] = $idDoc['ind_traslado'] ?? null;
+        $this->transport['tipo_despacho'] = $idDoc['tipo_despacho'] ?? null;
     }
 
     /**

@@ -9,13 +9,29 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
-use Laragear\Dte\Casts\AsDocumentPayload;
-use Laragear\Dte\Data\DocumentPayload;
+use Laragear\Dte\Casts\DteBlock;
+use Laragear\Dte\Casts\DteCommissions;
+use Laragear\Dte\Casts\DteDetailItems;
+use Laragear\Dte\Casts\DteEmissionGeoref;
+use Laragear\Dte\Casts\DteGlobalModifiers;
+use Laragear\Dte\Casts\DteHeaderIdDoc;
+use Laragear\Dte\Casts\DteHeaderIssuer;
+use Laragear\Dte\Casts\DteHeaderOtherCurrency;
+use Laragear\Dte\Casts\DteHeaderReceiver;
+use Laragear\Dte\Casts\DteHeaderTotals;
+use Laragear\Dte\Casts\DteHeaderTransport;
+use Laragear\Dte\Casts\DteReferences;
+use Laragear\Dte\Casts\DteSubtotals;
+use Laragear\Dte\Casts\DteTimberHandling;
 use Laragear\Dte\Database\Factories\SiiDtePayloadFactory;
 use Laragear\Dte\Models\Concerns\HasXmlPayload;
 
 /**
  * Stores builder input and signed XML outside the DTE ledger.
+ *
+ * Each column maps to one mother/child block of the SII Documento, hydrated
+ * into its DteBlock castable: SiiDtePayload::make(['header_issuer' => [...]])
+ * returns the model with a DteHeaderIssuer block for easy access.
  * ---
  * @see  SiiDtePayloadFactory
  * @link database/migrations/2026_01_01_000003_create_sii_dte_payloads_table.php
@@ -28,7 +44,19 @@ use Laragear\Dte\Models\Concerns\HasXmlPayload;
  * ---
  * @property-read int $id
  * ---
- * @property DocumentPayload $data
+ * @property DteHeaderIdDoc $header_id_doc
+ * @property DteHeaderIssuer $header_issuer
+ * @property DteHeaderReceiver $header_receiver
+ * @property DteHeaderTransport $header_transport
+ * @property DteHeaderTotals $header_totals
+ * @property DteHeaderOtherCurrency $header_other_currency
+ * @property DteDetailItems $detail_items
+ * @property DteSubtotals $subtotals
+ * @property DteGlobalModifiers $global_modifiers
+ * @property DteReferences $references
+ * @property DteCommissions $commissions
+ * @property DteEmissionGeoref $emission_georef
+ * @property DteTimberHandling $timber_handling
  * @property string|null $xml
  * ---
  * @property-read Carbon $created_at
@@ -39,7 +67,19 @@ use Laragear\Dte\Models\Concerns\HasXmlPayload;
  */
 #[UseFactory(SiiDtePayloadFactory::class)]
 #[Fillable(
-    'data',
+    'header_id_doc',
+    'header_issuer',
+    'header_receiver',
+    'header_transport',
+    'header_totals',
+    'header_other_currency',
+    'detail_items',
+    'subtotals',
+    'global_modifiers',
+    'references',
+    'commissions',
+    'emission_georef',
+    'timber_handling',
     'xml',
     'sii_response',
 )]
@@ -51,13 +91,54 @@ class SiiDtePayload extends Model
     use HasXmlPayload;
 
     /**
+     * The payload block columns and their castable block classes.
+     *
+     * @var array<string, class-string<DteBlock>>
+     */
+    public const array BLOCKS = [
+        'header_id_doc' => DteHeaderIdDoc::class,
+        'header_issuer' => DteHeaderIssuer::class,
+        'header_receiver' => DteHeaderReceiver::class,
+        'header_transport' => DteHeaderTransport::class,
+        'header_totals' => DteHeaderTotals::class,
+        'header_other_currency' => DteHeaderOtherCurrency::class,
+        'detail_items' => DteDetailItems::class,
+        'subtotals' => DteSubtotals::class,
+        'global_modifiers' => DteGlobalModifiers::class,
+        'references' => DteReferences::class,
+        'commissions' => DteCommissions::class,
+        'emission_georef' => DteEmissionGeoref::class,
+        'timber_handling' => DteTimberHandling::class,
+    ];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array<string, string|class-string>
      */
-    protected $casts = [
-        'data' => AsDocumentPayload::class,
-    ];
+    protected $casts = self::BLOCKS;
+
+    /*
+     |--------------------------------------------------------------------------
+     | Blocks
+     |--------------------------------------------------------------------------
+     */
+
+    /**
+     * Return every block as a column-keyed attribute array.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function blocksToArray(): array
+    {
+        $blocks = [];
+
+        foreach (array_keys(self::BLOCKS) as $column) {
+            $blocks[$column] = $this->{$column}->toArray();
+        }
+
+        return $blocks;
+    }
 
     /*
      |--------------------------------------------------------------------------

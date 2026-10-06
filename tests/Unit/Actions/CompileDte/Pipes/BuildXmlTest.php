@@ -26,42 +26,53 @@ class BuildXmlTest extends DatabaseTestCase
             'document_type' => DteType::Invoice,
         ]);
 
+        $item = [
+            'name' => 'Item 1',
+            'description' => null,
+            'quantity' => 1,
+            'unit' => null,
+            'unit_price' => 10000,
+            'discount_percentage' => 0,
+            'exempt' => false,
+            'code' => null,
+            'code_type' => null,
+        ];
+
+        if (isset($data['items'])) {
+            $item = array_merge($item, $data['items'][0]);
+        }
+
+        $totals = array_merge([
+            'net' => 10000,
+            'exempt' => 0,
+            'tax' => 1900,
+            'total' => 11900,
+        ], $data['totals'] ?? []);
+
         $payload = new SiiDtePayload([
             'sii_dte_id' => $dte->id,
-            'data' => array_merge([
+            'header_id_doc' => [
                 'document_type' => 33,
                 'issued_on' => '2024-01-15',
-                'issuer' => [
-                    'rut' => '11111111-1',
-                    'name' => 'Test Company',
-                    'activity' => 'Test Activity',
-                    'activity_code' => '620100',
-                ],
-                'receiver' => [
+                'payment' => $data['payment'] ?? null,
+            ],
+            'header_issuer' => [
+                'rut' => '11111111-1',
+                'name' => 'Test Company',
+                'activity' => 'Test Activity',
+                'activity_code' => '620100',
+            ],
+            'header_receiver' => array_key_exists('receiver', $data)
+                ? $data['receiver']
+                : [
                     'rut' => '22222222-2',
                     'name' => 'Client Company',
                 ],
-                'totals' => [
-                    'net' => 10000,
-                    'exempt' => 0,
-                    'tax' => 1900,
-                    'total' => 11900,
-                ],
-                'items' => [
-                    [
-                        'name' => 'Item 1',
-                        'description' => null,
-                        'quantity' => 1,
-                        'unit' => null,
-                        'unit_price' => 10000,
-                        'discount_percentage' => 0,
-                        'exempt' => false,
-                        'code' => null,
-                        'code_type' => null,
-                    ],
-                ],
-                'references' => [],
-            ], $data),
+            'header_transport' => $data['transport'] ?? null,
+            'header_totals' => ['taxes' => $data['taxes'] ?? []] + $totals,
+            'detail_items' => ['items' => [$item]],
+            'references' => ['items' => $data['references'] ?? []],
+            'global_modifiers' => ['items' => $data['global_modifiers'] ?? []],
         ]);
 
         $dte->setRelation('payload', $payload);

@@ -2,6 +2,8 @@
 
 namespace Laragear\Dte\Console\Commands;
 
+use const JSON_THROW_ON_ERROR;
+
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\DateFactory;
@@ -12,11 +14,14 @@ use Laragear\Dte\Events\EnvelopeSending;
 use Laragear\Dte\Events\EnvelopeSent;
 use Laragear\Dte\Gateways\BoletaRestGateway;
 use Laragear\Dte\Gateways\UploadGateway;
+use Laragear\Dte\Models\SiiDte;
 use Laragear\Dte\Models\SiiDteEnvelope;
 use LogicException;
 use Throwable;
+
 use function blank;
 use function is_numeric;
+use function json_encode;
 
 class ProcessAndSendEnvelopeCommand extends Command
 {
@@ -52,6 +57,7 @@ class ProcessAndSendEnvelopeCommand extends Command
         // crash cannot wedge the queue behind one envelope.
         if ($this->option('reclaim-stale')) {
             $this->reclaimStaleEnvelopes($date);
+            $this->reclaimStaleDtes($date);
         }
 
         $source = $this->envelope();
@@ -63,7 +69,7 @@ class ProcessAndSendEnvelopeCommand extends Command
             $envelope->loadMissing('payload');
         }
 
-        if (!$wasSigned || blank($envelope->payload?->xml)) {
+        if (! $wasSigned || blank($envelope->payload?->xml)) {
             $envelope = $create->forEnvelope($envelope);
         }
 
@@ -76,11 +82,7 @@ class ProcessAndSendEnvelopeCommand extends Command
         } catch (Throwable $e) {
             $this->markAsFailed($envelope, $date);
 
-            // Detach the envelopes so these can be retried.
-            $envelope->dtes()->update([
-                'sii_dte_envelope_id' => null,
-                'status' => DteStatus::Outbox,
-            ]);
+            $this->releaseOrFailDtes($envelope, $date, $e);
 
             throw $e;
         }
@@ -126,11 +128,46 @@ class ProcessAndSendEnvelopeCommand extends Command
     }
 
     /**
+     * Release DTEs back to the outbox with a bounded retry, or fail them to draft.
+     */
+    protected function releaseOrFailDtes(SiiDteEnvelope $envelope, DateFactory $date, Throwable $e): void
+    {
+        // Mirrors releaseOrRejectAllDtes(): the upload failure may repeat forever,
+        // so the retry is bounded. Exhausted DTEs go back to Draft with the stored
+        // reason, and folios possibly consumed by the SII are released.
+        $envelope->loadMissing('dtes');
+
+        $failure = [
+            'stage' => 'upload',
+            'exception' => $e::class,
+            'error' => $e->getMessage(),
+        ];
+
+        [$exhausted, $retryable] = $envelope->dtes->partition(
+            static fn (SiiDte $dte): bool => $dte->pack_retries + 1 >= config('dte.envelopes.max_retries', 3)
+        );
+
+        if ($retryable->isNotEmpty()) {
+            $envelope->dtes()
+                ->whereIn('id', $retryable->modelKeys())
+                ->increment('pack_retries', 1, [
+                    'sii_dte_envelope_id' => null,
+                    'status' => DteStatus::Outbox,
+                    'failure' => json_encode($failure, JSON_THROW_ON_ERROR),
+                    'updated_at' => $date->now(),
+                ]);
+        }
+
+        foreach ($exhausted as $dte) {
+            $dte->failToDraft('upload', $e);
+        }
+    }
+
+    /**
      * Mark the envelope as failed after an upload error.
      */
     protected function markAsFailed(SiiDteEnvelope $envelope, DateFactory $date): void
-    {
-        // Terminal at envelope granularity, but folios were never consumed: the caller
+    {        // Terminal at envelope granularity, but folios were never consumed: the caller
         // detaches the paired DTEs back to Outbox so they may pack into a new envelope.
         $envelope->update([
             'status' => EnvelopeStatus::Failed,
@@ -203,6 +240,30 @@ class ProcessAndSendEnvelopeCommand extends Command
         $envelope->forceFill(['status' => EnvelopeStatus::Assembling]);
 
         return $envelope->refresh();
+    }
+
+    /**
+     * Reclaim DTEs stuck mid-compile back to Draft, storing the reason.
+     *
+     * @return int The number of reclaimed DTEs.
+     */
+    public function reclaimStaleDtes(DateFactory $date, int $staleMinutes = 30): int
+    {
+        // A crashed worker leaves the DTE wedged in Building or Signing with no
+        // one to catch the failure. Each row goes through failToDraft() so the
+        // folio guard and payload cleanup a bulk UPDATE cannot do are applied.
+        // ponytail: a genuinely long compile older than the window gets reclaimed
+        // too — the same residual race reclaimStaleEnvelopes already accepts.
+        $stale = SiiDte::query()
+            ->whereIn('status', [DteStatus::Building, DteStatus::Signing])
+            ->where('updated_at', '<=', $date->now()->subMinutes($staleMinutes))
+            ->get();
+
+        foreach ($stale as $dte) {
+            $dte->failToDraft('stale', "Compilation did not finish within [{$staleMinutes}] minutes; reclaimed.");
+        }
+
+        return $stale->count();
     }
 
     /**

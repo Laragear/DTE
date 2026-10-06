@@ -13,7 +13,7 @@ class DteData
     public function __construct(
         public readonly DocumentBuilder $builder,
         public readonly array $attributes,
-        public readonly array $payloadData,
+        public readonly array $payloadBlocks,
         public bool $isUpdate = false,
         public ?SiiDte $dte = null,
     ) {

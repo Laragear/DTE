@@ -145,16 +145,10 @@ message = "This closure does not use `$this` and should be declared static."
 count = 1
 
 [[issues]]
-file = "src/Actions/Cuadratura/Pipes/DowngradeOrphanedDocuments.php"
-code = "no-else-clause"
-message = "Avoid `else` clauses."
-count = 1
-
-[[issues]]
 file = "src/Actions/Cuadratura/Pipes/ReconcileRcvStream.php"
 code = "no-else-clause"
 message = "Avoid `else` clauses."
-count = 3
+count = 2
 
 [[issues]]
 file = "src/Actions/InboundDte/Pipes/ProcessEnvioDteDocuments.php"
@@ -233,12 +227,6 @@ file = "src/Builders/Concerns/HasReferences.php"
 code = "no-else-clause"
 message = "Avoid `else` clauses."
 count = 1
-
-[[issues]]
-file = "src/Builders/Concerns/TotalsCalculator.php"
-code = "no-else-clause"
-message = "Avoid `else` clauses."
-count = 2
 
 [[issues]]
 file = "src/Builders/CreditNoteBuilder.php"

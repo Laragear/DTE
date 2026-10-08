@@ -107,4 +107,10 @@ ignore = [
     # baseline is keyed to exact message text and would break on every bump --
     # `composer.lock` is gitignored, so the SDK version is not reproducible.
     { code = "less-specific-nested-argument-type", pattern = "Aws\\\\S3\\\\S3Client", in = ["src/Mailbox/Drivers/AwsSesDriver.php"] },
+
+    # Eloquent `Builder::get()` ships a `...|stdClass` union in its generics, so
+    # models pulled from a builder never fully contain a downstream model union.
+    # Matched on `stdClass`, the only non-model member, so any real type error
+    # in this pipe still fails the build.
+    { code = "possibly-invalid-argument", pattern = "stdClass", in = ["src/Actions/Cuadratura/Pipes/DetectOrphanedDocuments.php"] },
 ]

@@ -56,24 +56,6 @@ count = 1
 
 [[issues]]
 file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('issued_on')` used for array access on `Laragear\Dte\Casts\DteHeaderIdDoc`.'''
-count = 1
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('items')` used for array access on `Laragear\Dte\Casts\DteDetailItems`.'''
-count = 1
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('name')` used for array access on `Laragear\Dte\Casts\DteHeaderReceiver`.'''
-count = 1
-
-[[issues]]
-file = "src/Actions/CompileDte/Pipes/GenerateTed.php"
 code = "invalid-method-access"
 message = "Attempting to access a method on a non-object type (`false`)."
 count = 2
@@ -199,18 +181,6 @@ message = "Attempting to call a method on `null`."
 count = 1
 
 [[issues]]
-file = "src/Actions/Cuadratura/Pipes/DowngradeOrphanedDocuments.php"
-code = "possibly-invalid-argument"
-message = 'Possible argument type mismatch for argument #1 of `Laragear\Dte\Actions\Cuadratura\Pipes\DowngradeOrphanedDocuments::downgradeQuery`: expected `Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>`, but possibly received `$this(Laragear\Dte\Models\SiiDte)|Illuminate\Database\Eloquent\Builder<Laragear\Dte\Models\SiiDte>&static`.'
-count = 1
-
-[[issues]]
-file = "src/Actions/Cuadratura/Pipes/DowngradeOrphanedDocuments.php"
-code = "possibly-invalid-argument"
-message = 'Possible argument type mismatch for argument #1 of `Laragear\Dte\Actions\Cuadratura\Pipes\DowngradeOrphanedDocuments::downgradeQuery`: expected `Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>`, but possibly received `$this(Laragear\Dte\Models\SiiInboundDocument)|Illuminate\Database\Eloquent\Builder<Laragear\Dte\Models\SiiInboundDocument>&static`.'
-count = 1
-
-[[issues]]
 file = "src/Actions/Cuadratura/Pipes/ReconcileRcvStream.php"
 code = "possibly-null-iterator"
 message = 'Expression being iterated (type `Illuminate\Support\LazyCollection<array-key, mixed>|null`) might be `null` at runtime.'
@@ -250,12 +220,6 @@ count = 1
 file = "src/Actions/InboundDte/Pipes/ProcessEnvioDteDocuments.php"
 code = "invalid-return-statement"
 message = '''Invalid return type for function `Laragear\Dte\Actions\InboundDte\Pipes\ProcessEnvioDteDocuments::extractMetadata`: expected `array{'amount': int, 'folio': int, 'issued_on': Illuminate\Support\Carbon, 'issuer': Laragear\Rut\Rut, 'type': enum(Laragear\Dte\Enums\DteType), 'xml': string}`, but found `array{'amount': int, 'folio': int, 'issued_on': Illuminate\Support\Carbon, 'issuer': Laragear\Rut\Rut, 'type': enum(laragear\dte\enums\dtetype), 'xml': bool|string}`.'''
-count = 1
-
-[[issues]]
-file = "src/Actions/InboundDte/Pipes/ProcessEnvioDteDocuments.php"
-code = "less-specific-return-statement"
-message = '''Returned type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)` is less specific than the declared return type `Laragear\Dte\Models\SiiInboundDocument` for function `Laragear\Dte\Actions\InboundDte\Pipes\ProcessEnvioDteDocuments::persistDocument`.'''
 count = 1
 
 [[issues]]
@@ -327,7 +291,7 @@ count = 1
 [[issues]]
 file = "src/Actions/PersistDte/Pipes/PersistDocument.php"
 code = "less-specific-argument"
-message = '''Argument type mismatch for argument #1 of `Illuminate\Database\Eloquent\Model::forceFill`: expected `array<string, mixed>`, but provided type `array{'accepted_at': null, 'acknowledged_at': null, 'rejected_at': null, 'repairs': null, 'status': enum(Laragear\Dte\Enums\DteStatus::Draft)|enum(Laragear\Dte\Enums\DteStatus::Pending), ...}` is less specific.'''
+message = '''Argument type mismatch for argument #1 of `Illuminate\Database\Eloquent\Model::forceFill`: expected `array<string, mixed>`, but provided type `array{'accepted_at': null, 'acknowledged_at': null, 'failure': null, 'rejected_at': null, 'repairs': null, 'status': enum(Laragear\Dte\Enums\DteStatus::Draft)|enum(Laragear\Dte\Enums\DteStatus::Pending), ...}` is less specific.'''
 count = 1
 
 [[issues]]
@@ -344,8 +308,14 @@ count = 1
 
 [[issues]]
 file = "src/Actions/PersistDte/Pipes/PersistDocument.php"
-code = "non-existent-method"
-message = "Method `getkey` does not exist on type `stdClass`."
+code = "less-specific-return-statement"
+message = 'Returned type `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiDte|Laragear\Dte\Models\SiiDte&static>|Illuminate\Support\Collection<int, stdClass>` is less specific than the declared return type `Illuminate\Database\Eloquent\Collection<int, Laragear\Dte\Models\SiiDte>` for function `Laragear\Dte\Actions\PersistDte\Pipes\PersistDocument::retrieveDtes`.'
+count = 1
+
+[[issues]]
+file = "src/Actions/PersistDte/Pipes/PersistDocument.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `Laragear\Dte\Actions\PersistDte\Pipes\PersistDocument::targetKey` is possibly `null`, but parameter type `int` does not accept it.'
 count = 1
 
 [[issues]]
@@ -477,19 +447,13 @@ count = 1
 [[issues]]
 file = "src/Builders/Concerns/TotalsCalculator.php"
 code = "less-specific-nested-return-statement"
-message = '''Returned type `array{'exempt': int, 'net': int, 'non_billable': mixed, 'tax': int, 'total': int}` is less specific than the declared return type `array{'exempt': int, 'net': int, 'non_billable': int, 'tax': int, 'total': int}` for function `Laragear\Dte\Builders\Concerns\TotalsCalculator::calculatedTotals` due to nested 'mixed'.'''
+message = '''Returned type `array{'exempt': int, 'net': int, 'non_billable': mixed, 'tax': int, 'taxes': array<int, int>, 'total': int}` is less specific than the declared return type `array{'exempt': int, 'net': int, 'non_billable': int, 'tax': int, 'total': int}` for function `Laragear\Dte\Builders\Concerns\TotalsCalculator::calculatedTotals` due to nested 'mixed'.'''
 count = 1
 
 [[issues]]
 file = "src/Builders/Concerns/TotalsCalculator.php"
 code = "non-existent-property"
 message = 'Property `$nonBillableAmount` does not exist on trait `Laragear\Dte\Builders\Concerns\TotalsCalculator`.'
-count = 1
-
-[[issues]]
-file = "src/Builders/Concerns/TotalsCalculator.php"
-code = "possibly-invalid-argument"
-message = '''Possible argument type mismatch for argument #1 of `Laragear\Dte\Builders\Concerns\TotalsCalculator::applyGlobalModifiers`: expected `array{'exempt': int, 'net': int, 'tax': int, 'total': int}`, but possibly received `array<array-key, mixed>`.'''
 count = 1
 
 [[issues]]
@@ -537,48 +501,6 @@ count = 2
 [[issues]]
 file = "src/Builders/DispatchGuideBuilder.php"
 code = "invalid-array-index"
-message = '''Invalid index type `string('carrier_rut')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
-count = 2
-
-[[issues]]
-file = "src/Builders/DispatchGuideBuilder.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('departure_at')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
-count = 2
-
-[[issues]]
-file = "src/Builders/DispatchGuideBuilder.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('destination_address')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
-count = 1
-
-[[issues]]
-file = "src/Builders/DispatchGuideBuilder.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('destination_city')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
-count = 1
-
-[[issues]]
-file = "src/Builders/DispatchGuideBuilder.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('destination_commune')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
-count = 1
-
-[[issues]]
-file = "src/Builders/DispatchGuideBuilder.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('driver_name')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
-count = 1
-
-[[issues]]
-file = "src/Builders/DispatchGuideBuilder.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('driver_rut')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
-count = 2
-
-[[issues]]
-file = "src/Builders/DispatchGuideBuilder.php"
-code = "invalid-array-index"
 message = '''Invalid index type `string('ind_traslado')` used for array access on `Laragear\Dte\Casts\DteHeaderIdDoc`.'''
 count = 1
 
@@ -590,33 +512,21 @@ count = 1
 
 [[issues]]
 file = "src/Builders/DispatchGuideBuilder.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('trailer_plate')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
-count = 1
-
-[[issues]]
-file = "src/Builders/DispatchGuideBuilder.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('vehicle_plate')` used for array access on `Laragear\Dte\Casts\DteHeaderTransport`.'''
-count = 1
-
-[[issues]]
-file = "src/Builders/DispatchGuideBuilder.php"
 code = "invalid-property-assignment-value"
-message = '''Invalid type for property `$transport`: expected `array{'arrival_at'?: DateTimeImmutable, 'carrier'?: Laragear\Rut\Rut, 'departure_at'?: DateTimeImmutable, 'destination_address'?: string, 'destination_city'?: string, 'destination_commune'?: string, 'driver'?: Laragear\Rut\Rut, 'driver_name'?: string, 'ind_traslado'?: int, 'tipo_despacho'?: int, 'trailer_plate'?: string, 'vehicle_plate'?: string}`, but got `array{'arrival_at': DateTimeImmutable|null, 'carrier': Laragear\Rut\Rut|null, 'departure_at': DateTimeImmutable|null, 'destination_address': ('TValue.illuminate\support\fluent extends nonnull)|null, 'destination_city': ('TValue.illuminate\support\fluent extends nonnull)|null, 'destination_commune': ('TValue.illuminate\support\fluent extends nonnull)|null, 'driver': Laragear\Rut\Rut|null, 'driver_name': ('TValue.illuminate\support\fluent extends nonnull)|null, 'trailer_plate': ('TValue.illuminate\support\fluent extends nonnull)|null, 'vehicle_plate': ('TValue.illuminate\support\fluent extends nonnull)|null}`.'''
+message = '''Invalid type for property `$transport`: expected `array{'arrival_at'?: DateTimeImmutable, 'carrier'?: Laragear\Rut\Rut, 'departure_at'?: DateTimeImmutable, 'destination_address'?: string, 'destination_city'?: string, 'destination_commune'?: string, 'driver'?: Laragear\Rut\Rut, 'driver_name'?: string, 'ind_traslado'?: int, 'tipo_despacho'?: int, 'trailer_plate'?: string, 'vehicle_plate'?: string}`, but got `array{'arrival_at': DateTimeImmutable|null, 'carrier': Laragear\Rut\Rut|null, 'departure_at': DateTimeImmutable|null, 'destination_address': null|string, 'destination_city': null|string, 'destination_commune': null|string, 'driver': Laragear\Rut\Rut|null, 'driver_name': null|string, 'trailer_plate': null|string, 'vehicle_plate': null|string}`.'''
 count = 1
 
 [[issues]]
 file = "src/Builders/DispatchGuideBuilder.php"
 code = "less-specific-nested-argument-type"
 message = '''Argument type mismatch for argument #1 of `DateTimeImmutable::__construct`: expected `string`, but provided type `('TValue.illuminate\support\fluent extends mixed)` is less specific.'''
-count = 2
+count = 1
 
 [[issues]]
 file = "src/Builders/DispatchGuideBuilder.php"
-code = "less-specific-nested-argument-type"
-message = '''Argument type mismatch for argument #1 of `Laragear\Rut\Rut::parse`: expected `Laragear\Rut\Rut|int|null|string`, but provided type `('TValue.illuminate\support\fluent extends mixed)` is less specific.'''
-count = 2
+code = "possibly-null-argument"
+message = "Argument #1 of method `DateTimeImmutable::__construct` is possibly `null`, but parameter type `string` does not accept it."
+count = 1
 
 [[issues]]
 file = "src/Builders/DispatchGuideBuilder.php"
@@ -818,38 +728,14 @@ count = 1
 
 [[issues]]
 file = "src/Builders/InvoiceBuilder.php"
-code = "incompatible-return-type"
-message = '''Return type `array{'exempt': int, 'net': int, 'tax': int, 'total': int}` of `Laragear\Dte\Builders\InvoiceBuilder::calculatedtotals()` is incompatible with parent return type `array{'exempt': int, 'net': int, 'non_billable': int, 'tax': int, 'total': int}` of `Laragear\Dte\Builders\Concerns\TotalsCalculator::calculatedtotals()`'''
-count = 1
-
-[[issues]]
-file = "src/Builders/InvoiceBuilder.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('exempt_amount_override')` used for array access on `Laragear\Dte\Casts\DteHeaderIdDoc`.'''
-count = 1
-
-[[issues]]
-file = "src/Builders/InvoiceBuilder.php"
 code = "invalid-array-index"
 message = '''Invalid index type `string('payment')` used for array access on `Laragear\Dte\Casts\DteHeaderIdDoc`.'''
 count = 1
 
 [[issues]]
 file = "src/Builders/InvoiceBuilder.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('tax_exempt')` used for array access on `Laragear\Dte\Casts\DteHeaderIdDoc`.'''
-count = 1
-
-[[issues]]
-file = "src/Builders/InvoiceBuilder.php"
 code = "invalid-return-statement"
-message = '''Invalid return type for function `Laragear\Dte\Builders\InvoiceBuilder::calculatedTotals`: expected `array{'exempt': int, 'net': int, 'tax': int, 'total': int}`, but found `array{'exempt': int, 'net': int(0), 'non_billable': int, 'tax': int(0), 'total': int}`.'''
-count = 1
-
-[[issues]]
-file = "src/Builders/InvoiceBuilder.php"
-code = "invalid-return-statement"
-message = '''Invalid return type for function `Laragear\Dte\Builders\InvoiceBuilder::calculatedTotals`: expected `array{'exempt': int, 'net': int, 'tax': int, 'total': int}`, but found `array{'exempt': int, 'net': int, 'non_billable': int, 'tax': int, 'total': int}`.'''
+message = '''Invalid return type for function `Laragear\Dte\Builders\InvoiceBuilder::calculatedTotals`: expected `array{'exempt': int, 'net': int, 'non_billable': int, 'tax': int, 'total': int}`, but found `array{'exempt': int, 'net': int, 'non_billable': int, 'tax': int, 'taxes': array<int, int>, 'total': int}`.'''
 count = 1
 
 [[issues]]
@@ -1633,18 +1519,6 @@ message = '''Possible argument type mismatch for argument #1 of `collect`: expec
 count = 1
 
 [[issues]]
-file = "src/Console/Commands/PackManualDtesCommand.php"
-code = "possibly-invalid-argument"
-message = 'Possible argument type mismatch for argument #3 of `Laragear\Dte\Services\PackDtesService::packManual`: expected `bool`, but possibly received `array<array-key, mixed>|bool|float|int|null|string`.'
-count = 1
-
-[[issues]]
-file = "src/Console/Commands/PackManualDtesCommand.php"
-code = "possibly-null-argument"
-message = 'Argument #3 of method `Laragear\Dte\Services\PackDtesService::packManual` is possibly `null`, but parameter type `bool` does not accept it.'
-count = 1
-
-[[issues]]
 file = "src/Console/Commands/PollIecvStatusCommand.php"
 code = "invalid-return-statement"
 message = 'Invalid return type for function `Laragear\Dte\Console\Commands\PollIecvStatusCommand::books`: expected `Illuminate\Support\LazyCollection<int, Laragear\Dte\Models\SiiIecv>`, but found `Illuminate\Support\LazyCollection<int, Laragear\Dte\Models\SiiIecv|Laragear\Dte\Models\SiiIecv&static|stdClass>`.'
@@ -1666,6 +1540,12 @@ count = 1
 file = "src/Console/Commands/ProcessAndSendEnvelopeCommand.php"
 code = "less-specific-return-statement"
 message = '''Returned type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)|Laragear\Dte\Models\SiiDteEnvelope` is less specific than the declared return type `Laragear\Dte\Models\SiiDteEnvelope` for function `Laragear\Dte\Console\Commands\ProcessAndSendEnvelopeCommand::envelope`.'''
+count = 1
+
+[[issues]]
+file = "src/Console/Commands/ProcessAndSendEnvelopeCommand.php"
+code = "non-existent-method"
+message = "Method `failtodraft` does not exist on type `stdClass`."
 count = 1
 
 [[issues]]
@@ -2324,8 +2204,26 @@ count = 1
 
 [[issues]]
 file = "src/Models/SiiDte.php"
-code = "less-specific-nested-argument-type"
-message = '''Argument type mismatch for argument #1 of `collect`: expected `Illuminate\Contracts\Support\Arrayable<('TKey.collect() extends array-key), ('TValue.collect() extends mixed)>|iterable<('TKey.collect() extends array-key), ('TValue.collect() extends mixed)>|null`, but provided type `('TValue.illuminate\support\fluent extends nonnull)|array{}` is less specific.'''
+code = "invalid-array-index"
+message = '''Invalid index type `string('non_billable')` used for array access on `Laragear\Dte\Casts\DteHeaderTotals`.'''
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDte.php"
+code = "invalid-property-assignment-value"
+message = '''Invalid type for property `$detail_items`: expected `Laragear\Dte\Casts\DteDetailItems`, but got `array{'items': array<array-key, mixed>}|array{'items': mixed, ...}`.'''
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDte.php"
+code = "invalid-property-assignment-value"
+message = '''Invalid type for property `$header_totals`: expected `Laragear\Dte\Casts\DteHeaderTotals`, but got `array{'exempt': int, 'net': int, 'non_billable': ('TValue.illuminate\support\fluent extends nonnull)|int(0), 'tax': int, 'taxes': array<int, int>, 'total': int}`.'''
+count = 1
+
+[[issues]]
+file = "src/Models/SiiDte.php"
+code = "invalid-return-statement"
+message = '''Invalid return type for function `Laragear\Dte\Models\SiiDte::calculatedTotalsFromPayload`: expected `array{'amount_exempt': int, 'amount_net': int, 'amount_taxes': int, 'amount_total': int, 'taxes': array<string, int>|null}`, but found `array{'amount_exempt': int, 'amount_net': int, 'amount_taxes': int, 'amount_total': int, 'taxes': non-empty-array<int, int>|null}`.'''
 count = 1
 
 [[issues]]
@@ -2666,69 +2564,9 @@ count = 1
 
 [[issues]]
 file = "src/Services/IecvService.php"
-code = "invalid-argument"
-message = 'Invalid argument type for argument #1 of `Illuminate\Support\Collection::map`: expected `(callable(Laragear\Rut\Rut|string, int): int)`, but found `(closure(Laragear\Rut\Rut): int)`.'
-count = 1
-
-[[issues]]
-file = "src/Services/IecvService.php"
-code = "invalid-property-access"
-message = "Attempting to access a property on a non-object type (`string`)."
-count = 4
-
-[[issues]]
-file = "src/Services/IecvService.php"
-code = "invalid-return-statement"
-message = 'Invalid return type for function `Laragear\Dte\Services\IecvService::issuerNums`: expected `list<int>`, but found `array<int, int>`.'
-count = 1
-
-[[issues]]
-file = "src/Services/IecvService.php"
-code = "invalid-return-statement"
-message = 'Invalid return type for function `{closure:src/Services/IecvService.php:268:19}`: expected `Laragear\Rut\Rut`, but found `Laragear\Rut\Rut|string`.'
-count = 1
-
-[[issues]]
-file = "src/Services/IecvService.php"
-code = "less-specific-nested-return-statement"
-message = '''Returned type `list<mixed>` is less specific than the declared return type `array<int, Laragear\Dte\Models\SiiDte>` for function `Laragear\Dte\Services\IecvService::documentsFor` due to nested 'mixed'.'''
-count = 1
-
-[[issues]]
-file = "src/Services/IecvService.php"
 code = "less-specific-return-statement"
 message = '''Returned type `('TModel.illuminate\database\eloquent\builder extends Illuminate\Database\Eloquent\Model)` is less specific than the declared return type `Laragear\Dte\Models\SiiIecv` for function `Laragear\Dte\Services\IecvService::persist`.'''
 count = 1
-
-[[issues]]
-file = "src/Services/IecvService.php"
-code = "possible-method-access-on-null"
-message = "Attempting to call a method on `null`."
-count = 2
-
-[[issues]]
-file = "src/Services/IecvService.php"
-code = "possibly-invalid-argument"
-message = 'Possible argument type mismatch for argument #1 of `Illuminate\Support\Collection::groupBy`: expected `(callable(Laragear\Dte\Models\SiiDte|Laragear\Dte\Models\SiiDte&static|stdClass, int): string)|array<array-key, mixed>|string`, but possibly received `(closure(Laragear\Dte\Models\SiiDte): string)`.'
-count = 1
-
-[[issues]]
-file = "src/Services/IecvService.php"
-code = "possibly-invalid-argument"
-message = 'Possible argument type mismatch for argument #1 of `Illuminate\Support\Collection::groupBy`: expected `(callable(stdClass, int): string)|array<array-key, mixed>|string`, but possibly received `(closure(Laragear\Dte\Models\SiiDte): string)`.'
-count = 1
-
-[[issues]]
-file = "src/Services/IecvService.php"
-code = "possibly-null-argument"
-message = 'Argument #1 of method `Laragear\Dte\Services\IecvService::documentKey` is possibly `null`, but parameter type `int` does not accept it.'
-count = 2
-
-[[issues]]
-file = "src/Services/IecvService.php"
-code = "possibly-null-argument"
-message = 'Argument #2 of method `Laragear\Dte\Services\IecvService::documentKey` is possibly `null`, but parameter type `string` does not accept it.'
-count = 2
 
 [[issues]]
 file = "src/Services/PackDtesService.php"
@@ -2783,6 +2621,12 @@ file = "src/Services/PackDtesService.php"
 code = "possibly-null-property-access"
 message = "Attempting to access a property on a possibly `null` value."
 count = 2
+
+[[issues]]
+file = "src/Services/TotalsCalculator.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `Laragear\Dte\Services\TotalsCalculator::aggregateTaxes`: expected `array<int, int>`, but found `array<string, int>`.'
+count = 1
 
 [[issues]]
 file = "src/Support/TokenAuthenticator.php"

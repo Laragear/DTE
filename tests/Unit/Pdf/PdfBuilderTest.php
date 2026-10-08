@@ -8,13 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use InvalidArgumentException;
+use Laragear\Dte\Actions\CompileDte\Compile;
 use Laragear\Dte\Data\PdfData;
+use Laragear\Dte\Enums\DteStatus;
 use Laragear\Dte\Enums\DteType;
 use Laragear\Dte\Models\SiiDte;
 use Laragear\Dte\Models\SiiDtePayload;
 use Laragear\Dte\Pdf\PdfBuilder;
 use Laragear\Dte\Pdf\Ted\Pdf417Encoder;
 use Laragear\Dte\Proxies\LibxmlProxy;
+use LogicException;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -208,6 +211,100 @@ class PdfBuilderTest extends DatabaseTestCase
         $this->expectExceptionMessageIs($message);
 
         $this->app->make(PdfBuilder::class)->forDte($dte)->binary();
+    }
+
+    public function test_compiles_pending_dte_when_xml_missing(): void
+    {
+        Storage::fake('local');
+        $this->config(['dte.pdf.disk' => 'local', 'dte.pdf.prefix' => 'dte']);
+
+        $dte = SiiDte::factory()
+            ->has(SiiDtePayload::factory(['xml' => null]), 'payload')
+            ->create([
+                'status' => DteStatus::Pending,
+                'issuer_rut' => '76543210-K',
+                'document_type' => DteType::Invoice,
+                'folio' => 4321,
+                'created_at' => Carbon::parse('2026-05-01 19:32:54'),
+            ]);
+
+        $this->mock(Compile::class, static function (MockInterface $mock) use ($dte): void {
+            $mock->expects('forDte')->andReturnUsing(static function () use ($dte): SiiDte {
+                $dte->payload->forceFill([
+                    'xml' => '<DTE version="1.0"><Documento><TED version="1.0">TEST_TED</TED></Documento></DTE>',
+                ])->save();
+
+                return $dte;
+            });
+        });
+
+        $this->barcode
+            ->expects('generate')
+            ->with('<TED version="1.0">TEST_TED</TED>')
+            ->andReturn('data:image/png;base64,barcode');
+
+        $builder = $this->app->make(PdfBuilder::class)->forDte($dte);
+
+        $data = $builder->generate();
+
+        static::assertInstanceOf(PdfData::class, $data);
+        Storage::disk('local')->assertExists('dte/76543210-K_33_4321_2026-05-01_193254.pdf');
+    }
+
+    public function test_compile_failure_propagates_and_writes_nothing(): void
+    {
+        Storage::fake('local');
+        $this->config(['dte.pdf.disk' => 'local', 'dte.pdf.prefix' => 'dte']);
+
+        $dte = SiiDte::factory()
+            ->has(SiiDtePayload::factory(['xml' => null]), 'payload')
+            ->create(['status' => DteStatus::Pending]);
+
+        $this->mock(Compile::class, static function (MockInterface $mock): void {
+            $mock->expects('forDte')->andThrow(new LogicException('The CAF is not available.'));
+        });
+
+        try {
+            $this->app->make(PdfBuilder::class)->forDte($dte)->generate();
+
+            static::fail('The compile exception did not propagate.');
+        } catch (LogicException $exception) {
+            static::assertSame('The CAF is not available.', $exception->getMessage());
+        }
+
+        static::assertSame([], Storage::disk('local')->allFiles());
+    }
+
+    public function test_draft_without_xml_is_not_compiled(): void
+    {
+        $dte = SiiDte::factory()
+            ->has(SiiDtePayload::factory(['xml' => null]), 'payload')
+            ->create(['status' => DteStatus::Draft]);
+
+        $this->mock(Compile::class, static function (MockInterface $mock): void {
+            $mock->expects('forDte')->never();
+        });
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessageIs('The DTE must have an XML payload to generate a PDF.');
+
+        $this->app->make(PdfBuilder::class)->forDte($dte)->binary();
+    }
+
+    public function test_does_not_compile_when_xml_present(): void
+    {
+        $this->mock(Compile::class, static function (MockInterface $mock): void {
+            $mock->expects('forDte')->never();
+        });
+
+        $this->barcode
+            ->expects('generate')
+            ->with('<TED version="1.0">TEST_TED</TED>')
+            ->andReturn('data:image/png;base64,barcode');
+
+        $builder = $this->app->make(PdfBuilder::class)->forDte($this->dte);
+
+        static::assertIsString($builder->binary());
     }
 
     public function test_binary_returns_content_from_real_spatie_builder(): void

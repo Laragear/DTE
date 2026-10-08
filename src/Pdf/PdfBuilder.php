@@ -10,6 +10,7 @@ use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\View as ViewContract;
 use InvalidArgumentException;
+use Laragear\Dte\Actions\CompileDte\Compile;
 use Laragear\Dte\Data\PdfData;
 use Laragear\Dte\Models\SiiDte;
 use Laragear\Dte\Pdf\Ted\Pdf417Encoder;
@@ -17,6 +18,7 @@ use Spatie\LaravelPdf\Facades\Pdf;
 use Spatie\LaravelPdf\FakePdfBuilder;
 use Spatie\LaravelPdf\PdfBuilder as SpatiePdfBuilder;
 use Symfony\Component\HttpFoundation\Response;
+
 use function implode;
 use function trim;
 
@@ -45,6 +47,7 @@ class PdfBuilder implements Responsable
         protected ViewFactory $view,
         protected Pdf417Encoder $barcode,
         protected TedExtractor $extractor,
+        protected Compile $compile,
     ) {
         //
     }
@@ -151,8 +154,15 @@ class PdfBuilder implements Responsable
             ?? $this->config->get('dte.pdf.views.'.$this->dte->document_type->value)
             ?? $this->config->get('dte.pdf.views.default');
 
-        $xml = $this->dte->payload?->xml
-            ?? throw new InvalidArgumentException('The DTE must have an XML payload to generate a PDF.');
+        $xml = $this->dte->payload?->xml;
+
+        // PDFs render from the signed XML; pending documents compile inline first.
+        if (! is_string($xml) && $this->dte->payload !== null && $this->dte->status->isCompilable()) {
+            $this->dte = $this->compile->forDte($this->dte);
+            $xml = $this->dte->payload?->xml;
+        }
+
+        $xml ?? throw new InvalidArgumentException('The DTE must have an XML payload to generate a PDF.');
 
         $ted = $this->extractor->extract($xml);
 
@@ -195,7 +205,7 @@ class PdfBuilder implements Responsable
 
         $storage = $this->storage->disk($disk);
 
-        if ($this->force || !$storage->exists($path)) {
+        if ($this->force || ! $storage->exists($path)) {
             $storage->put($path, $this->binary());
         }
 
@@ -224,11 +234,11 @@ class PdfBuilder implements Responsable
     public function uniqueName(string $append = ''): string
     {
         return implode('_', [
-                $this->dte->issuer_rut->formatBasic(),
-                $this->dte->document_type->value,
-                $this->dte->folio,
-                $this->dte->created_at->format('Y-m-d_His'),
-            ]).$append;
+            $this->dte->issuer_rut->formatBasic(),
+            $this->dte->document_type->value,
+            $this->dte->folio,
+            $this->dte->created_at->format('Y-m-d_His'),
+        ]).$append;
     }
 
     /**

@@ -19,8 +19,9 @@ readonly class RcvRecord
         public int $amountTotal,
         public string $characterization,
         public ?Carbon $issuedOn = null,
+        public ?Carbon $receivedOn = null,
         public ?Carbon $acknowledgedAt = null,
     ) {
-    //
+        //
     }
 }

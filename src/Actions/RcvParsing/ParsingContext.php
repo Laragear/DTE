@@ -20,6 +20,7 @@ class ParsingContext
         public array $headerMap = [],
         public ?LazyCollection $records = null,
         public mixed $stream = null,
+        public ?string $period = null,
     ) {
         //
     }

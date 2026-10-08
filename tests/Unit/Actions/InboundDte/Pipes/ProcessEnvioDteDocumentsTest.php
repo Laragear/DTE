@@ -130,6 +130,102 @@ class ProcessEnvioDteDocumentsTest extends DatabaseTestCase
 
     /*
     |--------------------------------------------------------------------------
+    | Phantom adoption
+    |--------------------------------------------------------------------------
+    */
+
+    public function test_adopts_existing_phantom_instead_of_colliding(): void
+    {
+        Event::fake([InboundDteReceived::class, InboundForgedDteReceived::class]);
+
+        $xmlString = static::getStub('EnvioDteSingleDocument.xml');
+
+        $tenant = (object) ['id' => 1];
+
+        $this->mock(TenantResolver::class, static function ($mock) use ($tenant) {
+            $mock->expects('resolve')->andReturn($tenant);
+        });
+
+        $this->mock(DteAuthenticityVerifier::class, static function ($mock) {
+            $mock->expects('verify')->andReturn(true);
+        });
+
+        $phantom = SiiInboundDocument::factory()->create([
+            'issuer_rut' => '11111111-1',
+            'receiver_rut' => '76123456-0',
+            'document_type' => 33,
+            'folio' => 1,
+            'amount_total' => 50000,
+            'status' => InboundDteStatus::PhantomPending,
+        ]);
+
+        $data = new InboundDteData(
+            new InboundEmailData('msg-1', 'a@b.cl', 'Subject', $xmlString),
+            xml: $this->app->make(XmlDomFactory::class)->simpleXml($xmlString),
+            rootName: 'EnvioDTE',
+        );
+
+        $data->log = SiiInterchangeLog::factory()->create();
+
+        $this
+            ->pipeline(ProcessInboundDte::class)
+            ->isolatePipe(ProcessEnvioDteDocuments::class)
+            ->send($data)
+            ->assertPassable(function (InboundDteData $result) use ($phantom) {
+                // The phantom row was adopted, not duplicated.
+                static::assertSame(1, SiiInboundDocument::query()->count());
+
+                $phantom->refresh();
+
+                static::assertSame(InboundDteStatus::Received, $phantom->status);
+                static::assertNotNull($phantom->payload);
+                static::assertSame(11900, $phantom->amount_total);
+
+                return true;
+            });
+    }
+
+    public function test_re_delivered_xml_never_regresses_status_or_duplicates_payload(): void
+    {
+        Event::fake([InboundDteReceived::class, InboundForgedDteReceived::class]);
+
+        $xmlString = static::getStub('EnvioDteSingleDocument.xml');
+
+        $tenant = (object) ['id' => 1];
+
+        $this->mock(TenantResolver::class, static function ($mock) use ($tenant) {
+            $mock->allows('resolve')->andReturn($tenant);
+        });
+
+        $this->mock(DteAuthenticityVerifier::class, static function ($mock) {
+            $mock->allows('verify')->andReturn(true);
+        });
+
+        $data = new InboundDteData(
+            new InboundEmailData('msg-1', 'a@b.cl', 'Subject', $xmlString),
+            xml: $this->app->make(XmlDomFactory::class)->simpleXml($xmlString),
+            rootName: 'EnvioDTE',
+        );
+
+        $data->log = SiiInterchangeLog::factory()->create();
+
+        foreach (range(1, 2) as $run) {
+            $this
+                ->pipeline(ProcessInboundDte::class)
+                ->isolatePipe(ProcessEnvioDteDocuments::class)
+                ->send($data);
+        }
+
+        static::assertSame(1, SiiInboundDocument::query()->count());
+
+        $document = SiiInboundDocument::query()->first();
+
+        static::assertSame(InboundDteStatus::Received, $document->status);
+        static::assertSame(1, $document->payload()->count());
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Sad paths
     |--------------------------------------------------------------------------
     */
@@ -153,7 +249,7 @@ class ProcessEnvioDteDocumentsTest extends DatabaseTestCase
             ->pipeline(ProcessInboundDte::class)
             ->isolatePipe(ProcessEnvioDteDocuments::class)
             ->send($data)
-            ->assertPassable(fn() => false);
+            ->assertPassable(fn () => false);
     }
 
     public function test_throws_when_tenant_not_found(): void
@@ -179,6 +275,6 @@ class ProcessEnvioDteDocumentsTest extends DatabaseTestCase
             ->pipeline(ProcessInboundDte::class)
             ->isolatePipe(ProcessEnvioDteDocuments::class)
             ->send($data)
-            ->assertPassable(fn() => false);
+            ->assertPassable(fn () => false);
     }
 }

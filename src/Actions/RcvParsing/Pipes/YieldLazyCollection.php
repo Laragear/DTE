@@ -31,7 +31,7 @@ class YieldLazyCollection
      */
     public function handle(ParsingContext $context, Closure $next): ParsingContext
     {
-        if (!$this->extractHeaders($context)) {
+        if (! $this->extractHeaders($context)) {
             $context->records = LazyCollection::empty();
 
             return $next($context);
@@ -118,11 +118,13 @@ class YieldLazyCollection
     }
 
     /**
-     * Filter row mappings lacking crucial identification elements.
+     * Filter row mappings lacking crucial identification elements or unmapped document types.
      */
     protected function isValidRow(array $mapped): bool
     {
-        return isset($mapped['Tipo Doc']) && is_numeric($mapped['Tipo Doc']);
+        return isset($mapped['Tipo Doc'])
+            && is_numeric($mapped['Tipo Doc'])
+            && DteType::tryFrom((int) $mapped['Tipo Doc']) !== null;
     }
 
     /**
@@ -138,6 +140,7 @@ class YieldLazyCollection
             $this->parseAmount($mapped),
             $mapped['Tipo Compra'] ?? $mapped['Tipo Venta'] ?? 'Del Giro',
             $this->parseDate($mapped, 'Fecha Docto'),
+            $this->parseDate($mapped, 'Fecha Recepcion'),
             $this->parseDate($mapped, 'Fecha Acuse'),
         );
     }
@@ -169,7 +172,9 @@ class YieldLazyCollection
      */
     protected function parseDate(array $mapped, string $key): ?Carbon
     {
-        if (isset($mapped[$key]) && $mapped[$key] !== '') {
+        // The SII portal may emit acuse management letters (A, C, P, G) inside date
+        // columns instead of dates; anything not matching the export format is null.
+        if (isset($mapped[$key]) && preg_match('/^\d{2}-\d{2}-\d{4}$/', $mapped[$key]) === 1) {
             return Carbon::createFromFormat('d-m-Y', $mapped[$key])->startOfDay();
         }
 

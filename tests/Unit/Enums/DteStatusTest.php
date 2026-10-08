@@ -344,6 +344,7 @@ class DteStatusTest extends TestCase
     {
         static::assertSame($expected, $status->isCompilableForPack());
         static::assertSame(! $expected, $status->isNotCompilableForPack());
+        static::assertSame(DteStatus::compilableForPackValues(), [DteStatus::Pending->value]);
     }
 
     public static function providesAnnulmentConflicting(): array
@@ -370,31 +371,6 @@ class DteStatusTest extends TestCase
         static::assertSame(! $expected, $status->isNotAnnulmentConflicting());
         static::assertSame(DteStatus::annulmentConflictingValues(),
             [DteStatus::Pending->value, DteStatus::Accepted->value]);
-    }
-
-    public static function providesOrphanDowngradable(): array
-    {
-        return [
-            DteStatus::Draft->value => [DteStatus::Draft, false],
-            DteStatus::Pending->value => [DteStatus::Pending, true],
-            DteStatus::Building->value => [DteStatus::Building, false],
-            DteStatus::RequiresCaf->value => [DteStatus::RequiresCaf, false],
-            DteStatus::Signing->value => [DteStatus::Signing, false],
-            DteStatus::Outbox->value => [DteStatus::Outbox, false],
-            DteStatus::Packed->value => [DteStatus::Packed, false],
-            DteStatus::Sent->value => [DteStatus::Sent, true],
-            DteStatus::Accepted->value => [DteStatus::Accepted, false],
-            DteStatus::Rejected->value => [DteStatus::Rejected, false],
-            DteStatus::Annulled->value => [DteStatus::Annulled, false],
-        ];
-    }
-
-    #[DataProvider('providesOrphanDowngradable')]
-    public function test_identifies_orphan_downgradable(DteStatus $status, bool $expected): void
-    {
-        static::assertSame($expected, $status->isOrphanDowngradable());
-        static::assertSame(! $expected, $status->isNotOrphanDowngradable());
-        static::assertSame(DteStatus::orphanDowngradableValues(), [DteStatus::Pending->value, DteStatus::Sent->value]);
     }
 
     public function test_non_terminal_values_excludes_terminal_states(): void

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Actions;
 
+use InvalidArgumentException;
 use Laragear\Dte\Actions\Cuadratura\Sync;
 use Laragear\Dte\Actions\RcvParsing\Parse;
 use Laragear\Dte\Actions\RcvParsing\ParsingContext;
@@ -16,6 +17,7 @@ use Mockery\MockInterface;
 use Override;
 use RuntimeException;
 use Tests\DatabaseTestCase;
+
 use function file_put_contents;
 use function sys_get_temp_dir;
 
@@ -25,7 +27,7 @@ class SyncRcvTest extends DatabaseTestCase
     {
         parent::setUp();
 
-        ConfigurationManager::setCompany(fn() => CompanyData::make(
+        ConfigurationManager::setCompany(fn () => CompanyData::make(
             IssuerData::make(
                 '76.111.222-3',
                 'Test Company',
@@ -50,6 +52,17 @@ class SyncRcvTest extends DatabaseTestCase
         @unlink(sys_get_temp_dir().'/dummy-compras.csv');
 
         parent::tearDown();
+    }
+
+    public function test_throws_when_period_is_invalid(): void
+    {
+        $csvPath = sys_get_temp_dir().'/dummy-compras.csv';
+        file_put_contents($csvPath, ''); // Create dummy file
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessageIs('The period [2026-13] is not a valid YYYY-MM month.');
+
+        $this->app->make(SyncRcv::class)->handle($csvPath, 'compras', '76111222-3', '2026-13');
     }
 
     public function test_throws_when_no_issuer(): void
@@ -77,7 +90,7 @@ class SyncRcvTest extends DatabaseTestCase
         $this->mock(Parse::class, function (MockInterface $mock) use ($csvPath, $parsingContext) {
             $mock
                 ->expects('forBatch')
-                ->with($csvPath, RcvType::Purchases, Mockery::on(fn(Rut $rut) => $rut->format() === '76.111.222-3'))
+                ->with($csvPath, RcvType::Purchases, Mockery::on(fn (Rut $rut) => $rut->format() === '76.111.222-3'), null)
                 ->andReturn($parsingContext);
         });
 

@@ -301,25 +301,6 @@ enum DteStatus: string
     }
 
     /**
-     * Whether the outbound document may be downgraded as orphaned.
-     */
-    public function isOrphanDowngradable(): bool
-    {
-        return match ($this) {
-            self::Pending, self::Sent => true,
-            default => false,
-        };
-    }
-
-    /**
-     * Whether the outbound document may not be downgraded as orphaned.
-     */
-    public function isNotOrphanDowngradable(): bool
-    {
-        return ! $this->isOrphanDowngradable();
-    }
-
-    /**
      * Backed values of the compiled group.
      *
      * @return list<string>
@@ -367,16 +348,6 @@ enum DteStatus: string
     public static function annulmentConflictingValues(): array
     {
         return [self::Pending->value, self::Accepted->value];
-    }
-
-    /**
-     * Backed values of the orphan-downgradable group.
-     *
-     * @return list<string>
-     */
-    public static function orphanDowngradableValues(): array
-    {
-        return [self::Pending->value, self::Sent->value];
     }
 
     /**

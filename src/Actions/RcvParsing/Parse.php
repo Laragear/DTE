@@ -25,8 +25,8 @@ class Parse extends Pipeline
     /**
      * Process natively executing the stream bounds mapping execution logic safely.
      */
-    public function forBatch(mixed $source, RcvType $type, Rut $companyRut): ParsingContext
+    public function forBatch(mixed $source, RcvType $type, Rut $companyRut, ?string $period = null): ParsingContext
     {
-        return $this->send(new ParsingContext($source, $type, $companyRut))->thenReturn();
+        return $this->send(new ParsingContext($source, $type, $companyRut, period: $period))->thenReturn();
     }
 }

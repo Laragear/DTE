@@ -60,7 +60,7 @@ class ProcessEnvioDteDocuments
      */
     protected function resolveReceiver(SimpleXMLElement $xml): Rut
     {
-        if (!isset($xml->SetDTE->Caratula->RutReceptor)) {
+        if (! isset($xml->SetDTE->Caratula->RutReceptor)) {
             throw new RuntimeException('Missing RutReceptor in EnvioDTE.');
         }
 
@@ -120,20 +120,32 @@ class ProcessEnvioDteDocuments
     ): SiiInboundDocument {
         $metadata = $this->extractMetadata($dteNode);
 
-        $document = SiiInboundDocument::forceCreate([
-            'sii_interchange_log_id' => $log->id,
+        // A phantom spawned by the RCV sync already holds the unique key: it is
+        // adopted instead of colliding with the unique index. The XML always
+        // wins on header values, but a phantom's status never regresses.
+        $document = SiiInboundDocument::query()
+            ->where('issuer_num', $metadata['issuer']->num)
+            ->where('issuer_vd', $metadata['issuer']->vd)
+            ->where('receiver_num', $receiver->num)
+            ->where('receiver_vd', $receiver->vd)
+            ->where('document_type', $metadata['type']->value)
+            ->where('folio', $metadata['folio'])
+            ->firstOrNew();
+
+        $document->forceFill([
             'issuer_rut' => $metadata['issuer'],
             'receiver_rut' => $receiver,
             'document_type' => $metadata['type'],
             'folio' => $metadata['folio'],
+            'sii_interchange_log_id' => $log->id,
             'issued_on' => $metadata['issued_on'],
             'amount_total' => $metadata['amount'],
-            'status' => InboundDteStatus::DEFAULT,
+            'status' => $document->exists ? $document->status : InboundDteStatus::DEFAULT,
             'received_at' => $this->date->now(),
             'validated_at' => $this->date->now(),
-        ]);
+        ])->save();
 
-        $document->payload()->create(['xml' => $metadata['xml']]);
+        $document->payload()->updateOrCreate([], ['xml' => $metadata['xml']]);
 
         return $document;
     }

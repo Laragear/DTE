@@ -65,8 +65,9 @@ class ReconcileRcvStreamTest extends DatabaseTestCase
 
         $document->refresh();
 
-        static::assertSame(InboundDteStatus::CommercialAccepted->value, $document->claim_status);
-        static::assertNotNull($document->claimed_at);
+        // A RCV match is not a commercial acceptance decision: claims untouched.
+        static::assertNull($document->claim_status);
+        static::assertNull($document->claimed_at);
     }
 
     public function test_matches_valid_sales_and_updates_outbounds_correctly(): void
@@ -109,12 +110,14 @@ class ReconcileRcvStreamTest extends DatabaseTestCase
         $document->refresh();
 
         static::assertSame(DteStatus::Accepted, $document->status);
-        static::assertNotNull($document->acknowledged_at);
+        static::assertNull($document->acknowledged_at);
     }
 
     public function test_generates_phantom_pending_when_valid_purchases_are_missing_locally(): void
     {
         $companyRut = Rut::parse('76111222-3');
+
+        $receivedOn = Carbon::parse('2023-03-07');
 
         $record = new RcvRecord(
             issuer: Rut::parse('76039449-1'),
@@ -123,7 +126,8 @@ class ReconcileRcvStreamTest extends DatabaseTestCase
             folio: 1000,
             amountTotal: 50000,
             characterization: 'Del Giro',
-            issuedOn: Carbon::now(),
+            issuedOn: $receivedOn,
+            receivedOn: $receivedOn,
             acknowledgedAt: Carbon::now(),
         );
 
@@ -143,6 +147,7 @@ class ReconcileRcvStreamTest extends DatabaseTestCase
             'folio' => 1000,
             'status' => InboundDteStatus::PhantomPending->value,
             'amount_total' => 50000,
+            'received_at' => $receivedOn->toDateTimeString(),
         ]);
     }
 
@@ -262,5 +267,255 @@ class ReconcileRcvStreamTest extends DatabaseTestCase
         $event->assertDispatched(DteAltered::class, function (DteAltered $event) {
             return $event->record->amountTotal === 119000 && $event->model->amount_total === 500;
         });
+    }
+
+    public function test_phantom_creation_is_idempotent_across_resyncs(): void
+    {
+        $companyRut = Rut::parse('76111222-3');
+
+        $record = new RcvRecord(
+            issuer: Rut::parse('76039449-1'),
+            receiver: $companyRut,
+            documentType: DteType::Invoice,
+            folio: 1000,
+            amountTotal: 50000,
+            characterization: 'Del Giro',
+            issuedOn: Carbon::now(),
+        );
+
+        $parsingContext = new ParsingContext('fake', RcvType::Purchases, $companyRut);
+        $parsingContext->records = LazyCollection::make([$record]);
+
+        $context = new CuadraturaContext($parsingContext);
+
+        $this
+            ->pipeline(Sync::class)
+            ->isolatePipe(ReconcileRcvStream::class)
+            ->send($context);
+
+        $this
+            ->pipeline(Sync::class)
+            ->isolatePipe(ReconcileRcvStream::class)
+            ->send($context);
+
+        static::assertSame(1, SiiInboundDocument::query()->where('folio', 1000)->count());
+    }
+
+    public function test_skips_phantom_creation_for_non_claimable_document_types(): void
+    {
+        $companyRut = Rut::parse('76111222-3');
+
+        $record = new RcvRecord(
+            issuer: Rut::parse('76039449-1'),
+            receiver: $companyRut,
+            documentType: DteType::Receipt,
+            folio: 1000,
+            amountTotal: 50000,
+            characterization: 'Del Giro',
+            issuedOn: Carbon::now(),
+        );
+
+        $parsingContext = new ParsingContext('fake', RcvType::Purchases, $companyRut);
+        $parsingContext->records = LazyCollection::make([$record]);
+
+        $context = new CuadraturaContext($parsingContext);
+
+        $this
+            ->pipeline(Sync::class)
+            ->isolatePipe(ReconcileRcvStream::class)
+            ->send($context);
+
+        static::assertSame(1, $context->metrics['skipped']);
+        static::assertSame(0, $context->metrics['phantoms']);
+        $this->assertDatabaseEmpty(SiiInboundDocument::class);
+    }
+
+    public function test_dispatches_altered_when_unsent_document_appears_in_rcv(): void
+    {
+        $event = Event::fake([DteAltered::class]);
+
+        $companyRut = Rut::parse('76111222-3');
+
+        $document = SiiDte::factory()->create([
+            'issuer_rut' => '76111222-3',
+            'receiver_rut' => '76039449-1',
+            'document_type' => DteType::Invoice,
+            'folio' => 9090,
+            'amount_total' => 5000,
+            'status' => DteStatus::Draft,
+        ]);
+
+        $record = new RcvRecord(
+            issuer: $companyRut,
+            receiver: Rut::parse('76039449-1'),
+            documentType: DteType::Invoice,
+            folio: 9090,
+            amountTotal: 5000,
+            characterization: 'Del Giro',
+            issuedOn: Carbon::now(),
+        );
+
+        $parsingContext = new ParsingContext('fake', RcvType::Sales, $companyRut);
+        $parsingContext->records = LazyCollection::make([$record]);
+
+        $context = new CuadraturaContext($parsingContext);
+
+        $this
+            ->pipeline(Sync::class)
+            ->isolatePipe(ReconcileRcvStream::class)
+            ->send($context);
+
+        static::assertSame(0, $context->metrics['matched']);
+        static::assertSame(1, $context->metrics['discrepancies']);
+
+        $document->refresh();
+        static::assertSame(DteStatus::Draft, $document->status);
+
+        $event->assertDispatched(DteAltered::class);
+    }
+
+    public function test_never_matches_documents_of_other_issuers(): void
+    {
+        $companyRut = Rut::parse('76111222-3');
+
+        // Same receiver, type and folio, but issued by another company.
+        SiiDte::factory()->create([
+            'issuer_rut' => '99999999-9',
+            'receiver_rut' => '76039449-1',
+            'document_type' => DteType::Invoice,
+            'folio' => 9090,
+            'amount_total' => 5000,
+            'status' => DteStatus::Sent,
+        ]);
+
+        $record = new RcvRecord(
+            issuer: $companyRut,
+            receiver: Rut::parse('76039449-1'),
+            documentType: DteType::Invoice,
+            folio: 9090,
+            amountTotal: 5000,
+            characterization: 'Del Giro',
+            issuedOn: Carbon::now(),
+        );
+
+        $parsingContext = new ParsingContext('fake', RcvType::Sales, $companyRut);
+        $parsingContext->records = LazyCollection::make([$record]);
+
+        $context = new CuadraturaContext($parsingContext);
+
+        $this
+            ->pipeline(Sync::class)
+            ->isolatePipe(ReconcileRcvStream::class)
+            ->send($context);
+
+        static::assertSame(0, $context->metrics['matched']);
+        static::assertSame(1, $context->metrics['phantoms']);
+    }
+
+    public function test_derives_period_from_oldest_record_issued_on(): void
+    {
+        $companyRut = Rut::parse('76111222-3');
+
+        $records = [
+            new RcvRecord(
+                issuer: Rut::parse('76039449-1'),
+                receiver: $companyRut,
+                documentType: DteType::Invoice,
+                folio: 1000,
+                amountTotal: 50000,
+                characterization: 'Del Giro',
+                issuedOn: Carbon::parse('2023-03-24'),
+            ),
+            new RcvRecord(
+                issuer: Rut::parse('76039449-1'),
+                receiver: $companyRut,
+                documentType: DteType::Invoice,
+                folio: 1001,
+                amountTotal: 50000,
+                characterization: 'Del Giro',
+                issuedOn: Carbon::parse('2023-02-28'),
+            ),
+            // Records without an issue date are derivation-neutral.
+            new RcvRecord(
+                issuer: Rut::parse('76039449-1'),
+                receiver: $companyRut,
+                documentType: DteType::Invoice,
+                folio: 1002,
+                amountTotal: 50000,
+                characterization: 'Del Giro',
+            ),
+        ];
+
+        $parsingContext = new ParsingContext('fake', RcvType::Purchases, $companyRut);
+        $parsingContext->records = LazyCollection::make($records);
+
+        $context = new CuadraturaContext($parsingContext);
+
+        $this
+            ->pipeline(Sync::class)
+            ->isolatePipe(ReconcileRcvStream::class)
+            ->send($context);
+
+        static::assertSame('2023-02', $context->period);
+    }
+
+    public function test_phantom_falls_back_to_reception_date_when_issue_date_missing(): void
+    {
+        $companyRut = Rut::parse('76111222-3');
+
+        $receivedOn = Carbon::parse('2023-03-07');
+
+        $record = new RcvRecord(
+            issuer: Rut::parse('76039449-1'),
+            receiver: $companyRut,
+            documentType: DteType::Invoice,
+            folio: 1000,
+            amountTotal: 50000,
+            characterization: 'Del Giro',
+            receivedOn: $receivedOn,
+        );
+
+        $parsingContext = new ParsingContext('fake', RcvType::Purchases, $companyRut);
+        $parsingContext->records = LazyCollection::make([$record]);
+
+        $context = new CuadraturaContext($parsingContext);
+
+        $this
+            ->pipeline(Sync::class)
+            ->isolatePipe(ReconcileRcvStream::class)
+            ->send($context);
+
+        $this->assertDatabaseHas(SiiInboundDocument::class, [
+            'folio' => 1000,
+            'status' => InboundDteStatus::PhantomPending->value,
+            'issued_on' => $receivedOn->toDateTimeString(),
+        ]);
+    }
+
+    public function test_explicit_period_wins_over_derivation(): void
+    {
+        $companyRut = Rut::parse('76111222-3');
+
+        $record = new RcvRecord(
+            issuer: Rut::parse('76039449-1'),
+            receiver: $companyRut,
+            documentType: DteType::Invoice,
+            folio: 1000,
+            amountTotal: 50000,
+            characterization: 'Del Giro',
+            issuedOn: Carbon::parse('2023-03-24'),
+        );
+
+        $parsingContext = new ParsingContext('fake', RcvType::Purchases, $companyRut, period: '2023-03');
+        $parsingContext->records = LazyCollection::make([$record]);
+
+        $context = new CuadraturaContext($parsingContext, '2023-03');
+
+        $this
+            ->pipeline(Sync::class)
+            ->isolatePipe(ReconcileRcvStream::class)
+            ->send($context);
+
+        static::assertSame('2023-03', $context->period);
     }
 }

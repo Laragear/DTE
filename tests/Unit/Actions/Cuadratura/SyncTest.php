@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Actions\Cuadratura;
 
-use Laragear\Dte\Actions\Cuadratura\Pipes\DowngradeOrphanedDocuments;
+use Laragear\Dte\Actions\Cuadratura\Pipes\DetectOrphanedDocuments;
 use Laragear\Dte\Actions\Cuadratura\Pipes\ReconcileRcvStream;
 use Laragear\Dte\Actions\Cuadratura\Sync;
 use Laragear\Dte\Actions\RcvParsing\ParsingContext;
@@ -20,7 +20,7 @@ class SyncTest extends TestCase
         $this->pipeline(Sync::class)
             ->assertPipes([
                 ReconcileRcvStream::class,
-                DowngradeOrphanedDocuments::class,
+                DetectOrphanedDocuments::class,
             ]);
     }
 
@@ -38,6 +38,7 @@ class SyncTest extends TestCase
                 'phantoms' => 0,
                 'discrepancies' => 0,
                 'orphans' => 0,
+                'skipped' => 0,
             ],
             $metrics,
         );

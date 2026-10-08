@@ -4,6 +4,7 @@ namespace Laragear\Dte\Actions\Cuadratura\Pipes;
 
 use Closure;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Support\Carbon;
 use Laragear\Dte\Actions\Cuadratura\CuadraturaContext;
 use Laragear\Dte\Data\RcvRecord;
 use Laragear\Dte\Enums\DteStatus;
@@ -33,8 +34,11 @@ class ReconcileRcvStream
     public function handle(CuadraturaContext $context, Closure $next): CuadraturaContext
     {
         $type = $context->parsingContext->type;
+        $oldestIssuedOn = null;
 
         foreach ($context->parsingContext->records as $record) {
+            $oldestIssuedOn = $this->minIssuedOn($oldestIssuedOn, $record);
+
             if ($type === RcvType::Purchases) {
                 $this->reconcileInbound($record, $context);
             } else {
@@ -42,50 +46,73 @@ class ReconcileRcvStream
             }
         }
 
+        // An explicit period always wins; otherwise the export is the month of
+        // its oldest record. With no records there is no period to speak of.
+        $context->period ??= $oldestIssuedOn?->format('Y-m');
+
         return $next($context);
     }
 
     /**
-     * Evaluates mappings corresponding directly internally to Inbound bounds safely.
+     * Returns the oldest issued-on date seen so far.
+     */
+    protected function minIssuedOn(?Carbon $oldest, RcvRecord $record): ?Carbon
+    {
+        $issuedOn = $record->issuedOn;
+
+        if ($issuedOn === null) {
+            return $oldest;
+        }
+
+        if ($oldest === null) {
+            return $issuedOn;
+        }
+
+        return $issuedOn->isBefore($oldest) ? $issuedOn : $oldest;
+    }
+
+    /**
+     * Reconciles an RCV purchase record against the local inbound documents.
      */
     protected function reconcileInbound(RcvRecord $record, CuadraturaContext $context): void
     {
         $model = SiiInboundDocument::query()
             ->where('issuer_num', $record->issuer->num)
-            ->where('issuer_vd', $record->issuer->vd)
+            ->where('receiver_num', $context->parsingContext->companyRut->num)
             ->where('document_type', $record->documentType->value)
             ->where('folio', $record->folio)
             ->first();
 
-        if (!$model) {
+        if (! $model) {
             $this->instantiatePhantom($record, $context);
 
             return;
         }
 
+        // The RCV "Fecha Acuse" is SII-side acuse knowledge, not our commercial
+        // acceptance decision, so a match only counts and never writes states.
         if ($model->amount_total !== $record->amountTotal) {
             $this->event->dispatch(new DteAltered($model, $record));
             $context->metrics['discrepancies']++;
         } else {
-            $this->updateInboundSafely($model, $record);
             $context->matchedLocalIds[] = $model->id;
             $context->metrics['matched']++;
         }
     }
 
     /**
-     * Evaluates mappings corresponding Outbound constraints natively accurately.
+     * Reconciles an RCV sale record against the locally issued documents.
      */
     protected function reconcileOutbound(RcvRecord $record, CuadraturaContext $context): void
     {
         $model = SiiDte::query()
+            ->where('issuer_num', $context->parsingContext->companyRut->num)
             ->where('receiver_num', $record->receiver->num)
-            ->where('receiver_vd', $record->receiver->vd)
             ->where('document_type', $record->documentType->value)
             ->where('folio', $record->folio)
             ->first();
 
-        if (!$model) {
+        if (! $model) {
             $this->event->dispatch(new DteUnregistered($record));
 
             $context->metrics['phantoms']++;
@@ -94,60 +121,87 @@ class ReconcileRcvStream
         }
 
         if ($model->amount_total !== $record->amountTotal) {
-            $this->event->dispatch(new DteAltered($model, $record));
-            $context->metrics['discrepancies']++;
-        } else {
-            $this->updateOutboundSafely($model, $record);
-            $context->matchedLocalIds[] = $model->id;
-            $context->metrics['matched']++;
+            $this->dispatchAltered($model, $record, $context);
+
+            return;
         }
+
+        match ($model->status) {
+            // Only a document already sent to the SII may be confirmed accepted.
+            DteStatus::Sent => $this->promoteOutbound($model, $context),
+            // Idempotent re-sync of a document confirmed on a previous run.
+            DteStatus::Accepted => $this->countMatched($model, $context),
+            // A never-sent document appearing on the RCV is a folio collision.
+            default => $this->dispatchAltered($model, $record, $context),
+        };
     }
 
     /**
-     * Spawns Phantom representations strictly natively cleanly bounded.
+     * Promotes a sent document to accepted and counts it as matched.
+     */
+    protected function promoteOutbound(SiiDte $model, CuadraturaContext $context): void
+    {
+        $model->status = DteStatus::Accepted;
+        $model->save();
+
+        $this->countMatched($model, $context);
+    }
+
+    /**
+     * Counts a document as matched against the RCV stream.
+     */
+    protected function countMatched(SiiDte $model, CuadraturaContext $context): void
+    {
+        $context->matchedLocalIds[] = $model->id;
+        $context->metrics['matched']++;
+    }
+
+    /**
+     * Dispatches an amount discrepancy event and counts it.
+     */
+    protected function dispatchAltered(SiiDte|SiiInboundDocument $model, RcvRecord $record, CuadraturaContext $context): void
+    {
+        $this->event->dispatch(new DteAltered($model, $record));
+        $context->metrics['discrepancies']++;
+    }
+
+    /**
+     * Spawns a Phantom inbound document for an RCV purchase missing locally.
      */
     protected function instantiatePhantom(RcvRecord $record, CuadraturaContext $context): void
     {
-        SiiInboundDocument::query()->create([
+        // The Reclamo WS only operates on 33/34/43; a phantom of any other type
+        // could never be rejected or answered, so it is only counted.
+        if ($record->documentType->isNotClaimable()) {
+            $context->metrics['skipped']++;
+
+            return;
+        }
+
+        // issued_on is NOT NULL: without any known date the phantom cannot be
+        // bounded to a period, so only the metric is recorded.
+        $issuedOn = $record->issuedOn ?? $record->receivedOn;
+
+        if ($issuedOn === null) {
+            $context->metrics['skipped']++;
+
+            return;
+        }
+
+        // Idempotent against unique index: re-syncing the same export, or a
+        // document whose XML already arrived, must not duplicate or regress it.
+        SiiInboundDocument::query()->firstOrCreate([
             'issuer_rut' => $record->issuer,
             'receiver_rut' => $record->receiver,
             'document_type' => $record->documentType,
             'folio' => $record->folio,
+        ], [
             'amount_total' => $record->amountTotal,
-            'issued_on' => $record->issuedOn,
+            'issued_on' => $issuedOn,
+            'received_at' => $record->receivedOn,
             'status' => InboundDteStatus::PhantomPending,
         ]);
 
         $context->metrics['phantoms']++;
-    }
-
-    /**
-     * Updates the inbound record with the RCV acceptance.
-     */
-    protected function updateInboundSafely(SiiInboundDocument $model, RcvRecord $record): void
-    {
-        if ($record->acknowledgedAt !== null) {
-            $model->claim_status = InboundDteStatus::CommercialAccepted->value;
-            /** @phpstan-ignore-next-line */
-            $model->claimed_at = $record->acknowledgedAt;
-        }
-
-        $model->save();
-    }
-
-    /**
-     * Updates mapped SiiDte securely tracking active bounds cleanly.
-     */
-    protected function updateOutboundSafely(SiiDte $model, RcvRecord $record): void
-    {
-        if ($model->status->isNotTerminalState()) {
-            $model->status = DteStatus::Accepted;
-        }
-
-        if ($record->acknowledgedAt !== null) {
-            $model->acknowledged_at = $record->acknowledgedAt;
-        }
-
-        $model->save();
     }
 }

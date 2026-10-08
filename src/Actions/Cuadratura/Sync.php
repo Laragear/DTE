@@ -17,7 +17,7 @@ class Sync extends Pipeline
      */
     protected $pipes = [
         Pipes\ReconcileRcvStream::class,
-        Pipes\DowngradeOrphanedDocuments::class,
+        Pipes\DetectOrphanedDocuments::class,
     ];
 
     /**
@@ -27,6 +27,8 @@ class Sync extends Pipeline
      */
     public function forParsing(ParsingContext $parsingContext): array
     {
-        return $this->send(new CuadraturaContext($parsingContext))->thenReturn()->metrics;
+        $context = new CuadraturaContext($parsingContext, $parsingContext->period);
+
+        return $this->send($context)->thenReturn()->metrics;
     }
 }

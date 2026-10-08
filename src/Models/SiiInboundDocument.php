@@ -61,6 +61,7 @@ use Laragear\Rut\Rut;
     'amount_total',
     'status',
     'claim_status',
+    'received_at',
 )]
 class SiiInboundDocument extends Model
 {

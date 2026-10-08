@@ -9,6 +9,9 @@ use Throwable;
 use function app;
 use function array_merge;
 
+/**
+ * @mixin \Illuminate\Database\Eloquent\Model
+ */
 trait HasDocumentReplication
 {
     /**
@@ -48,7 +51,7 @@ trait HasDocumentReplication
         // Single transaction of the replication flow: the clone row and its
         // payload row land together, never orphaned.
         try {
-            return $clone->getConnection()->transaction(function () use ($clone): static {
+            return $clone->getConnection()->transaction(function () use ($clone): SiiDte {
                 $clone->status = DteStatus::Draft;
 
                 $clone->save();

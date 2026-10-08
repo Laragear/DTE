@@ -259,6 +259,7 @@ class ProcessAndSendEnvelopeCommand extends Command
             ->where('updated_at', '<=', $date->now()->subMinutes($staleMinutes))
             ->get();
 
+        /** @var SiiDte $dte */
         foreach ($stale as $dte) {
             $dte->failToDraft('stale', "Compilation did not finish within [{$staleMinutes}] minutes; reclaimed.");
         }

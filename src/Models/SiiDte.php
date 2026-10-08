@@ -20,6 +20,7 @@ use Illuminate\Support\Fluent;
 use Laragear\Dte\Builders\AecCessionBuilder;
 use Laragear\Dte\Caf\Exceptions\CafNotFoundException;
 use Laragear\Dte\Casts\DteDetailItems;
+use Laragear\Dte\Casts\DteHeaderTotals;
 use Laragear\Dte\Data\Item;
 use Laragear\Dte\Database\Factories\SiiDteFactory;
 use Laragear\Dte\Enums\DteStatus;
@@ -397,9 +398,9 @@ class SiiDte extends Model
             $payload->header_id_doc->exempt_amount_override,
         );
 
-        $payload->header_totals = $totals + [
+        $payload->header_totals = DteHeaderTotals::make($totals + [
             'non_billable' => $payload->header_totals->non_billable ?? 0,
-        ];
+        ]);
 
         return [
             'amount_net' => $totals['net'],

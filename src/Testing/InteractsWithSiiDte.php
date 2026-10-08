@@ -34,6 +34,9 @@ use Laragear\Rut\Rut;
 use LogicException;
 use Mockery\MockInterface;
 
+/**
+ * @require-extends \PHPUnit\Framework\TestCase
+ */
 trait InteractsWithSiiDte
 {
     use InteractsWithDigitalCertificates;

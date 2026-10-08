@@ -198,19 +198,28 @@ class XmlSigner
 
         // Import into the target document and attach, so that inherited namespace
         // declarations (e.g. xmlns:xsi from EnvioDTE) are visible for C14N.
+        // A DOMNode without an owner document is the document itself.
+        /** @var \DOMDocument $document */
         $document = $parent->ownerDocument ?? $parent;
+        // The imported node is the detached Signature document element.
+        /** @var \DOMElement $sigNode */
         $sigNode = $document->importNode($sigDoc->documentElement, true);
         $parent->appendChild($sigNode);
 
         // Compute C14N in the final DOM context and sign.
+        /** @var DOMElement $signedInfo */
         $signedInfo = $sigNode->getElementsByTagName('SignedInfo')->item(0);
 
         // The signature value is computed after the Signature node is imported and
         // attached to the target document so that C14N produces the same bytes as the
         // SII verifier will see, including any namespace declarations inherited from
         // ancestor elements (e.g. xmlns:xsi from EnvioDTE).
-        $signatureValue = $this->openSsl->sign($signedInfo->C14N(false, false), $pem['pkey']);
+        /** @var string $c14n */
+        $c14n = $signedInfo->C14N(false, false);
 
+        $signatureValue = $this->openSsl->sign($c14n, $pem['pkey']);
+
+        /** @var DOMElement $signatureValueNode */
         $signatureValueNode = $sigNode->getElementsByTagName('SignatureValue')->item(0);
         $signatureValueNode->textContent = $signatureValue;
 

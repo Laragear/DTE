@@ -1544,12 +1544,6 @@ count = 1
 
 [[issues]]
 file = "src/Console/Commands/ProcessAndSendEnvelopeCommand.php"
-code = "non-existent-method"
-message = "Method `failtodraft` does not exist on type `stdClass`."
-count = 1
-
-[[issues]]
-file = "src/Console/Commands/ProcessAndSendEnvelopeCommand.php"
 code = "possibly-null-argument"
 message = 'Argument #2 of method `Laragear\Dte\Gateways\BoletaRestGateway::upload` is possibly `null`, but parameter type `string` does not accept it.'
 count = 1
@@ -2060,18 +2054,6 @@ count = 1
 
 [[issues]]
 file = "src/Models/Concerns/HasCorrections.php"
-code = "non-existent-method"
-message = 'Method `getkey` does not exist on type `Laragear\Dte\Models\Concerns\HasCorrections`.'
-count = 1
-
-[[issues]]
-file = "src/Models/Concerns/HasCorrections.php"
-code = "non-existent-method"
-message = 'Method `loadmissing` does not exist on type `Laragear\Dte\Models\Concerns\HasCorrections`.'
-count = 1
-
-[[issues]]
-file = "src/Models/Concerns/HasCorrections.php"
 code = "non-existent-property"
 message = 'Property `$document_type` does not exist on trait `Laragear\Dte\Models\Concerns\HasCorrections`.'
 count = 6
@@ -2086,30 +2068,6 @@ count = 6
 file = "src/Models/Concerns/HasDocumentReplication.php"
 code = "less-specific-return-statement"
 message = 'Returned type `Laragear\Dte\Models\SiiDte` is less specific than the declared return type `laragear\dte\models\concerns\hasdocumentreplication&static` for function `Laragear\Dte\Models\Concerns\HasDocumentReplication::finalizeClonedDraft`.'
-count = 1
-
-[[issues]]
-file = "src/Models/Concerns/HasDocumentReplication.php"
-code = "less-specific-return-statement"
-message = 'Returned type `Laragear\Dte\Models\SiiDte` is less specific than the declared return type `laragear\dte\models\concerns\hasdocumentreplication&static` for function `{closure:src/Models/Concerns/HasDocumentReplication.php:51:57}`.'
-count = 1
-
-[[issues]]
-file = "src/Models/Concerns/HasDocumentReplication.php"
-code = "non-existent-method"
-message = 'Method `getkey` does not exist on type `Laragear\Dte\Models\Concerns\HasDocumentReplication`.'
-count = 1
-
-[[issues]]
-file = "src/Models/Concerns/HasDocumentReplication.php"
-code = "non-existent-method"
-message = 'Method `relationloaded` does not exist on type `Laragear\Dte\Models\Concerns\HasDocumentReplication`.'
-count = 1
-
-[[issues]]
-file = "src/Models/Concerns/HasDocumentReplication.php"
-code = "non-existent-method"
-message = 'Method `replicate` does not exist on type `Laragear\Dte\Models\Concerns\HasDocumentReplication`.'
 count = 1
 
 [[issues]]
@@ -2141,30 +2099,6 @@ file = "src/Models/Concerns/HasSiiStatus.php"
 code = "docblock-type-mismatch"
 message = 'Docblock return type `Illuminate\Database\Eloquent\Builder<Laragear\Dte\Models\Concerns\HasSiiStatus&static>` is incompatible with native return type `Illuminate\Database\Eloquent\Builder`.'
 count = 3
-
-[[issues]]
-file = "src/Models/Concerns/HasSiiStatus.php"
-code = "non-existent-method"
-message = 'Method `forcefill` does not exist on type `Laragear\Dte\Models\Concerns\HasSiiStatus`.'
-count = 1
-
-[[issues]]
-file = "src/Models/Concerns/HasSiiStatus.php"
-code = "non-existent-method"
-message = 'Method `getattribute` does not exist on type `Laragear\Dte\Models\Concerns\HasSiiStatus`.'
-count = 1
-
-[[issues]]
-file = "src/Models/Concerns/HasSiiStatus.php"
-code = "non-existent-method"
-message = 'Method `save` does not exist on type `Laragear\Dte\Models\Concerns\HasSiiStatus`.'
-count = 1
-
-[[issues]]
-file = "src/Models/Concerns/HasXmlPayload.php"
-code = "non-existent-method"
-message = 'Method `getattribute` does not exist on type `Laragear\Dte\Models\Concerns\HasXmlPayload`.'
-count = 1
 
 [[issues]]
 file = "src/Models/SiiAecCession.php"
@@ -2204,20 +2138,8 @@ count = 1
 
 [[issues]]
 file = "src/Models/SiiDte.php"
-code = "invalid-array-index"
-message = '''Invalid index type `string('non_billable')` used for array access on `Laragear\Dte\Casts\DteHeaderTotals`.'''
-count = 1
-
-[[issues]]
-file = "src/Models/SiiDte.php"
 code = "invalid-property-assignment-value"
 message = '''Invalid type for property `$detail_items`: expected `Laragear\Dte\Casts\DteDetailItems`, but got `array{'items': array<array-key, mixed>}|array{'items': mixed, ...}`.'''
-count = 1
-
-[[issues]]
-file = "src/Models/SiiDte.php"
-code = "invalid-property-assignment-value"
-message = '''Invalid type for property `$header_totals`: expected `Laragear\Dte\Casts\DteHeaderTotals`, but got `array{'exempt': int, 'net': int, 'non_billable': ('TValue.illuminate\support\fluent extends nonnull)|int(0), 'tax': int, 'taxes': array<int, int>, 'total': int}`.'''
 count = 1
 
 [[issues]]
@@ -2314,12 +2236,6 @@ count = 1
 file = "src/Pdf/PdfBuilder.php"
 code = "less-specific-nested-return-statement"
 message = '''Returned type `array{'disk': mixed, 'path': string}` is less specific than the declared return type `array{'disk': string, 'path': string}` for function `Laragear\Dte\Pdf\PdfBuilder::resolveDiskAndPath` due to nested 'mixed'.'''
-count = 1
-
-[[issues]]
-file = "src/Pdf/PdfBuilder.php"
-code = "non-existent-method"
-message = 'Method `temporaryurl` does not exist on type `Illuminate\Contracts\Filesystem\Filesystem`.'
 count = 1
 
 [[issues]]
@@ -2799,12 +2715,6 @@ count = 1
 [[issues]]
 file = "src/Testing/InteractsWithDigitalCertificates.php"
 code = "non-existent-method"
-message = 'Method `andreturnusing` does not exist on type `Mockery\ExpectationInterface`.'
-count = 1
-
-[[issues]]
-file = "src/Testing/InteractsWithDigitalCertificates.php"
-code = "non-existent-method"
 message = 'Method `missing` does not exist on type `Illuminate\Contracts\Filesystem\Filesystem`.'
 count = 1
 
@@ -2908,12 +2818,6 @@ count = 1
 file = "src/Testing/InteractsWithSiiDte.php"
 code = "less-specific-return-statement"
 message = 'Returned type `Laragear\Dte\Builders\DocumentBuilder` is less specific than the declared return type `Laragear\Dte\Testing\Fakes\FakeReceiptBuilder` for function `Laragear\Dte\Testing\InteractsWithSiiDte::newReceipt`.'
-count = 1
-
-[[issues]]
-file = "src/Testing/InteractsWithSiiDte.php"
-code = "non-existent-method"
-message = 'Method `assertsame` does not exist on type `Laragear\Dte\Testing\InteractsWithSiiDte`.'
 count = 1
 
 [[issues]]
@@ -3058,12 +2962,6 @@ count = 1
 file = "src/Xml/XmlSigner.php"
 code = "invalid-return-statement"
 message = 'Invalid return type for function `Laragear\Dte\Xml\XmlSigner::signString`: expected `string`, but found `false|string`.'
-count = 1
-
-[[issues]]
-file = "src/Xml/XmlSigner.php"
-code = "non-existent-method"
-message = "Method `importnode` does not exist on type `DOMNode`."
 count = 1
 
 [[issues]]

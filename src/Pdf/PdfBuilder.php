@@ -258,7 +258,12 @@ class PdfBuilder implements Responsable
     {
         $pdf = $this->generate();
 
-        return $this->storage->disk($pdf->disk)->temporaryUrl($pdf->path, $expiration, $options);
+        $disk = $this->storage->disk($pdf->disk);
+
+        // The Filesystem contract does not expose temporary URLs; only the
+        // adapter instance returned by disk() does.
+        /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
+        return $disk->temporaryUrl($pdf->path, $expiration, $options);
     }
 
     /**

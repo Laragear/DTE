@@ -12,6 +12,9 @@ use function app;
 use function is_string;
 use const LIBXML_NONET;
 
+/**
+ * @mixin \Illuminate\Database\Eloquent\Model
+ */
 trait HasXmlPayload
 {
     /*

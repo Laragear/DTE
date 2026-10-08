@@ -805,12 +805,6 @@ message = "Define model casts in the `casts()` method instead of the `$casts` pr
 count = 1
 
 [[issues]]
-file = "src/Pdf/PdfBuilder.php"
-code = "no-redundant-nullsafe"
-message = "The nullsafe operator (`?->`) is redundant when used with `??`."
-count = 1
-
-[[issues]]
 file = "src/Pdf/Ted/Pdf417CodeWords.php"
 code = "braced-string-interpolation"
 message = "Unbraced variable in string interpolation."

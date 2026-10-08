@@ -13,6 +13,8 @@ use LogicException;
 use function value;
 
 /**
+ * @mixin \Illuminate\Database\Eloquent\Model
+ *
  * @method Builder<static>|static whereStatus(BackedEnum|string $status)
  * @method Builder<static>|static pending()
  * @method Builder<static>|static accepted()

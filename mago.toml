@@ -113,4 +113,10 @@ ignore = [
     # Matched on `stdClass`, the only non-model member, so any real type error
     # in this pipe still fails the build.
     { code = "possibly-invalid-argument", pattern = "stdClass", in = ["src/Actions/Cuadratura/Pipes/DetectOrphanedDocuments.php"] },
+
+    # Mockery's `MockInterface::expects()` returns `ExpectationInterface`, which
+    # does not declare `andReturnUsing()` -- only the concrete `Expectation` does.
+    # Matched on the symbol so any other missing-method finding in this trait
+    # still fails the build.
+    { code = "non-existent-method", pattern = "Mockery\\\\ExpectationInterface", in = ["src/Testing/InteractsWithDigitalCertificates.php"] },
 ]

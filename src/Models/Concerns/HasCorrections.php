@@ -15,6 +15,9 @@ use LogicException;
 use function app;
 use function with;
 
+/**
+ * @mixin \Illuminate\Database\Eloquent\Model
+ */
 trait HasCorrections
 {
     /**

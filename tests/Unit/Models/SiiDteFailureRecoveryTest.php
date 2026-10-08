@@ -12,6 +12,8 @@ use Laragear\Dte\Models\SiiDte;
 use Laragear\Dte\Models\SiiDtePayload;
 use LogicException;
 use Mockery\MockInterface;
+use Psr\Log\LoggerInterface;
+use RuntimeException;
 use Tests\DatabaseTestCase;
 
 class SiiDteFailureRecoveryTest extends DatabaseTestCase
@@ -172,5 +174,35 @@ class SiiDteFailureRecoveryTest extends DatabaseTestCase
 
         static::assertNull($fresh->sii_dte_envelope_id);
         static::assertSame(DteStatus::Draft, $fresh->status);
+    }
+
+    public function test_fail_to_draft_logs_and_rethrows_when_the_transaction_fails(): void
+    {
+        $dte = SiiDte::factory()->has(SiiDtePayload::factory(), 'payload')->create([
+            'status' => DteStatus::Pending,
+        ]);
+
+        Event::listen(DteFailed::class, static fn () => throw new RuntimeException('recovery blew up'));
+
+        $this->mock(LoggerInterface::class)->expects('error')->once()->withArgs(static function (string $message, array $context): bool {
+            static::assertSame('DTE failure recovery failed, rolling back to the pre-failure state.', $message);
+            static::assertSame('dte-failure-recovery', $context['flow']);
+            static::assertSame($context['exception'], RuntimeException::class);
+            static::assertSame($context['message'], 'recovery blew up');
+
+            return true;
+        });
+
+        try {
+            $dte->failToDraft('compile', 'boom');
+            static::fail('The transaction exception was not rethrown.');
+        } catch (RuntimeException $e) {
+            static::assertSame('recovery blew up', $e->getMessage());
+        }
+
+        $fresh = $dte->fresh();
+
+        static::assertSame(DteStatus::Pending, $fresh->status);
+        static::assertTrue($fresh->hasNoFailure());
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Casts;
 
+use Illuminate\Support\Fluent;
 use Illuminate\Validation\ValidationException;
 use Laragear\Dte\Casts\DteDetailItems;
 use Laragear\Dte\Casts\DteHeaderIdDoc;
@@ -37,6 +38,20 @@ class DteBlockTest extends TestCase
         $block->taxExempt();
 
         static::assertTrue($block->tax_exempt);
+    }
+
+    public function test_dynamic_calls_delegate_to_registered_macros(): void
+    {
+        try {
+            Fluent::macro('fancyValue', fn (string $value) => $value.'!');
+
+            $block = DteHeaderIdDoc::make();
+
+            static::assertSame('x!', $block->fancyValue('x'));
+            static::assertArrayNotHasKey('fancy_value', $block->toArray());
+        } finally {
+            Fluent::flushMacros();
+        }
     }
 
     public function test_make_applies_defaults_for_missing_keys(): void

@@ -12,8 +12,8 @@ use Laragear\Dte\Services\PackDtesService;
 /**
  * Manually pack compiled DTEs into envelopes, bypassing batch thresholds.
  *
- * @method static Collection<int, SiiDteEnvelope> packManual(array|Collection|EloquentBuilder $dtes, closure|mixed $sync = false, bool $retryFailed = false)
- * @method static Collection<int, SiiDteEnvelope> packManualSync(array|Collection|EloquentBuilder $dtes, bool $retryFailed = false)
+ * @method static Collection<int, SiiDteEnvelope> packManual(array|Collection|EloquentBuilder $dtes, closure|mixed $sync = false)
+ * @method static Collection<int, SiiDteEnvelope> packManualSync(array|Collection|EloquentBuilder $dtes)
  * @method static int pack()
  *
  * @see PackDtesService

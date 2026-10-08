@@ -7,13 +7,21 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\DateFactory;
 use Laragear\Dte\Enums\InboundDteStatus;
-use Laragear\Dte\Gateways\ReclamoWebserviceGateway;
 use Laragear\Dte\Models\SiiInboundDocument;
+use Laragear\Dte\Services\DteClaimService;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
 class RejectExpiringPhantomInvoicesCommand extends Command
 {
+    /**
+     * Days the SII allows registering claims since reception.
+     *
+     * After 8 days the Reclamo Webservice rejects any event, so a phantom past
+     * the ceiling is skipped instead of provoking a guaranteed rejection.
+     */
+    protected const int LEGAL_CLAIM_DAYS = 8;
+
     /**
      * The name and signature of the console command.
      *
@@ -32,8 +40,11 @@ class RejectExpiringPhantomInvoicesCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(LoggerInterface $log, DateFactory $date, ReclamoWebserviceGateway $gateway): int
-    {
+    public function handle(
+        LoggerInterface $log,
+        DateFactory $date,
+        DteClaimService $claims,
+    ): int {
         $documents = $this->queryExpiringPhantomInvoices($this->getThreshold($date));
 
         if ($documents->isEmpty()) {
@@ -42,7 +53,7 @@ class RejectExpiringPhantomInvoicesCommand extends Command
             return self::SUCCESS;
         }
 
-        [$rejected, $failed] = $this->rejectDocuments($documents, $gateway, $log);
+        [$rejected, $failed] = $this->rejectDocuments($documents, $claims, $log, $date);
 
         $this->info("Rejected {$rejected} phantom invoices. Failed: {$failed}.");
 
@@ -66,7 +77,9 @@ class RejectExpiringPhantomInvoicesCommand extends Command
     {
         return SiiInboundDocument::query()
             ->where('status', InboundDteStatus::PhantomPending)
-            ->where('created_at', '<=', $threshold)
+            // The clock anchors on the SII reception date when known, falling back to
+            // the phantom creation date.
+            ->whereRaw('coalesce(received_at, created_at) <= ?', [$threshold])
             ->get();
     }
 
@@ -78,14 +91,24 @@ class RejectExpiringPhantomInvoicesCommand extends Command
      */
     protected function rejectDocuments(
         Collection $documents,
-        ReclamoWebserviceGateway $gateway,
+        DteClaimService $claims,
         LoggerInterface $log,
+        DateFactory $date,
     ): array {
         $rejected = 0;
         $failed = 0;
 
         foreach ($documents as $document) {
-            if ($this->rejectDocument($document, $gateway, $log)) {
+            if ($this->isPastLegalClaimCeiling($document, $date)) {
+                $log->warning('Skipping phantom invoice rejection: past the 8-day legal claim window.', [
+                    'flow' => 'phantom-reject',
+                    'document_id' => $document->id,
+                ]);
+
+                continue;
+            }
+
+            if ($this->rejectDocument($document, $claims, $log)) {
                 $rejected++;
             } else {
                 $failed++;
@@ -96,36 +119,27 @@ class RejectExpiringPhantomInvoicesCommand extends Command
     }
 
     /**
-     * Attempt to reject a single phantom invoice via the SII webservice.
+     * Check if the document reception is past the SII claim registration window.
+     */
+    protected function isPastLegalClaimCeiling(SiiInboundDocument $document, DateFactory $date): bool
+    {
+        $reception = $document->received_at ?? $document->created_at;
+
+        return $date->now()->greaterThan($reception->copy()->addDays(self::LEGAL_CLAIM_DAYS));
+    }
+
+    /**
+     * Attempt to reject a single phantom invoice through the claim service.
      */
     protected function rejectDocument(
         SiiInboundDocument $document,
-        ReclamoWebserviceGateway $gateway,
+        DteClaimService $claims,
         LoggerInterface $log,
     ): bool {
-        // Claims the document with a single conditional UPDATE before touching
-        // the gateway: a manual claim racing this command loses here and aborts
-        // instead of hitting the SII webservice twice.
+        // The claim service races-guards with a conditional update before
+        // touching the SII webservice: a manual claim wins and aborts this one.
         try {
-            $claimed = SiiInboundDocument::query()
-                ->whereKey($document->getKey())
-                ->where('status', InboundDteStatus::PhantomPending)
-                ->update(['updated_at' => $document->freshTimestamp()]);
-
-            if ($claimed < 1) {
-                $log->warning('Skipping phantom invoice rejection: document already claimed by a concurrent operation.',
-                    [
-                        'flow' => 'phantom-reject',
-                        'document_id' => $document->id,
-                    ]);
-
-                return false;
-            }
-
-            $gateway->reject($document, 'Rechazo automático de factura fantasma (Sin recepción).');
-
-            $document->status = InboundDteStatus::CommercialRejected;
-            $document->save();
+            $claims->reject($document, 'Rechazo automático de factura fantasma (Sin recepción).');
 
             return true;
         } catch (Throwable $e) {

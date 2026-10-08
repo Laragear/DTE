@@ -64,4 +64,16 @@ class DteTypeTest extends TestCase
     {
         static::assertSame($schema, $type->schemaXsd());
     }
+
+    public function test_is_claimable(): void
+    {
+        static::assertTrue(DteType::Invoice->isClaimable());
+        static::assertTrue(DteType::InvoiceExempt->isClaimable());
+        static::assertTrue(DteType::InvoiceLiquidation->isClaimable());
+
+        static::assertFalse(DteType::Invoice->isNotClaimable());
+        static::assertFalse(DteType::Receipt->isClaimable());
+        static::assertFalse(DteType::CreditNote->isClaimable());
+        static::assertTrue(DteType::Receipt->isNotClaimable());
+    }
 }

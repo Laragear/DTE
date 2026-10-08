@@ -30,6 +30,17 @@ enum DteType: int
         self::PurchaseInvoice,
     ];
 
+    /**
+     * DTE types the SII Reclamo Webservice operates on.
+     *
+     * @var list<DteType>
+     */
+    public const array CLAIMABLE = [
+        self::Invoice,
+        self::InvoiceExempt,
+        self::InvoiceLiquidation,
+    ];
+
     /** Paper invoice (Factura) */
     case InvoicePhysical = 30;
 
@@ -74,11 +85,27 @@ enum DteType: int
     }
 
     /**
+     * Check if the DTE Type can be claimed through the SII Reclamo Webservice.
+     */
+    public function isClaimable(): bool
+    {
+        return in_array($this, self::CLAIMABLE, true);
+    }
+
+    /**
+     * Check if the DTE Type cannot be claimed through the SII Reclamo Webservice.
+     */
+    public function isNotClaimable(): bool
+    {
+        return ! $this->isClaimable();
+    }
+
+    /**
      * Check if the DTE Type cannot be amended.
      */
     public function isNotAmendable(): bool
     {
-        return !$this->isAmendable();
+        return ! $this->isAmendable();
     }
 
     /**

@@ -15,6 +15,7 @@ use Psr\Log\LoggerInterface;
 use RuntimeException;
 use SoapClient;
 use Tests\DatabaseTestCase;
+
 use function now;
 
 class RejectExpiringPhantomInvoicesCommandTest extends DatabaseTestCase
@@ -84,7 +85,7 @@ class RejectExpiringPhantomInvoicesCommandTest extends DatabaseTestCase
         $this
             ->mock(TokenAuthenticator::class, static function (MockInterface $mock): void {
                 $mock->expects('token')->twice()->andReturn(new Token('fake', time() + 3600));
-                $mock->expects('retryWithFreshToken')->twice()->andReturnUsing(fn($request, $issuer) => $request());
+                $mock->expects('retryWithFreshToken')->twice()->andReturnUsing(fn ($request, $issuer) => $request());
             });
 
         $this
@@ -149,7 +150,7 @@ class RejectExpiringPhantomInvoicesCommandTest extends DatabaseTestCase
         $this
             ->mock(TokenAuthenticator::class, static function (MockInterface $mock): void {
                 $mock->expects('token')->andReturn(new Token('fake', time() + 3600));
-                $mock->expects('retryWithFreshToken')->andReturnUsing(fn($request, $issuer) => $request());
+                $mock->expects('retryWithFreshToken')->andReturnUsing(fn ($request, $issuer) => $request());
             });
 
         $this
@@ -182,13 +183,15 @@ class RejectExpiringPhantomInvoicesCommandTest extends DatabaseTestCase
 
         $this
             ->mock(LoggerInterface::class)
-            ->expects('warning')
+            ->expects('error')
             ->once()
-            ->with(
-                'Skipping phantom invoice rejection: document already claimed by a concurrent operation.',
-                Mockery::on(static fn(array $context): bool => $context['flow'] === 'phantom-reject'
-                    && in_array($context['document_id'], [$doc1->id, $doc2->id], true)),
-            );
+            ->withArgs(static function (string $message, array $context) use ($doc1, $doc2): bool {
+                static::assertSame('Failed to reject phantom invoice.', $message);
+                static::assertContains($context['document_id'], [$doc1->id, $doc2->id]);
+                static::assertStringContainsString('already been commercially claimed', $context['error']);
+
+                return true;
+            });
 
         $this->mock(ReclamoWebserviceGateway::class, static function (MockInterface $mock) use ($doc1, $doc2): void {
             $mock->expects('reject')->once()->andReturnUsing(
@@ -205,6 +208,65 @@ class RejectExpiringPhantomInvoicesCommandTest extends DatabaseTestCase
         $this
             ->artisan('dte:reject-phantom-invoices')
             ->expectsOutput('Rejected 1 phantom invoices. Failed: 1.')
+            ->assertSuccessful();
+    }
+
+    public function test_anchors_deadline_on_reception_date_over_creation_date(): void
+    {
+        $this->app['env'] = 'production';
+        $this->config('app.env', 'production');
+        $this->config('dte.environment', 'production');
+        $this->app->make(EnvironmentResolver::class)->flush();
+
+        // Created long ago, but only received by the SII 7 days ago: claimable.
+        $document = SiiInboundDocument::factory()->create([
+            'status' => InboundDteStatus::PhantomPending,
+            'created_at' => now()->subDays(20),
+            'received_at' => now()->subDays(7),
+        ]);
+
+        $this->mock(ReclamoWebserviceGateway::class, static function (MockInterface $mock) use ($document): void {
+            $mock->expects('reject')->withArgs(function (SiiInboundDocument $d, string $reason) use ($document): bool {
+                return $d->is($document)
+                    && $reason === 'Rechazo automático de factura fantasma (Sin recepción).';
+            });
+        });
+
+        $this
+            ->artisan('dte:reject-phantom-invoices')
+            ->expectsOutput('Rejected 1 phantom invoices. Failed: 0.')
+            ->assertSuccessful();
+
+        $document->refresh();
+
+        static::assertSame(InboundDteStatus::CommercialRejected, $document->status);
+        static::assertSame('RCD', $document->claim_status);
+    }
+
+    public function test_skips_phantoms_past_the_legal_claim_window(): void
+    {
+        // Received 9 days ago: past the 8-day SII claim registration window.
+        SiiInboundDocument::factory()->create([
+            'status' => InboundDteStatus::PhantomPending,
+            'created_at' => now()->subDays(9),
+        ]);
+
+        $this
+            ->mock(LoggerInterface::class)
+            ->expects('warning')
+            ->once()
+            ->with(
+                'Skipping phantom invoice rejection: past the 8-day legal claim window.',
+                Mockery::on(static fn (array $context): bool => $context['flow'] === 'phantom-reject'),
+            );
+
+        $this->mock(ReclamoWebserviceGateway::class, static function (MockInterface $mock): void {
+            $mock->expects('reject')->never();
+        });
+
+        $this
+            ->artisan('dte:reject-phantom-invoices')
+            ->expectsOutput('Rejected 0 phantom invoices. Failed: 0.')
             ->assertSuccessful();
     }
 }

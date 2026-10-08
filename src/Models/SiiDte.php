@@ -19,6 +19,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
 use Laragear\Dte\Builders\AecCessionBuilder;
 use Laragear\Dte\Caf\Exceptions\CafNotFoundException;
+use Laragear\Dte\Casts\DteDetailItems;
 use Laragear\Dte\Data\Item;
 use Laragear\Dte\Database\Factories\SiiDteFactory;
 use Laragear\Dte\Enums\DteStatus;
@@ -28,6 +29,7 @@ use Laragear\Dte\Models\Concerns\HasDocumentType;
 use Laragear\Dte\Models\Concerns\HasSiiStatus;
 use Laragear\Dte\Pdf\PdfBuilder;
 use Laragear\Dte\Services\DteLifecycleService;
+use Laragear\Dte\Services\TotalsCalculator;
 use Laragear\Rut\Eloquent\RutAttribute;
 use Laragear\Rut\Rut;
 use LogicException;
@@ -73,6 +75,7 @@ use function filled;
  * @property DteStatus $status
  * @property array<string, string>|null $failure
  * @property array<string, int>|null $taxes
+ * @property DteDetailItems|null $detail_items
  * @property bool $iva_common_use
  * @property Carbon|null $acknowledged_at
  * @property Carbon|null $accepted_at
@@ -138,6 +141,36 @@ class SiiDte extends Model
         'accepted_at' => 'datetime',
         'rejected_at' => 'datetime',
     ];
+
+    /*
+     |--------------------------------------------------------------------------
+     | Boot
+     |--------------------------------------------------------------------------
+     */
+
+    /**
+     * Recalculate the document totals from the payload items before saving drafts.
+     */
+    protected static function booted(): void
+    {
+        static::saving(static function (SiiDte $dte): void {
+            // Only drafts are editable; a persisted emitted document must
+            // keep the totals the SII already saw.
+            if (! $dte->isNotReadOnly() || ! $dte->relationLoaded('payload')) {
+                return;
+            }
+
+            // Payloads not yet persisted belong to creation flows that already
+            // compute their totals; only edited payloads recalculate.
+            $payload = $dte->payload;
+
+            if ($payload !== null && $payload->exists) {
+                $dte->recalculateTotals();
+
+                $payload->save();
+            }
+        });
+    }
 
     /*
      |--------------------------------------------------------------------------
@@ -310,11 +343,72 @@ class SiiDte extends Model
         });
     }
 
+    /**
+     * The payload detail items block, recalculating totals when replaced.
+     */
+    protected function detailItems(): Attribute
+    {
+        return Attribute::set(function (array $value): array {
+            $payload = $this->payload ?? throw new LogicException('The DTE has no payload to store detail items.');
+
+            $payload->detail_items = array_key_exists('items', $value) ? $value : ['items' => $value];
+
+            // The mutator snapshots the attributes before the callback, so the
+            // recalculated amounts must be returned to take effect.
+            return $this->calculatedTotalsFromPayload();
+        });
+    }
+
     /*
      |--------------------------------------------------------------------------
      | Helpers
      |--------------------------------------------------------------------------
      */
+
+    /**
+     * Recalculate the amounts from the payload items, modifiers and taxes.
+     */
+    public function recalculateTotals(): static
+    {
+        $this->fill($this->calculatedTotalsFromPayload());
+
+        return $this;
+    }
+
+    /**
+     * Compute the document amounts from the payload and sync its header totals.
+     *
+     * @return array{amount_net: int, amount_exempt: int, amount_taxes: int, amount_total: int, taxes: array<string, int>|null}
+     */
+    protected function calculatedTotalsFromPayload(): array
+    {
+        $this->loadMissing('payload');
+
+        $payload = $this->payload ?? throw new LogicException('The DTE has no payload to calculate totals from.');
+
+        // The generic block accessor returns an untyped map; rows are modifier tables.
+        /** @var array<array-key, array<string, mixed>> $modifiers */
+        $modifiers = $payload->global_modifiers->array('items');
+
+        $totals = app(TotalsCalculator::class)->calculate(
+            $this->items->all(),
+            $modifiers,
+            $this->document_type,
+            $payload->header_id_doc->exempt_amount_override,
+        );
+
+        $payload->header_totals = $totals + [
+            'non_billable' => $payload->header_totals->non_billable ?? 0,
+        ];
+
+        return [
+            'amount_net' => $totals['net'],
+            'amount_exempt' => $totals['exempt'],
+            'amount_taxes' => $totals['tax'],
+            'amount_total' => $totals['total'],
+            'taxes' => $totals['taxes'] === [] ? null : $totals['taxes'],
+        ];
+    }
 
     /**
      * Whether this DTE is locked against edits and deletion.

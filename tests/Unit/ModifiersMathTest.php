@@ -84,14 +84,14 @@ class ModifiersMathTest extends DatabaseTestCase
         static::assertEquals([15 => 1710], $dte->taxes);
 
         // Validate payload modifiers
-        $payload = $dte->payload->data;
-        static::assertCount(1, $payload['global_modifiers']);
-        static::assertEquals('D', $payload['global_modifiers'][0]['type']);
-        static::assertEquals(10, $payload['global_modifiers'][0]['value']);
+        $payload = $dte->payload->blocksToArray();
+        static::assertCount(1, $payload['global_modifiers']['items']);
+        static::assertEquals('D', $payload['global_modifiers']['items'][0]['type']);
+        static::assertEquals(10, $payload['global_modifiers']['items'][0]['value']);
 
         // Verify Totals inside payload match DB mapping
-        static::assertEquals(9000, $payload['totals']['net']);
-        static::assertEquals(1710, $payload['totals']['tax']);
-        static::assertEquals(9000, $payload['totals']['total']);
+        static::assertEquals(9000, $payload['header_totals']['net']);
+        static::assertEquals(1710, $payload['header_totals']['tax']);
+        static::assertEquals(9000, $payload['header_totals']['total']);
     }
 }

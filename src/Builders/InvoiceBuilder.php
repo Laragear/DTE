@@ -10,6 +10,7 @@ use Laragear\Dte\Builders\Concerns\HasReferences;
 use Laragear\Dte\Data\PaymentTermData;
 use Laragear\Dte\Enums\DteType;
 use Laragear\Dte\Models\SiiDtePayload;
+use Laragear\Dte\Services\TotalsCalculator;
 use LogicException;
 
 class InvoiceBuilder extends DocumentBuilder
@@ -36,25 +37,27 @@ class InvoiceBuilder extends DocumentBuilder
     }
 
     /**
-     * Apply global invoice exemption rules to calculated totals.
+     * Calculate totals applying the exempt invoice override amount.
      *
-     * @return array{net: int, exempt: int, tax: int, total: int}
+     * @return array{net: int, exempt: int, tax: int, total: int, non_billable: int}
      */
     protected function calculatedTotals(): array
     {
-        if (!$this->isTaxExempt()) {
+        if (! $this->isTaxExempt()) {
             return parent::calculatedTotals();
         }
 
-        $amount = $this->exemptAmountOverride() ?? $this->allItemsAmount();
+        $totals = app(TotalsCalculator::class)->calculate(
+            $this->items(),
+            $this->globalModifiers(),
+            $this->documentType(),
+            exemptAmountOverride: $this->exemptAmountOverride(),
+            baseTotals: $this->totals(),
+        );
 
-        return [
-            'net' => 0,
-            'exempt' => $amount,
-            'tax' => 0,
-            'total' => $amount,
-            'non_billable' => $this->nonBillableAmount,
-        ];
+        $totals['non_billable'] = $this->nonBillableAmount;
+
+        return $totals;
     }
 
     /**
@@ -64,7 +67,7 @@ class InvoiceBuilder extends DocumentBuilder
     {
         $this->validateB2bReceiver();
 
-        if (!$this->isTaxExempt() && $this->netAmount() === 0 && $this->exemptAmount() > 0) {
+        if (! $this->isTaxExempt() && $this->netAmount() === 0 && $this->exemptAmount() > 0) {
             throw new LogicException('An invoice containing only exempt items must use document type 34.');
         }
     }
@@ -99,19 +102,5 @@ class InvoiceBuilder extends DocumentBuilder
                 new DateTimeImmutable($payment['expiration_date']),
             );
         }
-    }
-
-    /**
-     * Sum every invoice item regardless of its tax indicator.
-     */
-    protected function allItemsAmount(): int
-    {
-        $amount = 0;
-
-        foreach ($this->items() as $item) {
-            $amount += $this->itemAmount($item);
-        }
-
-        return $amount;
     }
 }

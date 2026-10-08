@@ -71,6 +71,8 @@ trait HasGlobalModifiers
 
     /**
      * Return the global modifiers.
+     *
+     * @return list<array{type: string, value_type: string, value: float|int, target: int, description: string|null}>
      */
     public function globalModifiers(): array
     {

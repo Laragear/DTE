@@ -96,7 +96,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --coverage-clover build/logs/clover-unit-actions.xml --coverage-filter src",
+        "test": "vendor/bin/phpunit --coverage-clover build/logs/clover.xml",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
         "dte:rules": "php dev/generate-rules.php",
         "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
